@@ -31,18 +31,20 @@ int ft_atoi(const char *nptr)
 	i = 0;
 	nb = 0;
 	signe = 1;
-	while (nptr[i] == '-' || nptr[i] == '+' || nptr[i])
+	while (nptr[i] == 32 || (nptr[i] >= 9 && nptr[i] <= 13))
+		i++;
+	while (nptr[i] == '-' || nptr[i] == '+' || !nptr[i])
 	{
 		if (nptr[i] == '-')
 			signe = -signe;
 		i++;
 	}
 	while (nptr[i] >= '0' && nptr[i] <= '9')
-		nb = nb * 10 + nptr[i] - 48;
+		nb = nb * 10 + nptr[i++] - 48;
 	return (nb * signe);
 }
 
-void *calloc(size_t nmemb, size_t size)
+void *ft_calloc(size_t nmemb, size_t size)
 {
 	size_t	i;
 	void	*ptr;
@@ -57,7 +59,7 @@ void *calloc(size_t nmemb, size_t size)
 	return (ptr);
 }
 
-char *strdup(const char *s)
+char *ft_strdup(const char *s)
 {
 	char	*dst;
 	int 	i;
