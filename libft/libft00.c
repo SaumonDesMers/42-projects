@@ -56,7 +56,10 @@ void *ft_memccpy(void *dest, const void *src, int c, size_t n)
 		i++;
 	}
 	if (c_src[i] == c)
-		return (dest + i + 1);
+	{
+		c_dest[i] = (unsigned char)c_src[i];
+		return (dest + i);
+	}
 	return (NULL);
 }
 
@@ -64,7 +67,7 @@ void *ft_memccpy(void *dest, const void *src, int c, size_t n)
 void *ft_memmove(void *dest, const void *src, size_t n)
 {
 	size_t	i;
-	int		j;
+	size_t	j;
 	char	*c_dest;
 	char	*c_src;
 
@@ -74,7 +77,7 @@ void *ft_memmove(void *dest, const void *src, size_t n)
 	{
 		i = n - 1;
 		j = 0;
-		while (j++ >= 0)
+		while (j++ < n)
 		{
 			c_dest[i] = c_src[i];
 			i--;

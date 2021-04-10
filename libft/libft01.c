@@ -17,14 +17,16 @@ void *ft_memchr(const void *s, int c, size_t n)
 int ft_memcmp(const void *s1, const void *s2, size_t n)
 {
 	size_t i;
-	char	*c_s1;
-	char	*c_s2;
+	unsigned char	*c_s1;
+	unsigned char	*c_s2;
 
-	c_s1 = (char*)s1;
-	c_s2 = (char*)s2;
+	c_s1 = (unsigned char*)s1;
+	c_s2 = (unsigned char*)s2;
 	i = 0;
 	while (i < n && c_s1[i] == c_s2[i])
 		i++;
+	if (i == n)
+		i--;
 	return (c_s1[i] - c_s2[i]);
 }
 

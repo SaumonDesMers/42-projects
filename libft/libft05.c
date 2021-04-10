@@ -61,26 +61,28 @@ static int is_set(char const *set, char c)
 char *ft_strtrim(char const *s1, char const *set)
 {
     int     i;
-    int     len;
+    int     j;
+    int     start;
+    int     end;
     char    *dst;
 
     i = 0;
-    while (s1[i])
-    {
-        if (!is_set(set, s1[i]))
-            len++;
+    while (is_set(set, s1[i]))
         i++;
-    }
-    if (!(dst = malloc(sizeof(char) * (len + 1))))
+    start = i;
+    while (s1[i])
+        i++;
+    i--;
+    while (is_set(set, s1[i]))
+        i--;
+    end = i + 1;
+    if (!(dst = malloc(sizeof(char) * (end - start + 1))))
         return (NULL);
-    i = 0;
-    while (s1[i])
-    {
-        if (!is_set(set, s1[i]))
-            dst[i] = s1[i];
-        i++;
-    }
-    dst[i] = 0;
+    i = start;
+    j = 0;
+    while (i < end)
+        dst[j++] = s1[i++];
+    dst[j] = 0;
     return (dst);
 }
 
