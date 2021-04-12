@@ -7,7 +7,7 @@ static int ft_strlen(const char *s)
 	if (!s)
 		return (0);
 	i = 0;
-	while (s[i] && s[i] != '+')
+	while (s[i] && s[i] != '\n')
 		i++;
 	return (i);
 }
@@ -19,7 +19,7 @@ static int	no_newline(char buffer[BUFFER_SIZE + 1])
 	i = 0;
 	while (buffer[i])
 	{
-		if (buffer[i] == '+')
+		if (buffer[i] == '\n')
 			return (0);
 		i++;
 	}
@@ -35,7 +35,7 @@ static void	reset_buff(char buffer[BUFFER_SIZE + 1])
 	j = 0;
 	if (!no_newline(buffer))
 	{
-		while (buffer[i] != '+')
+		while (buffer[i] != '\n')
 			i++;
 		i++;
 		while (buffer[i])
@@ -43,7 +43,7 @@ static void	reset_buff(char buffer[BUFFER_SIZE + 1])
 		buffer[j] = 0;
 	}
 }
-#include <stdio.h>
+
 static char *ft_strjoin(char const *buffer, char *line)
 {
     int     i;
@@ -62,7 +62,7 @@ static char *ft_strjoin(char const *buffer, char *line)
         	newline[i++] = line[j++];
 	}
     j = 0;
-    while (buffer[j] && buffer[j] != '+')
+    while (buffer[j] && buffer[j] != '\n')
         newline[i++] = buffer[j++];
     newline[i] = 0;
 	free(line);
@@ -73,25 +73,21 @@ int get_next_line(int fd, char **line)
 {
 	static char buffer[BUFFER_SIZE + 1];
 	int			ret;
-	int i = 0;
 
+	ret = -1;
 	*line = NULL;
 	while (no_newline(buffer) || !*line)
 	{
-		//printf("i:\t%d\n", i++);
-		//printf("buffer:\t%s\nline:\t%s\n\n", buffer, *line);
+		if (!ret)
+			return (1);
 		*line = ft_strjoin(buffer, *line);
-		//printf("buffer:\t%s\nline:\t%s\n\n", buffer, *line);
 		ret = read(fd, buffer, BUFFER_SIZE);
-		//printf("buffer:\t%s\nline:\t%s\n\n", buffer, *line);
 		if (ret)
 			buffer[ret] = 0;
-		if (!ret && no_newline(buffer))
+		if (!ret && !ft_strlen(buffer))
 			return (0);
 		if (ret)
 			*line = ft_strjoin(buffer, *line);
-		//printf("buffer:\t%s\nline:\t%s\n\n", buffer, *line);
-		//printf("--------------------------------------\n");
 		if (no_newline(buffer))
 			buffer[0] = 0;
 	}	
