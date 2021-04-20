@@ -8,16 +8,16 @@ char *ft_substr(char const *s, unsigned int start, size_t len)
 
     j = 0;
     i = start;
-    while (s[i] && j < len)
+    while (s[i] && j < len && start < ft_strlen(s))
     {
         i++;
         j++;
     }
-    if (!(dst = malloc(sizeof(char) * (i + 1))))
+    if (!(dst = malloc(sizeof(char) * (j + 1))))
         return (NULL);
     j = 0;
     i = start;
-    while (s[i] && j < len)
+    while (s[i] && j < len && start < ft_strlen(s))
         dst[j++] = s[i++];
     dst[j] = 0;
     return (dst);
@@ -67,15 +67,17 @@ char *ft_strtrim(char const *s1, char const *set)
     char    *dst;
 
     i = 0;
-    while (is_set(set, s1[i]))
+    while (is_set(set, s1[i]) && s1[i])
         i++;
     start = i;
     while (s1[i])
         i++;
     i--;
-    while (is_set(set, s1[i]))
+    while (is_set(set, s1[i]) && i >= 0)
         i--;
     end = i + 1;
+    if (end == 0)
+        end = start;
     if (!(dst = malloc(sizeof(char) * (end - start + 1))))
         return (NULL);
     i = start;

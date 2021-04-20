@@ -30,6 +30,8 @@ void *ft_memcpy(void *dest, const void *src, size_t n)
 	char *c_dest;
 	char *c_src;
 
+	if (!dest && !src)
+		return (NULL);
 	c_dest = (char*)dest;
 	c_src = (char*)src;
 	i = 0;
@@ -50,12 +52,12 @@ void *ft_memccpy(void *dest, const void *src, int c, size_t n)
 	c_dest = (char*)dest;
 	c_src = (char*)src;
 	i = 0;
-	while (i < n && c_src[i] != c)
+	while (i < n && (unsigned char)c_src[i] != (unsigned char)c)
 	{
 		c_dest[i] = c_src[i];
 		i++;
 	}
-	if (c_src[i] == c)
+	if ((unsigned char)c_src[i] == (unsigned char)c)
 	{
 		c_dest[i] = (unsigned char)c_src[i];
 		return (dest + i + 1);

@@ -11,15 +11,20 @@ SRCS		= ${SRC_DIR}/libft00.c \
 				${SRC_DIR}/libft06.c \
 				${SRC_DIR}/libft07.c
 
+BONUS_OBJ	= ${SRC_DIR}/ft_lstnew.c \
+				${SRC_DIR}/ft_lstadd_front
+
 CC			= cc
 
 CFLAGS		= -Wall -Wextra -Werror
 
-AR			= ar rc
+AR			= ar rcs
 
 RL			= ranlib
 
-OBJS		= ${SRCS:.c=.o}
+OBJS		= $(SRCS:.c=.o)
+
+BONUS_OBJ	= $(BONUS:.c=.o)
 
 RM			= rm -f
 
@@ -31,6 +36,9 @@ ${NAME}:	${OBJS}
 			${RL} ${NAME}
 
 all:		${NAME}
+
+bonus:		$(OBJ) $(BONUS_OBJ)
+			$(AR) $(NAME) $^
 
 so:
 			$(CC) -fPIC $(CFLAGS) -c $(SRCS)

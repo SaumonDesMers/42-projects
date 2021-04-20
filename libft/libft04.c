@@ -1,6 +1,6 @@
 #include "libft.h"
 
-char *	ft_strnstr(const char *big, const char *little, size_t len)
+char *ft_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t i;
 	size_t j;
@@ -11,7 +11,7 @@ char *	ft_strnstr(const char *big, const char *little, size_t len)
 	while (big[i] && i < len)
 	{
 		j = 0;
-		while (little[j] == big[i + j])
+		while (little[j] == big[i + j] && i + j < len)
 		{
 			if (little[j + 1] == 0)
 				return ((char*)big + i);
@@ -49,10 +49,8 @@ void *ft_calloc(size_t nmemb, size_t size)
 	size_t	i;
 	void	*ptr;
 
-	if (!nmemb || !size)
-		return (NULL);
 	if (!(ptr = malloc(nmemb * size)))
-		return (0);
+		return (NULL);
 	i = 0;
 	while (i < nmemb * size)
 		((char*)ptr)[i++] = 0;
