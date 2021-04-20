@@ -7,9 +7,18 @@
 
 int        main(void)
 {
-    char *s1 = "  \t \t \n   \n\n\n\t";
-	char *ret = ft_strtrim(s1, " \n\t");
+    t_list **start;
+    t_list *node;
 
-    //printf("%s\n", ret);
+    *start = NULL;
+    node = ft_lstnew("b");
+
+    ft_lstadd_back(start, node);
+
+    while (*start)
+    {
+        printf("%s\n", (char*)(*start)->content);
+        *start = (*start)->next;
+    }
     return (0);
 }

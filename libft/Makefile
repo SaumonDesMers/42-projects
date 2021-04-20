@@ -11,8 +11,11 @@ SRCS		= ${SRC_DIR}/libft00.c \
 				${SRC_DIR}/libft06.c \
 				${SRC_DIR}/libft07.c
 
-BONUS_OBJ	= ${SRC_DIR}/ft_lstnew.c \
-				${SRC_DIR}/ft_lstadd_front
+BONUS_SRCS	= ${SRC_DIR}/ft_lstnew.c \
+				${SRC_DIR}/ft_lstadd_front.c \
+				${SRC_DIR}/ft_lstsize.c \
+				${SRC_DIR}/ft_lstlast.c \
+				${SRC_DIR}/ft_lstadd_back.c
 
 CC			= cc
 
@@ -24,7 +27,7 @@ RL			= ranlib
 
 OBJS		= $(SRCS:.c=.o)
 
-BONUS_OBJ	= $(BONUS:.c=.o)
+BONUS_OBJ	= $(BONUS_SRCS:.c=.o)
 
 RM			= rm -f
 
@@ -37,12 +40,12 @@ ${NAME}:	${OBJS}
 
 all:		${NAME}
 
-bonus:		$(OBJ) $(BONUS_OBJ)
-			$(AR) $(NAME) $^
+bonus:		$(OBJS) $(BONUS_OBJ)
+			$(AR) $(NAME) $(OBJS) $(BONUS_OBJ)
 
 so:
-			$(CC) -fPIC $(CFLAGS) -c $(SRCS)
-			gcc -shared -o libft.so $(OBJS)
+			$(CC) -fPIC $(CFLAGS) -c $(SRCS) $(BONUS_SRCS)
+			gcc -shared -o libft.so $(OBJS) $(BONUS_OBJ)
 
 clean:
 			${RM} ${OBJS}
