@@ -15,7 +15,11 @@ BONUS_SRCS	= ${SRC_DIR}/ft_lstnew.c \
 				${SRC_DIR}/ft_lstadd_front.c \
 				${SRC_DIR}/ft_lstsize.c \
 				${SRC_DIR}/ft_lstlast.c \
-				${SRC_DIR}/ft_lstadd_back.c
+				${SRC_DIR}/ft_lstadd_back.c \
+				${SRC_DIR}/ft_lstdelone.c \
+				${SRC_DIR}/ft_lstclear.c \
+				${SRC_DIR}/ft_lstiter.c \
+				${SRC_DIR}/ft_lstmap.c
 
 CC			= cc
 
