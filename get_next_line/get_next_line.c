@@ -68,7 +68,7 @@ static char *ft_strjoin(char const *buffer, char *line)
 	free(line);
     return (newline);
 }
-
+#include <stdio.h>
 int get_next_line(int fd, char **line)
 {
 	static char buffer[BUFFER_SIZE + 1];
@@ -84,7 +84,7 @@ int get_next_line(int fd, char **line)
 		ret = read(fd, buffer, BUFFER_SIZE);
 		if (ret)
 			buffer[ret] = 0;
-		if (!ret && !ft_strlen(buffer))
+		if (!ret && buffer[0] == 0 && *line[0] == 0)
 			return (0);
 		if (ret)
 			*line = ft_strjoin(buffer, *line);
