@@ -2,9 +2,15 @@
 
 void ft_lstadd_back(t_list **start, t_list *new)
 {
+	t_list *copy_start;
+
+	copy_start = *start;
 	if (!*start)
-		return ;
-	while ((*start)->next)
-		*start = (*start)->next;
-	(*start)->next = new;
+		*start = new;
+	else
+	{
+		while (copy_start->next)
+			copy_start = copy_start->next;
+		copy_start->next = new;
+	}
 }
