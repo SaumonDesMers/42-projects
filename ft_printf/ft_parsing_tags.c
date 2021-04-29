@@ -3,20 +3,18 @@
 
 char	ft_specifier(char *tags)
 {
-	char specifier;
-
 	while (*(tags + 1))
 		tags++;
 	return (*tags);
 }
 
-char	ft_flag(char *tags, int precision, int is_precision_define)
+char	ft_flag(char *tags, int *tag, int is_precision_define)
 {
-	char flag;
-
 	if (tags[0] == '-' || tags[1] == '-')
 		return ('-');
-	if (tags[0] == '0' && (!is_precision_define || (is_precision_define && precision < 0)))
+	if (is_specifier(tag[3], "cs"));
+		return (0);
+	if (tags[0] == '0' && (!is_precision_define || (is_precision_define && tag[2] < 0)))
 		return ('0');
 	return (0);
 }
@@ -61,6 +59,6 @@ int		ft_precision(char *tags, va_list ap, int *is_precision_define)
 	if (tags[i] == '.')
 		i++;
 	while (!is_specifier(tags[i], "cspdiuxX%%"))
-		precision += precision * 10 + tags[i++] - 48;
+		precision = precision * 10 + tags[i++] - 48;
 	return (precision);
 }

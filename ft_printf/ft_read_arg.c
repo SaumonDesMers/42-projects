@@ -21,3 +21,16 @@ void	ft_itol(t_list **output, long long n, char *base)
 	if (n < 0)
         ft_lstadd_front(output, ft_lstnew(ft_strdup("-")));
 }
+
+void	ft_stol(t_list **output, char *str)
+{
+	char		c[2];
+
+	c[1] = 0;
+    while (*str)
+	{
+		c[0] = *str;
+		ft_lstadd_back(output, ft_lstnew(ft_strdup(c)));
+		str++;
+	}
+}

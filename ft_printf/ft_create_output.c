@@ -4,27 +4,28 @@
 
 void	manage_specifier(t_list **output, int *tag, va_list ap)
 {
-	long long value;
+	long long	value;
+	char		c[2];
+	char		*str;
 	
-	if (is_specifier(tag[3], "diuxX"))
+	if (is_specifier(tag[3], "diuxXp"))
 	{
 		value = va_arg(ap, int);
 		if (value != 0 || tag[2] != 0)
 			case_diuxX(output, tag[3], value);
 	}
-	/*
-	else if (specifier == 'p')
+	else if (tag[3] == 'c')
 	{
-
+		c[0] = (unsigned char)va_arg(ap, int);
+		c[1] = 0;
+		*output = ft_lstnew(ft_strdup(c));
 	}
-	else if (specifier == 'c')
+	else if (tag[3] == 's')
+		ft_stol(output, va_arg(ap, char*));
+	else if (tag[3] == 'p')
 	{
-
+		value = va_arg(ap, int);
 	}
-	else if (specifier == 's')
-	{
-
-	}*/
 	else if (tag[3] == '%')
 		*output = ft_lstnew(ft_strdup("%"));
 }
@@ -38,7 +39,7 @@ void	case_diuxX(t_list **output, char specifier, long long value)
 		else
 			ft_itol(output, value, "0123456789");
 	}
-	else if (specifier == 'x')
+	else if (is_specifier(specifier, "xp"))
 	{
 		if (value < 0)
 			ft_itol(output, value  + 4294967296, "0123456789abcdef");
@@ -54,29 +55,36 @@ void	case_diuxX(t_list **output, char specifier, long long value)
 	}
 }
 
-void	manage_precision(t_list **output, int *tag)
+void	manage_precision(t_list **output, int *tag, int is_precision_define)
 {
-	int	nb;
+	int		nb;
+	t_list	*copy;
 
 	nb = 0;
+	copy = *output;
 	if (is_specifier(tag[3], "diuxX"))
 	{
 		nb = ft_lstsize(*output);
+		if (!nb)
+			return ;
 		if (!ft_strncmp((*output)->content, "-", 1))
 			while (nb++ < tag[2])
 				ft_lstadd_front(&(*output)->next, ft_lstnew(ft_strdup("0")));
 		else
-			while (nb++ < tag[2] - 1)
+			while (nb++ < tag[2])
 				ft_lstadd_front(output, ft_lstnew(ft_strdup("0")));
 	}
-	if (is_specifier(tag[3], "s"))
+	else if (is_specifier(tag[3], "s") && is_precision_define && tag[2] == 0)
+		ft_lstclear(output, &free);
+	else if (is_specifier(tag[3], "s") && is_precision_define && tag[2] > 0)
 	{
-		while (nb < tag[2] && *output)
+		while (nb < tag[2] - 1 && copy->next)
 		{
-			*output = (*output)->next;
+			copy = copy->next;
 			nb++;
 		}
-		ft_lstclear(output, &free);
+		ft_lstclear(&copy->next, &free);
+		copy->next = NULL;
 	}
 }
 
@@ -84,6 +92,8 @@ void	manage_widht(t_list **output, int *tag)
 {
 	int	nb;
 
+	if (is_specifier(tag[3], "%"))
+		return ;
 	nb = ft_lstsize(*output);
 	if (tag[0] == '-')
 	{

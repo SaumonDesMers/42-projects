@@ -25,8 +25,8 @@ int ft_printf(const char *format, ...)
 		}
 		else
 		{
-			printf("%c", format[i++]);
-			//write(1, &format[i++], 1);
+			//printf("%c", format[i++]);
+			write(1, &format[i++], 1);
 			nbchar++;
 		}
 	}

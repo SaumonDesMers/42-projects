@@ -3,8 +3,8 @@
 
 int main(void)
 {
-	char	*format = "%-20x";
-	int		value = 42;
+	char	*format = "%x02";
+	char	value = 42;
 
 	printf("(%d)\n", ft_printf(format, value));
 	printf("(%d)\n", printf(format, value));

@@ -47,19 +47,20 @@ int		pars_tags(char *tags, va_list ap)
 	nbchar = 0;
 	output = NULL;
 	is_precision_define = 0;
+	tag[3] = ft_specifier(tags);
 	tag[1] = ft_widht(tags, ap);
 	tag[2] = ft_precision(tags, ap, &is_precision_define);
-	tag[0] = ft_flag(tags, tag[2], is_precision_define);
-	tag[3] = ft_specifier(tags);
+	tag[0] = ft_flag(tags, tag, is_precision_define);
 
 	manage_specifier(&output, tag, ap);
-	manage_precision(&output, tag);
+	manage_precision(&output, tag, is_precision_define);
 	manage_widht(&output, tag);
 
 	copy = output;
 	while (copy)
 	{
-		printf("%s", (char*)copy->content);
+		//printf("%s", (char*)copy->content);
+		write(1, (char*)copy->content, 1);
 		copy = copy->next;
 		nbchar++;
 	}
