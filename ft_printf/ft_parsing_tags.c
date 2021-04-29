@@ -10,13 +10,13 @@ char	ft_specifier(char *tags)
 	return (*tags);
 }
 
-char	ft_flag(char *tags)
+char	ft_flag(char *tags, int precision, int is_precision_define)
 {
 	char flag;
 
 	if (tags[0] == '-' || tags[1] == '-')
 		return ('-');
-	if (tags[0] == '0')
+	if (tags[0] == '0' && (!is_precision_define || (is_precision_define && precision < 0)))
 		return ('0');
 	return (0);
 }
@@ -33,7 +33,7 @@ int		ft_widht(char *tags, va_list ap)
 	if (tags[i] == '*')
 	{
 		widht = va_arg(ap, int);
-		if (widht > 0)
+		if (widht < 0)
 			widht = -widht;
 		return (widht);
 	}
@@ -42,7 +42,7 @@ int		ft_widht(char *tags, va_list ap)
 	return (widht);
 }
 
-int		ft_precision(char *tags, va_list ap)
+int		ft_precision(char *tags, va_list ap, int *is_precision_define)
 {
 	int	i;
 	int	precision;
@@ -55,6 +55,7 @@ int		ft_precision(char *tags, va_list ap)
 		return (-1);
 	if (is_specifier(tags[i], "cspdiuxX%%"))
 		return (1);
+	*is_precision_define = 1;
 	if (tags[i] == '.' && tags[i + 1] == '*')
 		return (va_arg(ap, int));
 	if (tags[i] == '.')

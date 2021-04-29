@@ -39,28 +39,32 @@ char	*take_tags(char *s)
 int		pars_tags(char *tags, va_list ap)
 {
 	int		nbchar;
-	int		widht;
-	int		precision;
+	int		tag[4];
+	int		is_precision_define;
 	t_list	*output;
-	t_list	*save;
+	t_list	*copy;
 
 	nbchar = 0;
 	output = NULL;
-	widht = ft_widht(tags, ap);
-	precision = ft_precision(tags, ap);
+	is_precision_define = 0;
+	tag[1] = ft_widht(tags, ap);
+	tag[2] = ft_precision(tags, ap, &is_precision_define);
+	tag[0] = ft_flag(tags, tag[2], is_precision_define);
+	tag[3] = ft_specifier(tags);
 
-	manage_specifier(&output, ft_specifier(tags), ap);
-	manage_precision(&output, precision, ft_specifier(tags));
-	manage_widht(&output, ft_flag(tags), widht);
+	manage_specifier(&output, tag, ap);
+	manage_precision(&output, tag);
+	manage_widht(&output, tag);
 
-	save = output;
-	while (output)
+	copy = output;
+	while (copy)
 	{
-		printf("%s", (char*)output->content);
-		output = output->next;
+		printf("%s", (char*)copy->content);
+		copy = copy->next;
 		nbchar++;
 	}
-	//printf("('%c') (%d) (.%d) (%c)", ft_flag(tags), widht, precision, ft_specifier(tags));
-	ft_lstclear(&save, &free);
+
+	//printf("{%c}{%d}{.%d}{%c}{%d}", tag[0], tag[1], tag[2], tag[3], is_precision_define);
+	ft_lstclear(&output, &free);
 	return (nbchar);
 }	
