@@ -7,7 +7,6 @@ void	manage_specifier(t_list **output, int *tag, va_list ap)
 	long long		value;
 	unsigned long	ptr;
 	char			c[2];
-	char			*str;
 	
 	if (is_specifier(tag[3], "diuxX"))
 	{
