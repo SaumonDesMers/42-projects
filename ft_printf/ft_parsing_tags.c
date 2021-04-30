@@ -7,14 +7,14 @@ char	ft_specifier(char *tags)
 		tags++;
 	return (*tags);
 }
-
-char	ft_flag(char *tags, int *tag, int is_precision_define)
+#include <stdio.h>
+char	ft_flag(char *tags, int *int_tag, int is_precision_define)
 {
 	if (tags[0] == '-' || tags[1] == '-')
 		return ('-');
-	if (is_specifier(tag[3], "cs"));
+	if (is_specifier(int_tag[3], "cs"))
 		return (0);
-	if (tags[0] == '0' && (!is_precision_define || (is_precision_define && tag[2] < 0)))
+	if (tags[0] == '0' && (!is_precision_define || (is_precision_define && int_tag[2] < 0)))
 		return ('0');
 	return (0);
 }

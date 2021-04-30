@@ -24,5 +24,6 @@ void	manage_widht(t_list **output, int *tag);
 
 void	ft_itol(t_list **output, long long n, char *base);
 void	ft_stol(t_list **output, char *str);
+void	ft_ultol(t_list **output, unsigned long n, char *base);
 
 #endif
