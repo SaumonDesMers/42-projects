@@ -3,10 +3,8 @@
 
 int main(void)
 {
-	char	*format = "%020p";
-	char	*value = "";
-
-	printf("(%d)\n", ft_printf(format, value));
-	printf("(%d)\n", printf(format, value));
+	char *str = 0;
+	printf("(%d)\n", ft_printf("%s", str));
+	printf("(%d)\n", printf("%s", str));
 	return (0);
 }

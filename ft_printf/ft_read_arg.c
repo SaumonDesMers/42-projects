@@ -27,18 +27,24 @@ void	ft_stol(t_list **output, char *str)
 	char		c[2];
 
 	c[1] = 0;
-    while (*str)
+    if (!str)
+        ft_stol(output, "(null)");
+	else
 	{
-		c[0] = *str;
-		ft_lstadd_back(output, ft_lstnew(ft_strdup(c)));
-		str++;
-	}
+    	while (*str)
+		{
+			c[0] = *str;
+			ft_lstadd_back(output, ft_lstnew(ft_strdup(c)));
+			str++;
+		}
+    }
+    
 }
 
 void	ft_ultol(t_list **output, unsigned long n, char *base)
 {
     unsigned long	nb;
-	char		c[2];
+	char		    c[2];
 
     if (n == 0)
     {

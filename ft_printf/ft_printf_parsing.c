@@ -23,7 +23,7 @@ char	*take_tags(char *s)
 	i = 0;
 	while (!is_specifier(s[i], "cspdiuxX%%"))
 		i++;
-	if(!(dst = malloc(sizeof(char) * (i + 1))))
+	if(!(dst = malloc(sizeof(char) * (i + 2))))
 		return (0);
 	i = 0;
 	while (!is_specifier(s[i], "cspdiuxX%%"))

@@ -7,17 +7,6 @@ char	ft_specifier(char *tags)
 		tags++;
 	return (*tags);
 }
-#include <stdio.h>
-char	ft_flag(char *tags, int *int_tag, int is_precision_define)
-{
-	if (tags[0] == '-' || tags[1] == '-')
-		return ('-');
-	if (is_specifier(int_tag[3], "cs"))
-		return (0);
-	if (tags[0] == '0' && (!is_precision_define || (is_precision_define && int_tag[2] < 0)))
-		return ('0');
-	return (0);
-}
 
 int		ft_widht(char *tags, va_list ap)
 {
@@ -31,8 +20,6 @@ int		ft_widht(char *tags, va_list ap)
 	if (tags[i] == '*')
 	{
 		widht = va_arg(ap, int);
-		if (widht < 0)
-			widht = -widht;
 		return (widht);
 	}
 	while (tags[i] != '.' && !is_specifier(tags[i], "cspdiuxX%%"))
@@ -61,4 +48,20 @@ int		ft_precision(char *tags, va_list ap, int *is_precision_define)
 	while (!is_specifier(tags[i], "cspdiuxX%%"))
 		precision = precision * 10 + tags[i++] - 48;
 	return (precision);
+}
+
+char	ft_flag(char *tags, int *int_tag, int is_precision_define)
+{
+	if (int_tag[1] < 0)
+	{
+		int_tag[1] = -int_tag[1];
+		return ('-');
+	}
+	if (tags[0] == '-' || tags[1] == '-')
+		return ('-');
+	if (is_specifier(int_tag[3], "cs"))
+		return (0);
+	if (tags[0] == '0' && (!is_precision_define || (is_precision_define && int_tag[2] < 0)))
+		return ('0');
+	return (0);
 }

@@ -13,9 +13,9 @@ char	*take_tags(char *s);
 int		pars_tags(char *tags, va_list ap);
 
 char	ft_specifier(char *tags);
-char	ft_flag(char *tags, int *tag, int is_precision_define);
 int		ft_widht(char *tags, va_list ap);
 int		ft_precision(char *tags, va_list ap, int *is_precision_define);
+char	ft_flag(char *tags, int *tag, int is_precision_define);
 
 void	manage_specifier(t_list **output, int *tag, va_list ap);
 void	case_diuxX(t_list **output, char specifier, long long value);

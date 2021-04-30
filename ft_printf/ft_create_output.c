@@ -69,7 +69,7 @@ void	manage_precision(t_list **output, int *tag, int is_precision_define)
 		if (!nb)
 			return ;
 		if (!ft_strncmp((*output)->content, "-", 1))
-			while (nb++ < tag[2])
+			while (nb++ < tag[2] + 1)
 				ft_lstadd_front(&(*output)->next, ft_lstnew(ft_strdup("0")));
 		else
 			while (nb++ < tag[2])
@@ -77,7 +77,7 @@ void	manage_precision(t_list **output, int *tag, int is_precision_define)
 	}
 	else if (is_specifier(tag[3], "s") && is_precision_define && tag[2] == 0)
 		ft_lstclear(output, &free);
-	else if (is_specifier(tag[3], "s") && is_precision_define && tag[2] > 0)
+	else if (is_specifier(tag[3], "s") && is_precision_define && tag[2] > 0 && copy)
 	{
 		while (nb++ < tag[2] - 1 && copy->next)
 			copy = copy->next;
