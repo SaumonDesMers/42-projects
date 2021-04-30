@@ -76,21 +76,23 @@ int get_next_line(int fd, char **line)
 
 	ret = -1;
 	*line = NULL;
+	if (fd < 0 || fd >= 1000)
+		return (-1);
 	while (no_newline(buffer) || !*line)
 	{
-		if (!ret)
-			return (1);
 		*line = ft_strjoin(buffer, *line);
+		if (!no_newline(buffer))
+			break;
 		ret = read(fd, buffer, BUFFER_SIZE);
 		if (ret)
 			buffer[ret] = 0;
-		if (!ret && buffer[0] == 0 && *line[0] == 0)
+		if (!ret && buffer[0] == 0)
 			return (0);
 		if (ret)
 			*line = ft_strjoin(buffer, *line);
 		if (no_newline(buffer))
 			buffer[0] = 0;
-	}	
+	}
 	reset_buff(buffer);
 	return (1);
 }
