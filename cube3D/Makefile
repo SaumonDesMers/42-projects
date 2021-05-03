@@ -4,6 +4,13 @@ SRC_DIR		= .
 
 SRC			= ${SRC_DIR}/main.c \
 				${SRC_DIR}/color.c \
+				${SRC_DIR}/divers.c \
+				${SRC_DIR}/rendering.c \
+				${SRC_DIR}/set_input.c \
+				${SRC_DIR}/drawing.c \
+				${SRC_DIR}/camera.c \
+				${SRC_DIR}/key_hook.c \
+				${SRC_DIR}/grid.c \
 
 OBJ			= $(SRC:.c=.o)
 
@@ -13,7 +20,7 @@ LIBFT_A		= ${SRC_DIR_LIBFT}/libft.a
 
 CC			= cc
 
-CFLAGS		= -Wall -Wextra -Werror 
+CFLAGS		= -Wall -Wextra -Werror
 
 AR			= ar rcs
 

@@ -12,5 +12,6 @@
 # include "libft/libft.h"
 # include "color.h"
 # include "struct.h"
+# include "ft_fct.h"
 
 #endif
