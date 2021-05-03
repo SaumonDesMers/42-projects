@@ -17,6 +17,8 @@ float	cast_ray(float angle, t_root *root)
 		coord.y = cam.y + distance * sin(rad(root->cam.view_angle.x - angle));
 		char_grid = root->input.grid[(int)trunc(coord.x)][(int)trunc(coord.y)];
 		distance += 0.001;
+		if (distance > 10)
+			return (-1);
 	}
 	distance = distance * cos(rad(angle));
 	return (distance);
@@ -44,7 +46,8 @@ void	ray_casting(t_root *root)
 	{
 		distance = cast_ray((ray / nb_ray * vision_angle) - vision_angle / 2, root);
 		//printf("angle : %.2f\t distance : %.2f\n", ray / nb_ray * vision_angle - vision_angle / 2, distance);
-		draw_col(ray, height(distance, root), 0xffffffff, root);
+		if (distance != -1)
+			draw_col(ray, height(distance, root), 0xffffffff, root);
 		ray++;
 	}
 }

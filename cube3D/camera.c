@@ -27,10 +27,15 @@ int		move_view(int x, int y, t_root *root)
 
 void	mouve_cam_from_view(int dir, t_root *root)
 {
-	//int	x;
+	t_vector3	coord;
 
-	root->cam.pos.x += 0.1 * dir * cos(rad(root->cam.view_angle.x));
-	root->cam.pos.y += 0.1 * dir * sin(rad(root->cam.view_angle.x));
-	//x = trunc(root->cam.view_angle.x);
-	//printf("view : %d\tpos : %f %f\n", x, trunc(root->cam.pos.x), trunc(root->cam.pos.y));
+	coord.x = root->cam.pos.x;
+	coord.y = root->cam.pos.y;
+	coord.x += 0.1 * dir * cos(rad(root->cam.view_angle.x));
+	coord.y += 0.1 * dir * sin(rad(root->cam.view_angle.x));
+	if (detect_colision(coord, root))
+		return ;
+	root->cam.pos.x = coord.x;
+	root->cam.pos.y = coord.y;
+	printf("pos : %.3f %.3f\n", root->cam.pos.x, root->cam.pos.y);
 }

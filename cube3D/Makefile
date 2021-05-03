@@ -13,6 +13,7 @@ SRC			= ${SRC_DIR}/main.c \
 				${SRC_DIR}/grid.c \
 				${SRC_DIR}/raycasting.c \
 				${SRC_DIR}/maths.c \
+				${SRC_DIR}/colision.c \
 
 OBJ			= $(SRC:.c=.o)
 

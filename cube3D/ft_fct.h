@@ -42,5 +42,9 @@ void	ray_casting(t_root *root);
 */
 float	rad(float x);
 int		normalized(int x);
+/*
+**colision.c
+*/
+int		detect_colision(t_vector3 coord, t_root *root);
 
 #endif
