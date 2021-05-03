@@ -28,14 +28,19 @@ void	get_data_img(t_img *img);
 int		valid_coord(t_vector3 coord, t_root *root);
 int		update_img(t_root *root);
 void	create_img(t_root *root);
-float	rad(float x);
-int		normalized(int x);
 /*
 **key_hook.c
 */
 int		key_hook(int keycode, t_root *root);
 /*
-**grid.c
+**raycasting.c
 */
+float	cast_ray(float angle, t_root *root);
+void	ray_casting(t_root *root);
+/*
+**maths.c
+*/
+float	rad(float x);
+int		normalized(int x);
 
 #endif

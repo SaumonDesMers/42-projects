@@ -22,5 +22,5 @@ void	rendering(t_root *root)
 	(void)root;
 	root->cam.horizon = root->win.height / 2;
 	render_floor_ceilling(root);
-	draw_col(10, 200, create_trgb(0, 255, 255, 255), root);
+	ray_casting(root);
 }

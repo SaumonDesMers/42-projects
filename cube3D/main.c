@@ -15,10 +15,10 @@ int	click(int button, int x, int y, t_root *root)
 
 void init(t_root *root)
 {
-	root->cam.view_angle.x = 0;
+	root->cam.view_angle.x = 225;
 	root->cam.view_angle.z = 0;
-	root->cam.pos.x = 0;
-	root->cam.pos.y = 0;
+	root->cam.pos.x = 2;
+	root->cam.pos.y = 2;
 	root->cam.pos.z = 0;
 }
 
@@ -33,8 +33,6 @@ int	main(void)
 	root.win.win = mlx_new_window(root.mlx, root.win.widht, root.win.height, "salut");
 
 	create_img(&root);
-
-	rendering(&root);
 
 	//mlx_mouse_hide(root.mlx.mlx, root.mlx.win);
 	mlx_do_key_autorepeaton(root.mlx);

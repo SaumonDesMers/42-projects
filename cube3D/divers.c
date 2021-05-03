@@ -13,6 +13,7 @@ int		valid_coord(t_vector3 coord, t_root *root)
 int	update_img(t_root *root)
 {
 	(void)root;
+	rendering(root);
 	mlx_put_image_to_window(root->mlx, root->win.win, root->cam.img.img, 0, 0);
 	return (0);
 }
@@ -28,18 +29,4 @@ void	create_img(t_root *root)
 	if (root->cam.img_grid.img == NULL)
 		exit(0);
 	get_data_img(&root->cam.img_grid);
-}
-
-float	rad(float x)
-{
-	return ((x / 360) * (2 * M_PI));
-}
-
-int		normalized(int x)
-{
-	if (x > 0)
-		return (1);
-	if (x < 0)
-		return (-1);
-	return (0);
 }

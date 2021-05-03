@@ -11,6 +11,8 @@ SRC			= ${SRC_DIR}/main.c \
 				${SRC_DIR}/camera.c \
 				${SRC_DIR}/key_hook.c \
 				${SRC_DIR}/grid.c \
+				${SRC_DIR}/raycasting.c \
+				${SRC_DIR}/maths.c \
 
 OBJ			= $(SRC:.c=.o)
 

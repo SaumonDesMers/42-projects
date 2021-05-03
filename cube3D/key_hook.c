@@ -24,6 +24,6 @@ int	key_hook(int keycode, t_root *root)
 	{
 		mouve_cam_from_view(-1, root);
 	}
-	//printf("%d\n", keycode);
+	printf("%d\n", keycode);
 	return (0);
 }
