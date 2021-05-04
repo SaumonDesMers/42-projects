@@ -9,12 +9,12 @@ void	render_floor_ceilling(t_root *root)
 	pos1.y = 0;
 	pos2.x = root->win.widht;
 	pos2.y = root->cam.horizon;
-	draw_square(&root->cam.img, pos1, pos2, root->input.c_color, root);
+	draw_square(&root->cam.img, pos1, pos2, root->input.c_color);
 	pos1.x = 0;
 	pos1.y = root->cam.horizon;
 	pos2.x = root->win.widht;
 	pos2.y = root->win.height;
-	draw_square(&root->cam.img, pos1, pos2, root->input.f_color, root);
+	draw_square(&root->cam.img, pos1, pos2, root->input.f_color);
 }
 
 void	rendering(t_root *root)
@@ -23,5 +23,14 @@ void	rendering(t_root *root)
 	root->cam.horizon = root->win.height / 2;
 	render_floor_ceilling(root);
 	print_grid(root);
-	ray_casting(root);
+	//ray_casting_DDA(root);
+}
+
+int	update_img(t_root *root)
+{
+	(void)root;
+	rendering(root);
+	//mlx_put_image_to_window(root->mlx, root->win.win, root->cam.img.img, 0, 0);
+	mlx_put_image_to_window(root->mlx, root->win.win, root->cam.img_grid.img, 0, 0);
+	return (0);
 }
