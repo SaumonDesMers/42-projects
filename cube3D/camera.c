@@ -37,5 +37,5 @@ void	mouve_cam_from_view(int dir, t_root *root)
 		return ;
 	root->cam.pos.x = coord.x;
 	root->cam.pos.y = coord.y;
-	printf("pos : %.3f %.3f\n", root->cam.pos.x, root->cam.pos.y);
+	//printf("pos : %.3f %.3f\n", root->cam.pos.x, root->cam.pos.y);
 }

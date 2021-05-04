@@ -21,7 +21,7 @@ void	set_input(t_root *root)
 	}
 
 	root->input.grid_widht = 5;
-	root->input.grig_height = 5;
+	root->input.grid_height = 5;
 	//root->input.NO_img;
 	//root->input.SO_img;
 	//root->input.WE_img;
@@ -36,7 +36,7 @@ void	free_grid(t_root *root)
 	int	i;
 
 	i = 0;
-	while (i < root->input.grig_height)
+	while (i < root->input.grid_height)
 		free(root->input.grid[i++]);
 	free(root->input.grid);
 }

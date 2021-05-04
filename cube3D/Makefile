@@ -14,6 +14,7 @@ SRC			= ${SRC_DIR}/main.c \
 				${SRC_DIR}/raycasting.c \
 				${SRC_DIR}/maths.c \
 				${SRC_DIR}/colision.c \
+				${SRC_DIR}/DDA.c \
 
 OBJ			= $(SRC:.c=.o)
 

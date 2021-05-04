@@ -34,7 +34,7 @@ typedef struct	s_camera {
 typedef struct	s_input {
 	char		**grid;
 	int			grid_widht;
-	int			grig_height;
+	int			grid_height;
 	t_img		NO_img;
 	t_img		SO_img;
 	t_img		WE_img;

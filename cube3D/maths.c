@@ -5,7 +5,7 @@ float	rad(float x)
 	return ((x / 360) * (2 * M_PI));
 }
 
-int		normalized(int x)
+float	normalized(float x)
 {
 	if (x > 0)
 		return (1);

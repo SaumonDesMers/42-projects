@@ -13,9 +13,10 @@ void	free_grid(t_root *root);
 /*
 **drawing.c
 */
-void	pixel_put(t_vector3 coord, int color, t_root *root);
-void	draw_square(t_vector3 pos1, t_vector3 pos2, int color, t_root *root);
-void	draw_col(int col, int height, int color, t_root *root);
+void	pixel_put(t_img	*img, t_vector3 coord, int color);
+void	draw_square(t_img *img, t_vector3 pos1, t_vector3 pos2, int color, t_root *root);
+void	draw_col(t_img *img, int col, int height, int color, t_root *root);
+void	draw_disk(t_img *img, t_vector3 pos, float radius, int color);
 /*
 **camera.c
 */
@@ -36,15 +37,27 @@ int		key_hook(int keycode, t_root *root);
 **raycasting.c
 */
 float	cast_ray(float angle, t_root *root);
+float	height(float distance, t_root *root);
 void	ray_casting(t_root *root);
+/*
+**DDA.c
+*/
+float	cast_ray_DDA(float angle, t_vector3 *point, t_root *root);
 /*
 **maths.c
 */
 float	rad(float x);
-int		normalized(int x);
+float	normalized(float x);
 /*
 **colision.c
 */
 int		detect_colision(t_vector3 coord, t_root *root);
+/*
+**grid.c
+*/
+void	print_grid(t_root *root);
+void	print_wall_grid(t_vector3 origin, float cell_size, t_root *root);
+void	print_cam_grid(t_vector3 origin, float cell_size, t_root *root);
+void	ray_casting_grid(t_vector3 origin, float cell_size, t_root *root);
 
 #endif

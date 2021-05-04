@@ -14,7 +14,8 @@ int	update_img(t_root *root)
 {
 	(void)root;
 	rendering(root);
-	mlx_put_image_to_window(root->mlx, root->win.win, root->cam.img.img, 0, 0);
+	//mlx_put_image_to_window(root->mlx, root->win.win, root->cam.img.img, 0, 0);
+	mlx_put_image_to_window(root->mlx, root->win.win, root->cam.img_grid.img, 0, 0);
 	return (0);
 }
 
