@@ -35,6 +35,10 @@ void	create_img(t_root *root);
 */
 int		key_hook(int keycode, t_root *root);
 /*
+**motion_hook.c
+*/
+int		motion_hook(int x, int y, t_root *root);
+/*
 **raycasting.c
 */
 float	cast_ray(float angle, t_root *root);
@@ -44,7 +48,8 @@ void	ray_casting_grid(t_vector3 origin, float cell_size, t_root *root);
 /*
 **DDA.c
 */
-float	cast_ray_DDA(float angle, t_vector3 *point, t_root *root);
+void	init_DDA(float h_angle, t_DDA *var, t_root *root);
+float	cast_ray_DDA(float h_angle, t_DDA *var, t_root *root);
 void	ray_casting_DDA(t_root *root);
 void	ray_casting_grid_DDA(t_vector3 origin, float cell_size, t_root *root);
 /*

@@ -3,25 +3,30 @@
 void	set_input(t_root *root)
 {
 	int		i = 0;
-	char	*str[5] =  {"11111",
-						"10001",
-						"10001",
-						"10001",
-						"11111"};
+	char	*str[10] =  {"1111111111",
+						"1000100001",
+						"1000100001",
+						"1000000101",
+						"1110100001",
+						"1000000001",
+						"1000101001",
+						"1001000001",
+						"1000000001",
+						"1111111111"};
 
 	root->win.widht = 1920;
 	root->win.height = 1080;
 
-	root->input.grid = malloc(sizeof(char*) * 5);
-	while (i < 5)
+	root->input.grid = malloc(sizeof(char*) * 10);
+	while (i < 10)
 	{
 		root->input.grid[i] = malloc(sizeof(char) * (ft_strlen(str[i]) + 1));
 		ft_strlcpy(root->input.grid[i], str[i], ft_strlen(str[i]) + 1);
 		i++;
 	}
 
-	root->input.grid_widht = 5;
-	root->input.grid_height = 5;
+	root->input.grid_widht = 10;
+	root->input.grid_height = 10;
 	//root->input.NO_img;
 	//root->input.SO_img;
 	//root->input.WE_img;

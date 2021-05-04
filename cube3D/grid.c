@@ -7,9 +7,10 @@ void	print_grid(t_root *root)
 
 	origin.x = 100;
 	origin.y = 100;
-	cell_size = 100;
+	cell_size = 50;
+	(void)origin;
 
-	clear_img(&root->cam.img_grid, create_trgb(255, 255, 255, 255));
+	clear_img(&root->img.grid, create_trgb(255, 255, 255, 255));
 	print_cell(cell_size, root);
 	print_wall_grid(origin, cell_size, root);
 	print_cam_grid(origin, cell_size, root);
@@ -40,7 +41,7 @@ void	print_wall_grid(t_vector3 origin, float cell_size, t_root *root)
 				color = create_trgb(0,200,200,200);
 			if (root->input.grid[i][j] == '0')
 				color = create_trgb(0,0,0,0);
-			draw_square(&root->cam.img_grid, pos1, pos2, color);
+			draw_square(&root->img.grid, pos1, pos2, color);
 			j++;
 		}
 		i++;
@@ -54,7 +55,7 @@ void	print_cam_grid(t_vector3 origin, float cell_size, t_root *root)
 	pos.x = origin.x + root->cam.pos.x * cell_size;
 	pos.y = origin.y + root->cam.pos.y * cell_size;
 
-	draw_disk(&root->cam.img_grid, pos, 5, 0xffffffff);
+	draw_disk(&root->img.grid, pos, 5, 0xffffffff);
 }
 
 void	print_cell(float cell_size, t_root *root)
@@ -73,7 +74,7 @@ void	print_cell(float cell_size, t_root *root)
 			pos1.y = coord.y + 1;
 			pos2.x = pos1.x + cell_size - 1;
 			pos2.y = pos1.y + cell_size - 1;
-			draw_square(&root->cam.img_grid, pos1, pos2, 0x00000000);
+			draw_square(&root->img.grid, pos1, pos2, 0x00000000);
 			coord.y += cell_size;
 		}
 		coord.x += cell_size;

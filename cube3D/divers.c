@@ -7,17 +7,17 @@ void	get_data_img(t_img *img)
 
 void	create_img(t_root *root)
 {
-	root->cam.img.img = mlx_new_image(root->mlx, root->win.widht, root->win.height);
-	if (root->cam.img.img == NULL)
+	root->img.maze.widht = root->win.widht;
+	root->img.maze.height = root->win.height;
+	root->img.maze.img = mlx_new_image(root->mlx, root->win.widht, root->win.height);
+	if (root->img.maze.img == NULL)
 		exit(0);
-	get_data_img(&root->cam.img);
-	root->cam.img.widht = root->win.widht;
-	root->cam.img.height = root->win.height;
-
-	root->cam.img_grid.img = mlx_new_image(root->mlx, root->win.widht, root->win.height);
-	if (root->cam.img_grid.img == NULL)
+	get_data_img(&root->img.maze);
+	
+	root->img.grid.widht = root->win.widht;
+	root->img.grid.height = root->win.height;
+	root->img.grid.img = mlx_new_image(root->mlx, root->win.widht, root->win.height);
+	if (root->img.grid.img == NULL)
 		exit(0);
-	get_data_img(&root->cam.img_grid);
-	root->cam.img_grid.widht = root->win.widht;
-	root->cam.img_grid.height = root->win.height;
+	get_data_img(&root->img.grid);
 }

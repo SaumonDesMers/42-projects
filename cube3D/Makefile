@@ -8,8 +8,9 @@ SRC			= ${SRC_DIR}/main.c \
 				${SRC_DIR}/rendering.c \
 				${SRC_DIR}/set_input.c \
 				${SRC_DIR}/drawing.c \
-				${SRC_DIR}/camera.c \
+				${SRC_DIR}/move_camera.c \
 				${SRC_DIR}/key_hook.c \
+				${SRC_DIR}/motion_hook.c \
 				${SRC_DIR}/grid.c \
 				${SRC_DIR}/raycasting.c \
 				${SRC_DIR}/maths.c \

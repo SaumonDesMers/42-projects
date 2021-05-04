@@ -35,17 +35,17 @@ void	ray_casting(t_root *root)
 	int		nb_ray;
 	float	ray;
 	float	vision_angle;
-	float	distance;
+	float	len;
 
 	nb_ray = root->win.widht;
 	ray = 0;
 	vision_angle = 60;
 	while (ray < nb_ray + 1)
 	{
-		distance = cast_ray((ray / nb_ray * vision_angle) - vision_angle / 2, root);
-		//printf("angle : %.2f\t distance : %.2f\n", ray / nb_ray * vision_angle - vision_angle / 2, distance);
-		if (distance != 0)
-			draw_col(&root->cam.img, ray, height(distance, root), 0xffffffff, root);
+		len = cast_ray((ray / nb_ray * vision_angle) - vision_angle / 2, root);
+		//printf("angle : %.2f\t len : %.2f\n", ray / nb_ray * vision_angle - vision_angle / 2, len);
+		if (len != 0)
+			draw_col(&root->img.maze, ray, height(len, root), 0xffffffff, root);
 		ray++;
 	}
 	
@@ -65,14 +65,14 @@ void	ray_casting_grid(t_vector3 origin, float cell_size, t_root *root)
 	vision = 60;
 	origin.x = origin.x + root->cam.pos.x * cell_size;
 	origin.y = origin.y + root->cam.pos.y * cell_size;
-	while (ray < nb_ray + 1)
+	while (ray < nb_ray)
 	{
 		v_angle = (ray / nb_ray * vision) - vision / 2;
 		h_angle = root->cam.view_angle.x - v_angle;
 
 		len = cast_ray(v_angle, root);
 		len = len / cos(rad(v_angle));
-		draw_ligne(&root->cam.img_grid, origin, h_angle, len * cell_size, 0x00ff0000);
+		draw_ligne(&root->img.grid, origin, h_angle, len * cell_size, 0x00ff0000);
 		ray++;
 	}
 }

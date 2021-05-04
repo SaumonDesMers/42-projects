@@ -27,28 +27,41 @@ typedef struct	s_camera {
 	t_vector3	pos;
 	t_vector3	view_angle;
 	int			horizon;
-	t_img		img;
-	t_img		img_grid;
 }				t_camera;
 
 typedef struct	s_input {
 	char		**grid;
 	int			grid_widht;
 	int			grid_height;
-	t_img		NO_img;
-	t_img		SO_img;
-	t_img		WE_img;
-	t_img		EA_img;
-	t_img		sprite_img;
 	int			c_color;
 	int			f_color;
 }				t_input;
+
+typedef struct	s_list_img {
+	t_img		maze;
+	t_img		grid;
+	t_img		NO;
+	t_img		SO;
+	t_img		WE;
+	t_img		EA;
+	t_img		sprite;
+}				t_list_img;
 
 typedef struct	s_root {
 	void		*mlx;
 	t_mlx_win	win;
 	t_camera	cam;
 	t_input		input;
+	t_list_img	img;
 }				t_root;
+
+typedef struct	s_DDA {
+	t_vector3	dir;
+	t_vector3	step;
+	t_vector3	delta;
+	t_vector3	len;
+	t_vector3	point;
+	int			cell[2];
+}				t_DDA;
 
 #endif

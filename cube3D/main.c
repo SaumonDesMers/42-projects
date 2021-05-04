@@ -4,8 +4,8 @@ void init(t_root *root)
 {
 	root->cam.view_angle.x = 45; // 0 = EAST
 	root->cam.view_angle.z = 0;
-	root->cam.pos.x = 1.5;
-	root->cam.pos.y = 1.5;
+	root->cam.pos.x = 5;
+	root->cam.pos.y = 6;
 	root->cam.pos.z = 0;
 }
 
@@ -29,7 +29,7 @@ int	main(void)
 
 	mlx_hook(root.win.win, 2, 1L<<0, key_hook, &root);
 	mlx_loop_hook(root.mlx, update_img, &root);
-	mlx_hook(root.win.win, 6, 1L<<6, move_view, &root);
+	mlx_hook(root.win.win, 6, 1L<<6, motion_hook, &root);
 
 	mlx_loop(root.mlx);
 
