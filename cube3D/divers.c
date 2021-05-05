@@ -14,10 +14,18 @@ void	create_img(t_root *root)
 		exit(0);
 	get_data_img(&root->img.maze);
 	
-	root->img.grid.widht = root->win.widht;
-	root->img.grid.height = root->win.height;
+	root->img.grid.widht = 500;
+	root->img.grid.height = 500;
 	root->img.grid.img = mlx_new_image(root->mlx, root->win.widht, root->win.height);
 	if (root->img.grid.img == NULL)
 		exit(0);
 	get_data_img(&root->img.grid);
+}
+
+void	import_img(t_img *img, char *path_name, t_root *root)
+{
+	img->img = mlx_xpm_file_to_image(root->mlx, path_name, &img->widht, &img->height);
+	if (img->img == NULL)
+		exit(0);
+	get_data_img(img);
 }

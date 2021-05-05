@@ -1,6 +1,6 @@
 #include "include_lib.h"
 
-void	pixel_put(t_img	*img, t_vector3 coord, int color)
+void	pixel_put(t_img *img, t_vector3 coord, int color)
 {
 	char	*dst;
 

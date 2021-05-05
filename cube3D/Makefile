@@ -15,7 +15,8 @@ SRC			= ${SRC_DIR}/main.c \
 				${SRC_DIR}/raycasting.c \
 				${SRC_DIR}/maths.c \
 				${SRC_DIR}/colision.c \
-				${SRC_DIR}/DDA.c \
+				${SRC_DIR}/raycasting_dda.c \
+				${SRC_DIR}/read_img.c \
 
 OBJ			= $(SRC:.c=.o)
 
@@ -25,7 +26,7 @@ LIBFT_A		= ${SRC_DIR_LIBFT}/libft.a
 
 CC			= cc
 
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= 
 
 AR			= ar rcs
 

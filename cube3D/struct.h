@@ -55,13 +55,13 @@ typedef struct	s_root {
 	t_list_img	img;
 }				t_root;
 
-typedef struct	s_DDA {
+typedef struct	s_ray {
 	t_vector3	dir;
 	t_vector3	step;
 	t_vector3	delta;
 	t_vector3	len;
 	t_vector3	point;
 	int			cell[2];
-}				t_DDA;
+}				t_ray;
 
 #endif

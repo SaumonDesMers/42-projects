@@ -1,12 +1,12 @@
 #include "include_lib.h"
 
-void	init_DDA(float h_angle, t_DDA *var, t_root *root)
+void	init_ray(float h_angle, t_ray *var, t_root *root)
 {
 	var->dir.x = cos(rad(h_angle));
 	var->dir.y = sin(rad(h_angle));
 
-	var->delta.x = 0;
-	var->delta.y = 0;
+	var->delta.x = INFINITY;
+	var->delta.y = INFINITY;
 	if (var->dir.x)
 		var->delta.x = 1 / var->dir.x;
 	if (var->dir.y)
@@ -42,7 +42,7 @@ void	init_DDA(float h_angle, t_DDA *var, t_root *root)
 	var->delta.y = fabs(var->delta.y);
 }
 
-float	cast_ray_DDA(float h_angle, t_DDA *var, t_root *root)
+float	cast_ray_dda(float h_angle, t_ray *var, t_root *root)
 {
 	while (root->input.grid[var->cell[0]][var->cell[1]] == '0')
 	{
@@ -71,62 +71,84 @@ float	cast_ray_DDA(float h_angle, t_DDA *var, t_root *root)
 	return (var->len.x);
 }
 
-void	ray_casting_DDA(t_root *root)
+void	ray_casting_dda(t_root *root)
 {
 	int			nb_ray;
 	float		ray;
 	float		vision;
 	float		len;
 	float		h_angle; // angle avec l'horizontal
-	float		v_angle; // angle avec l'angle de vue
-	t_DDA		DDA_var;
+	t_ray		ray_var;
+	int			*color;
 
 	nb_ray = root->win.widht;
 	ray = 0;
 	vision = 60;
 	while (ray < nb_ray)
 	{
-		v_angle = (ray / nb_ray * vision) - vision / 2;
-		h_angle = root->cam.view_angle.x - v_angle;
+		h_angle = root->cam.view_angle.x + ((ray / nb_ray * vision) - vision / 2);
 
-		init_DDA(h_angle, &DDA_var, root);
-		len = cast_ray_DDA(h_angle, &DDA_var, root);
-		//printf("angle : %.2f\t len : %.2f\n", h_angle, len);
-		if (len != 0)
-			draw_col(&root->img.maze, ray, height(len, root), 0xffffffff, root);
+		init_ray(h_angle, &ray_var, root);
+		len = cast_ray_dda(h_angle, &ray_var, root);
+		len = bornes(height(len, root), 0, root->win.height);
+
+		color = wall_texture(ray_var, len, root);
+		draw_col_img(&root->img.maze, ray, len, color, root);
+
+		free(color);
 		ray++;
 	}
 }
 
-void	ray_casting_grid_DDA(t_vector3 origin, float cell_size, t_root *root)
+int	*wall_texture(t_ray ray_var, float height, t_root *root)
+{
+	int		*color;
+
+	(void)root;
+	if (ray_var.len.x <= ray_var.len.y)
+	{
+		if (ray_var.dir.x > 0) // EAST
+			color = get_col_img(&root->img.EA, ray_var.point.y - trunc(ray_var.point.y), height);
+		if (ray_var.dir.x < 0) // WEST
+			color = get_col_img(&root->img.WE, ray_var.point.y - trunc(ray_var.point.y), height);
+	}
+	else if (ray_var.len.x > ray_var.len.y)
+	{
+		if (ray_var.dir.y > 0) // NORTH
+			color = get_col_img(&root->img.NO, ray_var.point.x - trunc(ray_var.point.x), height);
+		if (ray_var.dir.y < 0) // SOUTH
+			color = get_col_img(&root->img.SO, ray_var.point.x - trunc(ray_var.point.x), height);
+	}
+	return (color);
+}
+
+void	ray_casting_grid_dda(t_vector3 origin, float cell_size, t_root *root)
 {
 	int			nb_ray;
 	float		ray;
 	float		vision;
 	float		len;
 	float		h_angle; // angle avec l'horizontal
-	float		v_angle; // angle avec l'angle de vue
-	t_DDA		DDA_var;
+	t_ray		ray_var;
 	t_vector3	cam;
 
 	(void)len;
 	(void)h_angle;
 	(void)cam;
-	nb_ray = 100;
 	ray = 0;
 	vision = 60;
+	nb_ray = vision;
 	cam.x = origin.x + root->cam.pos.x * cell_size;
 	cam.y = origin.y + root->cam.pos.y * cell_size;
 	while (ray < nb_ray + 1)
 	{
-		v_angle = (ray / nb_ray * vision) - vision / 2;
-		h_angle = root->cam.view_angle.x - v_angle;
+		h_angle = root->cam.view_angle.x + ((ray / nb_ray * vision) - vision / 2);
 
-		init_DDA(h_angle, &DDA_var, root);
-		len = cast_ray_DDA(h_angle, &DDA_var, root);
-		DDA_var.point.x = DDA_var.point.x * cell_size + origin.x;
-		DDA_var.point.y = DDA_var.point.y * cell_size + origin.y;
-		draw_disk(&root->img.grid, DDA_var.point, 3, 0x00ffff00);
+		init_ray(h_angle, &ray_var, root);
+		len = cast_ray_dda(h_angle, &ray_var, root);
+		ray_var.point.x = ray_var.point.x * cell_size + origin.x;
+		ray_var.point.y = ray_var.point.y * cell_size + origin.y;
+		draw_disk(&root->img.grid, ray_var.point, 2, 0x00ff0000);
 		draw_ligne(&root->img.grid, cam, h_angle, len * cell_size, 0xffffffff);
 		ray++;
 	}

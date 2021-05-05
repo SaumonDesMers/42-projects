@@ -26,7 +26,7 @@ float	height(float distance, t_root *root)
 {
 	float	height;
 
-	height = (root->win.height / 2) / distance;
+	height = 2 * (root->win.height / 2) / distance;
 	return (height);
 }
 
@@ -44,8 +44,9 @@ void	ray_casting(t_root *root)
 	{
 		len = cast_ray((ray / nb_ray * vision_angle) - vision_angle / 2, root);
 		//printf("angle : %.2f\t len : %.2f\n", ray / nb_ray * vision_angle - vision_angle / 2, len);
+		len = bornes(height(len, root), 0, root->win.height);
 		if (len != 0)
-			draw_col(&root->img.maze, ray, height(len, root), 0xffffffff, root);
+			draw_col(&root->img.maze, ray, len, 0xffffffff, root);
 		ray++;
 	}
 	

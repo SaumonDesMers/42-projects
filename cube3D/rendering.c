@@ -23,14 +23,14 @@ void	rendering(t_root *root)
 	root->cam.horizon = root->win.height / 2;
 	render_floor_ceilling(root);
 	print_grid(root);
-	//ray_casting_DDA(root);
+	ray_casting_dda(root);
 }
 
 int	update_img(t_root *root)
 {
 	(void)root;
 	rendering(root);
-	//mlx_put_image_to_window(root->mlx, root->win.win, root->img.maze.img, 0, 0);
-	mlx_put_image_to_window(root->mlx, root->win.win, root->img.grid.img, 0, 0);
+	mlx_put_image_to_window(root->mlx, root->win.win, root->img.maze.img, 0, 0);
+	//mlx_put_image_to_window(root->mlx, root->win.win, root->img.grid.img, 0, 0);
 	return (0);
 }
