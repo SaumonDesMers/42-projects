@@ -12,21 +12,35 @@ int	get_pixel_color(t_img *img, t_vector3 coord)
 	return (color);
 }
 
-int		*get_col_img(t_img *img, float img_col, float height)
+int		*get_col_img(t_img *img, float img_col, float height, t_root *root)
 /*
-** col = colonne in %
-** height = final lenght of the printed colonne
+** img_col = colonne in %
 */
 {
 	t_vector3	pixel;
 	int			i;
+	int			j;
 	int			*color;
 
+	i = 0;
+	pixel.x = trunc(img->widht * img_col);
+	if (height > root->win.height)
+	{
+		j = (height / 2) - root->cam.horizon;
+		color = malloc(sizeof(int) * (root->win.height + 1));
+		if (!color)
+			exit(0);
+		while (i < root->win.height)
+		{
+			pixel.y = trunc(j * img->height / height);
+			color[(int)i++] = get_pixel_color(img, pixel);
+			j++;
+		}
+		return (color);
+	}
 	color = malloc(sizeof(int) * (height + 1));
 	if (!color)
 		exit(0);
-	pixel.x = trunc(img->widht * img_col);
-	i = 0;
 	while (i < height)
 	{
 		pixel.y = trunc(i * img->height / height);

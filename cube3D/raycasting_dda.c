@@ -71,6 +71,14 @@ float	cast_ray_dda(float h_angle, t_ray *var, t_root *root)
 	return (var->len.x);
 }
 
+float	height(float distance, t_root *root)
+{
+	float	height;
+
+	height = (root->win.height) / distance;
+	return (height);
+}
+
 void	ray_casting_dda(t_root *root)
 {
 	int			nb_ray;
@@ -90,14 +98,38 @@ void	ray_casting_dda(t_root *root)
 
 		init_ray(h_angle, &ray_var, root);
 		len = cast_ray_dda(h_angle, &ray_var, root);
-		len = bornes(height(len, root), 0, root->win.height);
+		//len = bornes(height(len, root), 0, root->win.height);
+		len = height(len, root);
 
 		color = wall_texture(ray_var, len, root);
+		//color = cut_color(color, len, root);
+		len = bornes(len, 0, root->win.height);
 		draw_col_img(&root->img.maze, ray, len, color, root);
 
 		free(color);
 		ray++;
 	}
+}
+
+int	*cut_color(int *color, float height, t_root *root)
+{
+	int		i;
+	int		j;
+	int		*new_color;
+
+	if (height < root->win.height)
+		return (color);
+	new_color = malloc(sizeof(int) * (root->win.height + 1));
+	if (!new_color)
+		exit(0);
+	i = (int)((height / 2) - root->cam.horizon);
+	j = 0;
+	while (j < root->win.height)
+	{
+		new_color[j++] = color[i++];
+	}
+	free(color);
+	return (new_color);
 }
 
 int	*wall_texture(t_ray ray_var, float height, t_root *root)
@@ -108,16 +140,16 @@ int	*wall_texture(t_ray ray_var, float height, t_root *root)
 	if (ray_var.len.x <= ray_var.len.y)
 	{
 		if (ray_var.dir.x > 0) // EAST
-			color = get_col_img(&root->img.EA, ray_var.point.y - trunc(ray_var.point.y), height);
+			color = get_col_img(&root->img.EA, ray_var.point.y - trunc(ray_var.point.y), height, root);
 		if (ray_var.dir.x < 0) // WEST
-			color = get_col_img(&root->img.WE, ray_var.point.y - trunc(ray_var.point.y), height);
+			color = get_col_img(&root->img.WE, ray_var.point.y - trunc(ray_var.point.y), height, root);
 	}
 	else if (ray_var.len.x > ray_var.len.y)
 	{
 		if (ray_var.dir.y > 0) // NORTH
-			color = get_col_img(&root->img.NO, ray_var.point.x - trunc(ray_var.point.x), height);
+			color = get_col_img(&root->img.NO, ray_var.point.x - trunc(ray_var.point.x), height, root);
 		if (ray_var.dir.y < 0) // SOUTH
-			color = get_col_img(&root->img.SO, ray_var.point.x - trunc(ray_var.point.x), height);
+			color = get_col_img(&root->img.SO, ray_var.point.x - trunc(ray_var.point.x), height, root);
 	}
 	return (color);
 }

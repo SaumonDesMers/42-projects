@@ -22,14 +22,6 @@ float	cast_ray(float v_angle, t_root *root)
 	return (distance);
 }
 
-float	height(float distance, t_root *root)
-{
-	float	height;
-
-	height = 2 * (root->win.height / 2) / distance;
-	return (height);
-}
-
 void	ray_casting(t_root *root)
 {
 	int		nb_ray;
