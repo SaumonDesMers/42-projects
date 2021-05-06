@@ -9,7 +9,10 @@ int		update_img(t_root *root);
 /*
 **set_input.c
 */
-void	set_input(t_root *root);
+void	read_file(char *path_name, t_root *root);
+void	set_input(char **strs, t_root *root);
+void	get_color_input(char *str, char flag, t_root *root);
+void	set_grid(char *line, t_root *root);
 void	free_grid(t_root *root);
 /*
 **drawing.c

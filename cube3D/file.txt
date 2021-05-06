@@ -1,0 +1,11 @@
+R 1920 1080
+
+NO ./images/norminet.xpm
+SO ./images/norminet1.xpm
+WE ./images/norminet2.xpm
+EA ./images/norminet3.xpm
+
+S ./images/file.xpm
+
+F 220,100,0
+C 225,30,0

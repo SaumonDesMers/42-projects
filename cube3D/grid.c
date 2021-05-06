@@ -9,14 +9,15 @@ void	print_grid(t_root *root)
 	origin.y = 0;
 	cell_size = 50;
 	(void)origin;
+	(void)root;
+	(void)cell_size;
 
 	clear_img(&root->img.grid, create_trgb(255, 255, 255, 255));
 	print_cell(cell_size, root);
 	print_wall_grid(origin, cell_size, root);
-	print_cam_grid(origin, cell_size, root);
+	// print_cam_grid(origin, cell_size, root);
 	
-	//ray_casting_grid(origin, cell_size, root);
-	ray_casting_grid_dda(origin, cell_size, root);
+	// ray_casting_grid_dda(origin, cell_size, root);
 }
 
 void	print_wall_grid(t_vector3 origin, float cell_size, t_root *root)

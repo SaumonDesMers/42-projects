@@ -13,5 +13,6 @@
 # include "color.h"
 # include "struct.h"
 # include "ft_fct.h"
+# include "get_next_line.h"
 
 #endif
