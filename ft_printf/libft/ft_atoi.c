@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgaubert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/21 14:43:49 by sgaubert          #+#    #+#             */
-/*   Updated: 2021/05/21 14:43:51 by sgaubert         ###   ########.fr       */
+/*   Created: 2021/05/22 08:39:12 by sgaubert          #+#    #+#             */
+/*   Updated: 2021/05/22 08:39:16 by sgaubert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void*))
+int	ft_atoi(const char *nptr)
 {
-	t_list	*save;
+	int	i;
+	int	nb;
+	int	signe;
 
-	while (*lst)
+	i = 0;
+	nb = 0;
+	signe = 1;
+	while (nptr[i] == 32 || (nptr[i] >= 9 && nptr[i] <= 13))
+		i++;
+	if (nptr[i] == '-' || nptr[i] == '+')
 	{
-		del((*lst)->content);
-		save = *lst;
-		*lst = (*lst)->next;
-		save->next = NULL;
-		free(save);
+		if (nptr[i] == '-')
+			signe = -signe;
+		i++;
 	}
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+		nb = nb * 10 + nptr[i++] - 48;
+	return (nb * signe);
 }

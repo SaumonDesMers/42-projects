@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgaubert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/21 14:43:49 by sgaubert          #+#    #+#             */
-/*   Updated: 2021/05/21 14:43:51 by sgaubert         ###   ########.fr       */
+/*   Created: 2021/05/22 08:35:30 by sgaubert          #+#    #+#             */
+/*   Updated: 2021/05/22 08:35:32 by sgaubert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void*))
+int	ft_isalnum(int c)
 {
-	t_list	*save;
+	int	ret;
 
-	while (*lst)
-	{
-		del((*lst)->content);
-		save = *lst;
-		*lst = (*lst)->next;
-		save->next = NULL;
-		free(save);
-	}
+	ret = 0;
+	if (c >= '0' && c <= '9')
+		ret = 1;
+	if (c >= 'a' && c <= 'z')
+		ret = 1;
+	if (c >= 'A' && c <= 'Z')
+		ret = 1;
+	return (ret);
 }
