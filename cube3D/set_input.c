@@ -45,7 +45,7 @@ void	set_input(char **strs, t_root *root)
 		import_img(&root->img.EA, strs[1], root);
 	if (!ft_strncmp(strs[0], "WE", 2))
 		import_img(&root->img.WE, strs[1], root);
-	if (!ft_strncmp(strs[0], "S", 1))
+	if (!ft_strncmp(strs[0], "S ", 2))
 		import_img(&root->img.sprite, strs[1], root);
 	if (!ft_strncmp(strs[0], "C", 1))
 		get_color_input(strs[1], 'C', root);

@@ -20,6 +20,13 @@ void	create_img(t_root *root)
 	if (root->img.grid.img == NULL)
 		exit(0);
 	get_data_img(&root->img.grid);
+
+	root->img.test.widht = root->win.widht;
+	root->img.test.height = root->win.height;
+	root->img.test.img = mlx_new_image(root->mlx, root->win.widht, root->win.height);
+	if (root->img.test.img == NULL)
+		exit(0);
+	get_data_img(&root->img.test);
 }
 
 void	import_img(t_img *img, char *path_name, t_root *root)

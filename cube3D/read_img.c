@@ -12,6 +12,28 @@ int	get_pixel_color(t_img *img, t_vector3 coord)
 	return (color);
 }
 
+int	*wall_texture(t_ray ray_var, float height, t_root *root)
+{
+	int		*color;
+
+	(void)root;
+	if (ray_var.len.x <= ray_var.len.y)
+	{
+		if (ray_var.dir.x > 0) // EAST
+			color = get_col_img(&root->img.EA, ray_var.point.y - trunc(ray_var.point.y), height, root);
+		if (ray_var.dir.x < 0) // WEST
+			color = get_col_img(&root->img.WE, ray_var.point.y - trunc(ray_var.point.y), height, root);
+	}
+	else if (ray_var.len.x > ray_var.len.y)
+	{
+		if (ray_var.dir.y > 0) // NORTH
+			color = get_col_img(&root->img.NO, ray_var.point.x - trunc(ray_var.point.x), height, root);
+		if (ray_var.dir.y < 0) // SOUTH
+			color = get_col_img(&root->img.SO, ray_var.point.x - trunc(ray_var.point.x), height, root);
+	}
+	return (color);
+}
+
 int		*get_col_img(t_img *img, float img_col, float height, t_root *root)
 /*
 ** img_col = colonne in %
@@ -55,11 +77,37 @@ void	draw_col_img(t_img *img, int col, int height, int *color, t_root *root)
 	int			i;
 
 	coord.x = col;
-	coord.y = root->cam.horizon - height / 2;
-	i = 0;
-	while (coord.y < root->cam.horizon + height / 2 && i < height)
+	if (/*height < root->win.height*/1)
 	{
-		pixel_put(img, coord, color[i++]);
-		coord.y++;
+		height = bornes(height, 0, root->win.height); // a retirer si mouvement vertical camera
+		coord.y = root->cam.horizon - height / 2;
+		i = 0;
+		while (coord.y < root->cam.horizon + height / 2 && i < height)
+		{
+			pixel_put(img, coord, color[i++]);
+			coord.y++;
+		}
+	}
+	else if (root->cam.view_angle.y >= 0)
+	{
+		coord.y = root->cam.horizon - height / 2;
+		height = bornes(height, 0, root->win.height);
+		i = root->cam.horizon - height / 2;
+		while (coord.y < root->cam.horizon + height / 2 && i < height)
+		{
+			pixel_put(img, coord, color[i++]);
+			coord.y++;
+		}
+	}
+	else if (root->cam.view_angle.y < 0)
+	{
+		coord.y = root->cam.horizon + height / 2;
+		height = bornes(height, 0, root->win.height);
+		i = root->cam.horizon + height / 2;
+		while (coord.y > root->cam.horizon - height / 2 && i > 0)
+		{
+			pixel_put(img, coord, color[i--]);
+			coord.y--;
+		}
 	}
 }

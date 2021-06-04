@@ -18,6 +18,7 @@ SRC			= ${SRC_DIR}/main.c \
 				${SRC_DIR}/raycasting_dda.c \
 				${SRC_DIR}/read_img.c \
 				${SRC_DIR}/get_next_line.c \
+				${SRC_DIR}/print_img.c \
 
 OBJ			= $(SRC:.c=.o)
 

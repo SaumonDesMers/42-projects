@@ -5,7 +5,7 @@ int		move_view(int x, int y, t_root *root)
 	t_vector3	view_move;
 
 	view_move.x = x - root->win.widht / 2;
-	view_move.z = -y + root->win.height / 2;
+	view_move.y = -y + root->win.height / 2;
 
 	root->cam.view_angle.x += 0.2 * normalized(view_move.x);
 	if (root->cam.view_angle.x < 0)
@@ -13,14 +13,11 @@ int		move_view(int x, int y, t_root *root)
 	if (root->cam.view_angle.x > 360)
 		root->cam.view_angle.x -= 360;
 
-	root->cam.view_angle.z += 0.2 * normalized(view_move.z);
-	if (root->cam.view_angle.z < -90)
-		root->cam.view_angle.z = -90;
-	if (root->cam.view_angle.z > 90)
-		root->cam.view_angle.z = 90;
-
-	//if (view_move.x != 0 || view_move.z != 0)
-	//	printf("%f : %f\n", root->cam.view_angle.x, root->cam.view_angle.z);
+	root->cam.view_angle.y += 0.2 * normalized(view_move.y);
+	if (root->cam.view_angle.y < -90)
+		root->cam.view_angle.y = -90;
+	if (root->cam.view_angle.y > 90)
+		root->cam.view_angle.y = 90;
 	mlx_mouse_move(root->mlx, root->win.win, root->win.widht / 2, root->win.height / 2);
 	return (0);
 }

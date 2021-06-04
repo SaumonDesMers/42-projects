@@ -26,6 +26,7 @@ typedef struct	s_img {
 typedef struct	s_camera {
 	t_vector3	pos;
 	t_vector3	view_angle;
+	t_vector3	vision;
 	int			horizon;
 }				t_camera;
 
@@ -40,6 +41,7 @@ typedef struct	s_input {
 typedef struct	s_list_img {
 	t_img		maze;
 	t_img		grid;
+	t_img		test;
 	t_img		NO;
 	t_img		SO;
 	t_img		WE;
@@ -62,6 +64,8 @@ typedef struct	s_ray {
 	t_vector3	len;
 	t_vector3	point;
 	int			cell[2];
+	float		h_angle;
+	float		distance;
 }				t_ray;
 
 #endif

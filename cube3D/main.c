@@ -3,10 +3,10 @@
 void init(t_root *root)
 {
 	root->cam.view_angle.x = 0; // 0 = EAST
-	root->cam.view_angle.z = 0;
+	root->cam.view_angle.y = 0;
 	root->cam.pos.x = 5.5;
 	root->cam.pos.y = 2;
-	root->cam.pos.z = 0;
+	root->cam.vision.x = 60;
 }
 
 int	main(void)

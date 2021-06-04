@@ -27,7 +27,7 @@ void	clear_img(t_img *img, int color);
 **camera.c
 */
 int		move_view(int x, int y, t_root *root);
-void	mouve_cam_from_view(int dir, t_root *root);
+void	mouve_cam_from_view(int v_angle, t_root *root);
 /*
 **divers.c
 */
@@ -51,12 +51,10 @@ void	ray_casting_grid(t_vector3 origin, float cell_size, t_root *root);
 /*
 **raycasting_dda.c
 */
-void	init_ray(float h_angle, t_ray *var, t_root *root);
-float	cast_ray_dda(float h_angle, t_ray *var, t_root *root);
+void	init_ray(t_ray *var, t_root *root);
+float	cast_ray_dda(t_ray *var, t_root *root);
 float	height(float distance, t_root *root);
 void	ray_casting_dda(t_root *root);
-int		*cut_color(int *color, float height, t_root *root);
-int		*wall_texture(t_ray ray_var, float height, t_root *root);
 void	ray_casting_grid_dda(t_vector3 origin, float cell_size, t_root *root);
 /*
 **maths.c
@@ -79,7 +77,11 @@ void	print_cell(float cell_size, t_root *root);
 **read_img.c
 */
 int		get_pixel_color(t_img *img, t_vector3 coord);
+int		*wall_texture(t_ray ray_var, float height, t_root *root);
 int		*get_col_img(t_img *img, float img_col, float height, t_root *root);
 void	draw_col_img(t_img *img, int col, int height, int *color, t_root *root);
+
+void	manipulate_img(t_root *root);
+void	print_img(t_img *screen, t_img *img, t_vector3 scale, t_vector3 rotation, t_root *root);
 
 #endif
