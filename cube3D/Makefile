@@ -1,5 +1,9 @@
 NAME		= cube3d
 
+LIB_LINUX	= -lft -lmlx -lXext -lX11 -lm -lbsd
+LIB_MAC		= -lft -I/usr/local/include -L/usr/local/lib -lmlx -framework OpenGL -framework AppKit
+LIB		= $(LIB_MAC)
+
 SRC_DIR		= .
 
 SRC			= ${SRC_DIR}/main.c \
@@ -28,7 +32,7 @@ LIBFT_A		= ${SRC_DIR_LIBFT}/libft.a
 
 CC			= cc
 
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= 
 
 AR			= ar rcs
 
@@ -40,7 +44,7 @@ RM			= rm -f
 			${CC} ${CFLAGS} -I includes -c $< -o ${<:.c=.o}
 
 ${NAME}:	${OBJ}
-			${CC} ${CFLAGS} -o $@ $^ ${LIBFT_A} -L ./libft -lft -lmlx -lXext -lX11 -lm -lbsd
+			${CC} ${CFLAGS} -o $@ $^ ${LIBFT_A} -L ./libft LIB
 
 all:		${NAME}
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parsing_tags.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgaubert <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/23 18:13:53 by sgaubert          #+#    #+#             */
+/*   Updated: 2021/05/23 18:14:38 by sgaubert         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft/libft.h"
 #include "ft_printf.h"
 
@@ -8,7 +20,7 @@ char	ft_specifier(char *tags)
 	return (*tags);
 }
 
-int		ft_widht(char *tags, va_list ap)
+int	ft_widht(char *tags, va_list ap)
 {
 	int		widht;
 	int		i;
@@ -27,7 +39,7 @@ int		ft_widht(char *tags, va_list ap)
 	return (widht);
 }
 
-int		ft_precision(char *tags, va_list ap, int *is_precision_define)
+int	ft_precision(char *tags, va_list ap, int *is_precision_define)
 {
 	int	i;
 	int	precision;
@@ -61,7 +73,9 @@ char	ft_flag(char *tags, int *int_tag, int is_precision_define)
 		return ('-');
 	if (is_specifier(int_tag[3], "cs"))
 		return (0);
-	if (tags[0] == '0' && (!is_precision_define || (is_precision_define && int_tag[2] < 0)))
+	if (
+		tags[0] == '0'
+		&& (!is_precision_define || (is_precision_define && int_tag[2] < 0)))
 		return ('0');
 	return (0);
 }
