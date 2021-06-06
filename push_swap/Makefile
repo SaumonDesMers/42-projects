@@ -20,16 +20,18 @@ $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
 
 $(NAME):	$(OBJS)
 			@make -C libft
-			@$(CC) $(CFLAGS) $(LIBS) $(OBJS) -o $@
+			@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $@
 			@echo "Done"
 
 all:		$(NAME)
 
 clean:
+#			@make clean -C libft
 			@$(RM) $(OBJS)
 			@echo "Remove obj"
 
 fclean:		clean
+#			@make fclean -C libft
 			@$(RM) $(NAME)
 			@echo "Remove $(NAME)"
 
