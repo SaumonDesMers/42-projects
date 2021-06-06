@@ -6,22 +6,32 @@
 # include "libft/src/libft.h"
 # include <stdio.h>
 
-typedef struct	s_value
-{
-	int	value;
-	int	index;
-}	t_value;
-
 typedef struct	s_root
 {
-	t_value	*stack_a;
-	int		size _a;
-	t_value	*stack_b;
-	int		size _b;
+	int	*stack;
+	int	size;
+	int	*stack_a;
+	int	size_a;
+	int	*stack_b;
+	int	size_b;
 }	t_root;
 
 int		check_arg(int ac, char **av);
 int		get_stack(int ac, char **av, t_root *root);
+
+void	sa(t_root *root, int flag);
+void	sb(t_root *root, int flag);
+void	ss(t_root *root, int flag);
+void	pa(t_root *root, int flag);
+void	pb(t_root *root, int flag);
+void	ra(t_root *root, int flag);
+void	rb(t_root *root, int flag);
+void	rr(t_root *root, int flag);
+void	rra(t_root *root, int flag);
+void	rrb(t_root *root, int flag);
+void	rrr(t_root *root, int flag);
+
+void	brutal_sorting(t_root *root);
 
 void	free_all(t_root *root);
 

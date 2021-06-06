@@ -11,8 +11,9 @@ int	check_arg(int ac, char **av)
 		j = 0;
 		while (av[i][j])
 		{
-			if (!ft_isdigit(av[i][j++]))
+			if (!ft_isdigit(av[i][j]) && av[i][j] != '-')
 				return (0);
+			j++;
 		}
 	}
 	// i = 0;
@@ -28,13 +29,40 @@ int	check_arg(int ac, char **av)
 int	get_stack(int ac, char **av, t_root *root)
 {
 	int		i;
+	int		j;
+	int		index;
 
-	root->stack_a = malloc(sizeof(t_value) * ac);
-	if (!root->stack_a)
+	root->stack = malloc(sizeof(int) * ac);
+	root->stack_a = malloc(sizeof(int) * ac);
+	root->stack_b = malloc(sizeof(int) * ac);
+	if (!root->stack || !root->stack_a || !root->stack_b)
+	{
+		free_all(root);
 		return (0);
-	root->stack_b = NULL;
+	}
+	root->size = ac - 1;
+	root->size_a = root->size;
+	root->size_b = 0;
 	i = 0;
 	while (++i < ac)
-		(root->stack_a + i)->value = ft_atoi(av[i]);
+		root->stack[i - 1] = ft_atoi(av[i]);
+	i = 0;
+	while (i < root->size)
+	{
+		root->stack_a[i] = root->stack[i];
+		index = 0;
+		j = 0;
+		while (j < root->size)
+		{
+			if (root->stack_a[i] > root->stack[j])
+				index++;
+			j++;
+		}
+		root->stack_a[i] = index;
+		i++;
+	}
+	i = 0;
+	while (i < root->size)
+		root->stack_b[i++] = -1;
 	return (1);
 }
