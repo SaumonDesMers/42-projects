@@ -3,5 +3,3 @@ a.out
 *.o
 *.a
 *.so
-push_swap
-checker

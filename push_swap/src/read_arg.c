@@ -2,27 +2,35 @@
 
 int	check_arg(int ac, char **av)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	long	nb;
 
 	i = 0;
 	while (++i < ac)
 	{
-		j = 0;
-		while (av[i][j])
-		{
+		j = -1;
+		while (av[i][++j])
 			if (!ft_isdigit(av[i][j]) && av[i][j] != '-')
 				return (0);
-			j++;
-		}
 	}
-	// i = 0;
-	// while (++i < ac)
-	// {
-	// 	j = ft_atoi(av[i]);
-	// 	if (j > 2147483647 || j < -2147483648)
-	// 		return (0);
-	// }
+	i = 0;
+	while (++i < ac)
+	{
+		nb = ft_atol(av[i]);
+		if (nb > 2147483647 || nb < -2147483648)
+			return (0);
+	}
+	i = 0;
+	j = 0;
+	while (++i < ac)
+	{
+		nb = ft_atol(av[i]);
+		j = i;
+		while (++j < ac)
+			if (nb == ft_atol(av[j]))
+				return (0);
+	}
 	return (1);
 }
 

@@ -6,7 +6,7 @@ int	main(int ac, char **av)
 
 	if (!check_arg(ac, av))
 	{
-		printf("Error arg\n");
+		printf("Error\n");
 		return (0);
 	}
 	root = malloc(sizeof(t_root));

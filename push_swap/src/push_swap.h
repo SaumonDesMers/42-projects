@@ -37,6 +37,7 @@ int		is_sorted(int *stack, int size);
 int		get_stack_checker(int ac, char **av, t_root *root);
 void	do_op(t_root *root, char *line);
 void	sort_stack(t_root *root);
+int		check_op(char *op);
 
 void	free_all(t_root *root);
 
