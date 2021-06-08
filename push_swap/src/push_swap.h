@@ -3,7 +3,7 @@
 
 # include <fcntl.h>
 # include <stdlib.h>
-# include "libft/src/libft.h"
+# include "../libft/src/libft.h"
 # include <stdio.h>
 
 typedef struct	s_root
@@ -32,6 +32,11 @@ void	rrb(t_root *root, int flag);
 void	rrr(t_root *root, int flag);
 
 void	brutal_sorting(t_root *root);
+int		is_sorted(int *stack, int size);
+
+int		get_stack_checker(int ac, char **av, t_root *root);
+void	do_op(t_root *root, char *line);
+void	sort_stack(t_root *root);
 
 void	free_all(t_root *root);
 

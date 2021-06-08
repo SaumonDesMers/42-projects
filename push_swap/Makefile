@@ -1,7 +1,7 @@
-NAME		= a.out
+NAME		= push_swap
 
-SRC_DIR		= .
-SRCS		=	$(patsubst %, $(SRC_DIR)/%, read_arg.c sort_stack.c push_swap_fonction.c utils.c)
+SRC_DIR		= src
+SRCS		=	$(patsubst %, $(SRC_DIR)/%, read_arg.c sort_stack.c push_swap_fonction.c utils.c checker.c)
 
 MAIN_PUSH_SWAP	=	$(SRC_DIR)/main_push_swap.c
 OBJ_PUSH_SWAP	=	$(MAIN_PUSH_SWAP:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -9,7 +9,7 @@ OBJ_PUSH_SWAP	=	$(MAIN_PUSH_SWAP:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 MAIN_CHECKER	=	$(SRC_DIR)/main_checker.c
 OBJ_CHECKER		=	$(MAIN_CHECKER:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-OBJ_DIR		= .
+OBJ_DIR		= obj
 OBJS		=	$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o) \
 				$(LIST_SRCS:$(LIST_DIR)/%.c=$(OBJ_DIR)/%.o) \
 
@@ -37,13 +37,13 @@ checker:	$(OBJS) $(OBJ_CHECKER)
 			@echo "Done"
 
 clean:
-#			@make clean -C libft
-			@$(RM) $(OBJS)
+			@make clean -C libft
+			@$(RM) $(OBJS) $(OBJ_PUSH_SWAP)
 			@echo "Remove obj"
 
 fclean:		clean
-#			@make fclean -C libft
-			@$(RM) $(NAME)
+			@make fclean -C libft
+			@$(RM) $(NAME) $(OBJ_PUSH_SWAP)
 			@echo "Remove $(NAME)"
 
 re:			fclean all
