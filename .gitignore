@@ -3,4 +3,5 @@ a.out
 *.o
 *.a
 *.so
-libft-unit-tests
+push_swap
+checker

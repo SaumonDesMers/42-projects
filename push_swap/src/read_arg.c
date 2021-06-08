@@ -49,17 +49,12 @@ int	get_stack(int ac, char **av, t_root *root)
 	i = 0;
 	while (i < root->size)
 	{
-		root->stack_a[i] = root->stack[i];
 		index = 0;
 		j = 0;
 		while (j < root->size)
-		{
-			if (root->stack_a[i] > root->stack[j])
+			if (root->stack[i] > root->stack[j++])
 				index++;
-			j++;
-		}
-		root->stack_a[i] = index;
-		i++;
+		root->stack_a[i++] = index;
 	}
 	i = 0;
 	while (i < root->size)
