@@ -6,7 +6,7 @@ void	brutal_sorting(t_root *root)
 	int	j;
 
 	i = 0;
-	while (i < root->size)
+	while (i < root->size_a + root->size_b)
 	{
 		j = 0;
 		while (j < root->size_a)

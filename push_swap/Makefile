@@ -16,7 +16,7 @@ OBJS		=	$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o) \
 LIBS		= libft/libft.a
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -fsanitize=address
 AR			= ar rcs
 RM			= rm -f
 

@@ -1,8 +1,8 @@
 #!/bin/bash
 make
 make checker
-
-echo "Invalid arg"
+#-------------------------------------------------------------------------
+echo -e "\033[38;2;128;0;128m--------Invalid arg--------\033[0;00m"
 
 TEST=`./push_swap 5 3 f 8`
 if [ "$TEST" = "Error" ]
@@ -28,17 +28,27 @@ else
 	echo -e "\033[38;2;255;0;0mKO\033[0;00m"
 fi
 echo
+#-------------------------------------------------------------------------
+echo -e "\033[38;2;128;0;128m--------Invalid op--------\033[0;00m"
 
-echo "Invalid op"
-
-TEST=`echo "da" | ./checker "1"`
+TEST=`echo "da" | ./checker 1`
 if [ "$TEST" = "Error" ]
 then
 	echo -e "\033[38;2;0;255;0mOK\033[0;00m"
 else
 	echo -e "\033[38;2;255;0;0mKO\033[0;00m"
 fi
+
+TEST=`echo "pb" | ./checker 2 1 3`
+if [ "$TEST" = "KO" ]
+then
+	echo -e "\033[38;2;0;255;0mOK\033[0;00m"
+else
+	echo -e "\033[38;2;255;0;0mKO\033[0;00m"
+fi
 echo
+#-------------------------------------------------------------------------
+echo -e "\033[38;2;128;0;128m--------5 elements--------\033[0;00m"
 
 for i in `seq 1 10`
 do
@@ -54,6 +64,7 @@ do
 	echo -e "$COLOR$TEST\033[0;00m nb operation : $NB"
 done
 echo
+echo -e "\033[38;2;128;0;128m--------100 elements--------\033[0;00m"
 for i in `seq 1 10`
 do
 	ARG=`ruby -e "puts (0..100).to_a.shuffle.join(' ')"`
@@ -68,6 +79,7 @@ do
 	echo -e "$COLOR$TEST\033[0;00m nb operation : $NB"
 done
 echo
+echo -e "\033[38;2;128;0;128m--------500 elements--------\033[0;00m"
 for i in `seq 1 10`
 do
 	ARG=`ruby -e "puts (0..500).to_a.shuffle.join(' ')"`

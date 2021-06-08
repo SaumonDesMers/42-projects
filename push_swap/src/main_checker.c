@@ -14,9 +14,7 @@ int	main(int ac, char **av)
 		return (0);
 	if (!get_stack_checker(ac, av, root))
 		return (0);
-
 	sort_stack(root);
-	
-	free_all(root);
+	free_all(root, 0);
 	return (0);
 }

@@ -147,11 +147,8 @@ void	rra(t_root *root, int flag)
 	{
 		i = root->size_a;
 		tmp = root->stack_a[i - 1];
-		while (i >= 0)
-		{
+		while (--i >= 0)
 			root->stack_a[i + 1] = root->stack_a[i];
-			i--;
-		}
 		root->stack_a[0] = tmp;
 	}
 	if (flag)
@@ -167,11 +164,8 @@ void	rrb(t_root *root, int flag)
 	{
 		i = root->size_b;
 		tmp = root->stack_b[i - 1];
-		while (i >= 0)
-		{
+		while (--i >= 0)
 			root->stack_b[i + 1] = root->stack_b[i];
-			i--;
-		}
 		root->stack_b[0] = tmp;
 	}
 	if (flag)

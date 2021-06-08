@@ -4,22 +4,17 @@ int	get_stack_checker(int ac, char **av, t_root *root)
 {
 	int		i;
 
-	root->stack = NULL;
 	root->stack_a = malloc(sizeof(int) * ac);
 	root->stack_b = malloc(sizeof(int) * ac);
 	if (!root->stack_a || !root->stack_b)
-	{
-		free_all(root);
-		return (0);
-	}
-	root->size = ac - 1;
-	root->size_a = root->size;
+		return (free_all(root, 0));
+	root->size_a = ac - 1;
 	root->size_b = 0;
 	i = 0;
 	while (++i < ac)
 		root->stack_a[i - 1] = ft_atoi(av[i]);
 	i = 0;
-	while (i < root->size)
+	while (i < ac - 1)
 		root->stack_b[i++] = 0;
 	return (1);
 }
@@ -67,7 +62,7 @@ void	sort_stack(t_root *root)
 		do_op(root, line);
 		free(line);
 	}
-	if (is_sorted(root->stack_a, root->size_a) == 1)
+	if (is_sorted(root->stack_a, root->size_a) == 1 && root->size_b == 0)
 		write(1, "OK\n", 3);
 	else
 		write(1, "KO\n", 3);

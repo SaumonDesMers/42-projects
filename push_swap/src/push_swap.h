@@ -1,15 +1,13 @@
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
 
 # include <fcntl.h>
 # include <stdlib.h>
 # include "../libft/src/libft.h"
 # include <stdio.h>
 
-typedef struct	s_root
+typedef struct s_root
 {
-	int	*stack;
-	int	size;
 	int	*stack_a;
 	int	size_a;
 	int	*stack_b;
@@ -39,6 +37,6 @@ void	do_op(t_root *root, char *line);
 void	sort_stack(t_root *root);
 int		check_op(char *op);
 
-void	free_all(t_root *root);
+int		free_all(t_root *root, int ret);
 
 #endif
