@@ -2,10 +2,9 @@ NAME		= cube3d
 
 LIB_LINUX	= -lft -lmlx -lXext -lX11 -lm -lbsd
 LIB_MAC		= -lft -I/usr/local/include -L/usr/local/lib -lmlx -framework OpenGL -framework AppKit
-LIB		= $(LIB_MAC)
+LIB		= $(LIB_LINUX)
 
 SRC_DIR		= .
-
 SRC			= ${SRC_DIR}/main.c \
 				${SRC_DIR}/color.c \
 				${SRC_DIR}/divers.c \
@@ -24,7 +23,8 @@ SRC			= ${SRC_DIR}/main.c \
 				${SRC_DIR}/get_next_line.c \
 				${SRC_DIR}/print_img.c \
 
-OBJ			= $(SRC:.c=.o)
+OBJ_DIR		= obj
+OBJ		=	$(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 SRC_DIR_LIBFT	= libft
 
@@ -40,11 +40,12 @@ RL			= ranlib
 
 RM			= rm -f
 
-.c.o:
-			${CC} ${CFLAGS} -I includes -c $< -o ${<:.c=.o}
+$(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
+			@mkdir -p $(OBJ_DIR)
+			@$(CC) $(CFLAGS) -I includes -c $< -o $@
 
 ${NAME}:	${OBJ}
-			${CC} ${CFLAGS} -o $@ $^ ${LIBFT_A} -L ./libft LIB
+			${CC} ${CFLAGS} -o $@ $^ ${LIBFT_A} -L ./libft $(LIB)
 
 all:		${NAME}
 

@@ -46,8 +46,8 @@ int	update_img(t_root *root)
 {
 	(void)root;
 	rendering(root);
-	// mlx_put_image_to_window(root->mlx, root->win.win, root->img.maze.img, 0, 0);
-	mlx_put_image_to_window(root->mlx, root->win.win, root->img.grid.img, 0, 0);
+	mlx_put_image_to_window(root->mlx, root->win.win, root->img.maze.img, 0, 0);
+	// mlx_put_image_to_window(root->mlx, root->win.win, root->img.grid.img, 0, 0);
 	// mlx_put_image_to_window(root->mlx, root->win.win, root->img.test.img, 0, 0);
 	return (0);
 }
