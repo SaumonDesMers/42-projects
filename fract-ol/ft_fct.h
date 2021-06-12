@@ -27,6 +27,11 @@ int		create_img(t_img *img, float widht, float height, t_root *root);
 int		key_hook(int keycode, t_root *root);
 
 /*
+** mouse_hook.c
+*/
+int		mouse_hook(int button, int x, int y, t_root *root);
+
+/*
 ** maths.c
 */
 float	rad(float x);
@@ -45,8 +50,8 @@ void	mult_c(t_complexe *rst, t_complexe c1, t_complexe c2);
 /*
 ** julia.c
 */
-int		julia_serie(t_complexe c);
-int		julia(t_root *root);
+int		julia_serie(t_complexe z, t_complexe c);
+int		julia(t_complexe c, t_root *root);
 
 // void	manipulate_img(t_root *root);
 // void	print_img(t_img *screen, t_img *img, t_vector2 scale, t_vector2 rotation, t_root *root);

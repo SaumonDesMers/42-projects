@@ -31,6 +31,8 @@ typedef struct	s_grid {
 	t_img		img;
 	t_vector2	pos_cam;
 	t_vector2	scale;
+	t_vector2	pos_mouse;
+	t_complexe	c;
 }				t_grid;
 
 typedef struct	s_root {
