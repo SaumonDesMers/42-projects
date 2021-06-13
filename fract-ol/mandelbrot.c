@@ -1,10 +1,10 @@
 #include "includes.h"
 
-int	julia_serie(t_complexe z, t_complexe c)
+int	mandelbrot_serie(t_complexe z, t_complexe c)
 {
 	t_complexe	tmp;
 	float		starting_mod;
-	float		mod[2];
+	float		mod;
 	int			i;
 
 	starting_mod = sqrt((z.r * z.r) + (z.i * z.i));
@@ -15,34 +15,36 @@ int	julia_serie(t_complexe z, t_complexe c)
 	{
 		mult_c(&tmp, z, z);
 		add_c(&z, tmp, c);
-		mod[0] = sqrt((z.r * z.r) + (z.i * z.i));
-		mod[1] = z.r / cos(atan(z.i / z.r));
-		if (mod[0] > 1 && mod [0] > 1)
+		// mod = sqrt((z.r * z.r) + (z.i * z.i));
+		mod = z.r / cos(atan(z.i / z.r));
+		if (mod > 1)
 			return (i);
 		i++;
 	}
-	// if (mod[1] < starting_mod)
+	// if (mod < starting_mod)
 	// 	return (-1);
 	return (-1);
 }
 
-int	julia(t_complexe c, t_root *root)
+int	mandelbrot(t_root *root)
 {
 	t_vector2	pxl;
 	t_complexe	z;
+	t_complexe	c;
 	float		i;
 
 	if (!create_img(&root->grid.img, root->win.widht, root->win.height, root))
 		return (0);
 
-	set_c(&z, root->grid.pos_cam.x - root->grid.scale, root->grid.pos_cam.y + root->grid.scale);
+	set_c(&c, -root->grid.scale, root->grid.scale);
+	set_c(&z, 0, 0);
 	pxl.x = 0;
 	pxl.y = 0;
 
 	while (pxl.x < root->win.widht)
 	{
 		pxl.y = 0;
-		z.i = root->grid.scale;
+		c.i = root->grid.scale;
 		while (pxl.y < root->win.height)
 		{
 			i = julia_serie(z, c);
@@ -51,10 +53,10 @@ int	julia(t_complexe c, t_root *root)
 			else
 				pixel_put(&root->grid.img, pxl, create_trgb(0, i, i, i));
 			pxl.y++;
-			z.i -= root->grid.scale / root->win.height * 2;
+			c.i -= root->grid.scale / root->win.height * 2;
 		}
 		pxl.x++;
-		z.r += root->grid.scale / root->win.widht * 2;
+		c.r += root->grid.scale / root->win.widht * 2;
 	}
 	printf("%.3f %.3f\n", c.r, c.i);
 	mlx_put_image_to_window(root->mlx, root->win.win, root->grid.img.img, 0, 0);

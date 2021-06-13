@@ -30,7 +30,7 @@ typedef struct	s_img {
 typedef struct	s_grid {
 	t_img		img;
 	t_vector2	pos_cam;
-	t_vector2	scale;
+	float		scale;
 	t_vector2	pos_mouse;
 	t_complexe	c;
 }				t_grid;
@@ -39,6 +39,7 @@ typedef struct	s_root {
 	void		*mlx;
 	t_mlx_win	win;
 	t_grid		grid;
+	char		set;
 }				t_root;
 
 #endif

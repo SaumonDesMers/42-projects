@@ -7,7 +7,7 @@ void	pixel_put(t_img *img, t_vector2 coord, int color)
 	if (coord.x < 0 || coord.x > img->widht || coord.y < 0 || coord.y > img->height)
 		return ;
 	dst = img->addr + ((int)coord.y * img->line_length + (int)coord.x * (img->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
 }
 
 void	draw_square(t_img *img, t_vector2 pos1, t_vector2 pos2, int color)
@@ -65,8 +65,8 @@ void	draw_ligne(t_img *img, t_vector2 origin, float angle, float len, int color)
 
 void	clear_img(t_img *img, int color)
 {
-	t_vector2 pos1;
-	t_vector2 pos2;
+	t_vector2	pos1;
+	t_vector2	pos2;
 
 	pos1.x = 0;
 	pos1.y = 0;

@@ -5,7 +5,7 @@ LIB			= $(LIB_LINUX)
 NAME		= fractol
 
 SRC_DIR		= .
-SRCS		= $(patsubst %, $(SRC_DIR)/%, main.c color.c key_hook.c drawing.c maths.c complexe.c julia.c divers.c mouse_hook.c)
+SRCS		= $(patsubst %, $(SRC_DIR)/%, main.c color.c key_hook.c drawing.c maths.c complexe.c julia.c divers.c mouse_hook.c mandelbrot.c)
 
 OBJ_DIR		= obj
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

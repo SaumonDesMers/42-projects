@@ -11,28 +11,32 @@ void	init(t_root *root)
 	root->grid.pos_mouse.x = 0;
 	root->grid.pos_mouse.y = 0;
 
-	root->grid.scale.x = 2;
-	root->grid.scale.y = 2;
+	root->grid.scale = 2;
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	t_root		root;
 
 	init(&root);
+	if (ac != 2)
+		return (0);
+	if (av[1][0] != 'm' && av[1][0] != 'j')
+		return (0);
+	root.set = av[1][0];
 
 	root.mlx = mlx_init();
 	root.win.win = mlx_new_window(root.mlx, root.win.widht, root.win.height, "fract-ol");
 
-	// mlx_do_key_autorepeaton(root.mlx);
-
-	mlx_hook(root.win.win, 2, 1L<<0, key_hook, &root);
+	mlx_hook(root.win.win, 2, 1L << 0, key_hook, &root);
 	mlx_mouse_hook(root.win.win, mouse_hook, &root);
 	// mlx_loop_hook(root.mlx, update_img, &root);
-	// mlx_hook(root.win.win, 6, 1L<<6, motion_hook, &root);
 
 	set_c(&root.grid.c, 0.285, 0.013);
-	julia(root.grid.c, &root);
+	if (root.set == 'j')
+		julia(root.grid.c, &root);
+	else if (root.set == 'm')
+		mandelbrot(&root);
 
 	mlx_loop(root.mlx);
 

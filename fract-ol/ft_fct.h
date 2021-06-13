@@ -53,6 +53,12 @@ void	mult_c(t_complexe *rst, t_complexe c1, t_complexe c2);
 int		julia_serie(t_complexe z, t_complexe c);
 int		julia(t_complexe c, t_root *root);
 
+/*
+** mandelbrot.c
+*/
+int		mandelbrot_serie(t_complexe z, t_complexe c);
+int		mandelbrot(t_root *root);
+
 // void	manipulate_img(t_root *root);
 // void	print_img(t_img *screen, t_img *img, t_vector2 scale, t_vector2 rotation, t_root *root);
 
