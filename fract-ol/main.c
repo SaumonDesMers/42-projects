@@ -32,7 +32,7 @@ int	main(int ac, char **av)
 	mlx_mouse_hook(root.win.win, mouse_hook, &root);
 	// mlx_loop_hook(root.mlx, update_img, &root);
 
-	set_c(&root.grid.c, 0.285, 0.013);
+	set_c(&root.grid.c, -0.6, 0.6);
 	if (root.set == 'j')
 		julia(root.grid.c, &root);
 	else if (root.set == 'm')

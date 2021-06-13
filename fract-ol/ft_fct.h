@@ -52,6 +52,7 @@ void	mult_c(t_complexe *rst, t_complexe c1, t_complexe c2);
 */
 int		julia_serie(t_complexe z, t_complexe c);
 int		julia(t_complexe c, t_root *root);
+void	fractal_color(int n, t_vector2 pxl, t_root *root);
 
 /*
 ** mandelbrot.c
