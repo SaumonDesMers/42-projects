@@ -11,6 +11,15 @@ int	key_hook(int keycode, t_root *root)
 		//mlx_loop_end(root->mlx);
 		exit(0);
 	}
-	//printf("%d\n", keycode);
+	else if (keycode == 65361)
+		root->grid.pos_cam.x -= root->grid.scale / 10;
+	else if (keycode == 65362)
+		root->grid.pos_cam.y += root->grid.scale / 10;
+	else if (keycode == 65363)
+		root->grid.pos_cam.x += root->grid.scale / 10;
+	else if (keycode == 65364)
+		root->grid.pos_cam.y -= root->grid.scale / 10;
+	update_img(root);
+	// printf("%d\n", keycode);
 	return (0);
 }

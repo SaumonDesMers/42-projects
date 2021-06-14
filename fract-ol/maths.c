@@ -28,17 +28,17 @@ float	bornes(float x, float inf, float sup)
 	return (x);
 }
 
-void	cart_pol(float *r, float *i, float *arg, float *mod, char op)
-{
-	if (op == 'p')
-	{
-		*arg = atan(*i / *r);
-		*mod = *r / cos(*arg);
-		*arg = deg(*arg);
-	}
-	else if (op == 'c')
-	{
-		*r = *mod * cosf(rad(*arg));
-		*i = *mod * sinf(rad(*arg));
-	}
-}
+// void	cart_pol(float *r, float *i, float *arg, float *mod, char op)
+// {
+// 	if (op == 'p')
+// 	{
+// 		*arg = atan(*i / *r);
+// 		*mod = *r / cos(*arg);
+// 		*arg = deg(*arg);
+// 	}
+// 	else if (op == 'c')
+// 	{
+// 		*r = *mod * cosf(rad(*arg));
+// 		*i = *mod * sinf(rad(*arg));
+// 	}
+// }
