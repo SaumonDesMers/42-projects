@@ -52,7 +52,13 @@ void	fractal_color(int n, t_vector2 pxl, t_root *root)
 
 	if (n == -1)
 		color = create_trgb(0, 255, 255, 255);
-	else
-		color = create_trgb(0, n % 10 * 25, n % 2 * 10, n % 4 * 50);
+	else if (root->grid.color == 0)
+		color = create_trgb(0, n % 17 * 16, n % 20 * 10, n % 11 * 25);
+	else if (root->grid.color == 1)
+		color = create_trgb(0, n % 9 * 25, n % 20 * 9, n % 17 * 15);
+	else if (root->grid.color == 2)
+		color = create_trgb(0, n % 19 * 10, n % 11 * 25, n % 17 * 15);
+	else if (root->grid.color == 3)
+		color = create_trgb(0, n % 20 * 10, n % 17 * 15, n % 10 * 25);
 	pixel_put(&root->grid.img, pxl, color);
 }

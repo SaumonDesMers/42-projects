@@ -31,7 +31,6 @@ float	rad(float x);
 float	deg(float x);
 float	normalized(float x);
 float	bornes(float x, float inf, float sup);
-// void	cart_pol(float *r, float *i, float *arg, float *mod, char op);
 
 /*
 ** complexe.c
@@ -52,8 +51,5 @@ void	fractal_color(int n, t_vector2 pxl, t_root *root);
 */
 int		mandelbrot_serie(t_complexe z, t_complexe c);
 int		mandelbrot(t_root *root);
-
-// void	manipulate_img(t_root *root);
-// void	print_img(t_img *screen, t_img *img, t_vector2 scale, t_vector2 rotation, t_root *root);
 
 #endif

@@ -21,22 +21,23 @@ int	input(int ac, char **av, t_root *root)
 {
 	if (ac == 2)
 	{
-		if (av[1][0] != 'm' && av[1][0] != 'j')
-			return (0);
-		root->set = av[1][0];
-		set_c(&root->grid.c, -0.8, 0.156);
-		return (1);
+		if (!ft_strncmp(av[1], "m", 2) || !ft_strncmp(av[1], "j", 2))
+		{
+			root->set = av[1][0];
+			set_c(&root->grid.c, -0.8, 0.156);
+			return (1);
+		}
 	}
 	else if (ac == 4)
 	{
-		if (av[1][0] != 'j')
-			return (0);
-		root->set = av[1][0];
-		set_c(&root->grid.c, ft_atof(av[2]), ft_atof(av[3]));
-		return (1);
+		if (!ft_strncmp(av[1], "j", 2))
+		{
+			root->set = av[1][0];
+			set_c(&root->grid.c, ft_atof(av[2]), ft_atof(av[3]));
+			return (1);
+		}
 	}
-	else
-		printf("Option available :\nMandelbrot = m\nJulia = j\n");
+	printf("Option available :\nMandelbrot = m\nJulia = j\n");
 	return (0);
 }
 

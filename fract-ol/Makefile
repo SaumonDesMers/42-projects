@@ -23,6 +23,7 @@ $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
 
 $(NAME):	$(OBJS)
 			@make -C libft
+			@make -C minilibx-linux
 			@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $@ -L ./libft $(LIB)
 			@echo "Done"
 
@@ -30,11 +31,13 @@ all:		$(NAME)
 
 clean:
 			@make clean -C libft
+			@make clean -C minilibx-linux
 			@$(RM) $(OBJS)
 			@echo "Remove obj"
 
 fclean:		clean
 			@make fclean -C libft
+			@make clean -C minilibx-linux
 			@$(RM) $(NAME)
 			@echo "Remove $(NAME)"
 

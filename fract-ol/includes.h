@@ -1,5 +1,5 @@
-#ifndef INCLUDE_LIB_H
-# define INCLUDE_LIB_H
+#ifndef INCLUDES_H
+# define INCLUDES_H
 
 # include <stdio.h>
 # include <errno.h>
