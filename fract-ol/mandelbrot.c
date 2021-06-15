@@ -7,7 +7,7 @@ int	mandelbrot_serie(t_complexe z, t_complexe c)
 	int			i;
 
 	i = 0;
-	while (i < 1000)
+	while (i < 200)
 	{
 		mult_c(&tmp, z, z);
 		add_c(&z, tmp, c);

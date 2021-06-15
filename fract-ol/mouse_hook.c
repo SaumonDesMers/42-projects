@@ -2,14 +2,14 @@
 
 int	mouse_hook(int button, int x, int y, t_root *root)
 {
-	float	fx;
-	float	fy;
+	double	dx;
+	double	dy;
 
-	fx = (float)x;
-	fy = (float)y;
-	root->grid.pos_cam.x = ((fx / root->win.widht * root->grid.scale * 2)
+	dx = (double)x;
+	dy = (double)y;
+	root->grid.pos_cam.x = ((dx / root->win.widht * root->grid.scale * 2)
 			- root->grid.scale) + root->grid.pos_cam.x;
-	root->grid.pos_cam.y = (root->grid.scale - (fy / root->win.height
+	root->grid.pos_cam.y = (root->grid.scale - (dy / root->win.height
 				* root->grid.scale * 2)) + root->grid.pos_cam.y;
 	if (button == 4)
 		root->grid.scale /= 1.5;

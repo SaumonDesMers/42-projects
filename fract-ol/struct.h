@@ -2,13 +2,13 @@
 # define STRUCT_H
 
 typedef struct s_vector2 {
-	float	x;
-	float	y;
+	double	x;
+	double	y;
 }				t_vector2;
 
 typedef struct s_complexe {
-	float	r;
-	float	i;
+	double	r;
+	double	i;
 }				t_complexe;
 
 typedef struct s_mlx_win {
@@ -30,7 +30,7 @@ typedef struct s_img {
 typedef struct s_grid {
 	t_img		img;
 	t_vector2	pos_cam;
-	float		scale;
+	double		scale;
 	t_vector2	pos_mouse;
 	t_complexe	c;
 	int			color;
