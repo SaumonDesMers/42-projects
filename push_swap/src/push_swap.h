@@ -32,6 +32,9 @@ void	rrr(t_root *root, int flag);
 void	brutal_sorting(t_root *root);
 int		is_sorted(int *stack, int size);
 
+void	sorting_size_3(t_root *root);
+int		wich_list(int n1, int n2, int n3, t_root *root);
+
 int		get_stack_checker(int ac, char **av, t_root *root);
 void	do_op(t_root *root, char *line);
 void	sort_stack(t_root *root);

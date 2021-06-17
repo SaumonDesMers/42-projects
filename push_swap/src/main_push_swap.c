@@ -14,7 +14,10 @@ int	main(int ac, char **av)
 		return (0);
 	if (!get_stack(ac, av, root))
 		return (0);
-	brutal_sorting(root);
+	if (root->size_a == 3)
+		sorting_size_3(root);
+	else
+		brutal_sorting(root);
 	free_all(root, 0);
 	return (0);
 }
