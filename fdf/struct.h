@@ -47,6 +47,7 @@ typedef struct s_root {
 	void		*mlx;
 	t_mlx_win	win;
 	t_grid		grid;
+	t_img		img;
 }				t_root;
 
 #endif

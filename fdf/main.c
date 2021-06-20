@@ -1,19 +1,5 @@
 #include "includes.h"
 
-void	error_catch(t_bool signal)
-{
-	if (signal == ERROR_FILE)
-	{
-		printf("Error file\n");
-		exit(0);
-	}
-	else if (signal == ERROR_MALLOC)
-	{
-		printf("Error malloc\n");
-		exit(0);
-	}
-}
-
 void	init(t_root *root)
 {
 	root->win.widht = 1000;
@@ -27,8 +13,10 @@ int	main(int ac, char **av)
 	t_root		root;
 	int			signal;
 
+	(void)ac;
+	(void)av;
 	if (ac != 2)
-		return (0);
+		error_catch(ERROR_FILE);
 	init(&root);
 	signal = open_file(av[1], &root);
 	error_catch(signal);

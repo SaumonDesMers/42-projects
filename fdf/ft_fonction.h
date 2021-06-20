@@ -12,12 +12,15 @@ t_bool	open_file(char *file_name, t_root *root);
 void	pixel_put(t_img	*img, t_vector3 coord, int color);
 void	draw_square(t_img *img, t_vector3 pos1, t_vector3 pos2, int color);
 void	clear_img(t_img *img, int color);
+void	draw_line(t_img *img, t_vector3 pos1, t_vector3 pos2, int color);
 
 /*
 ** divers.c
 */
 void	get_data_img(t_img *img);
 int		create_img(t_img *img, float widht, float height, t_root *root);
+void	error_catch(t_bool signal);
+int		update_img(t_root *root);
 
 /*
 ** key_hook.c

@@ -29,6 +29,20 @@ void	draw_square(t_img *img, t_vector3 pos1, t_vector3 pos2, int color)
 	}
 }
 
+void	draw_line(t_img *img, t_vector3 pos1, t_vector3 pos2, int color)
+{
+	t_vector3	coord;
+
+	coord.x = pos1.x;
+	coord.y = pos1.y;
+	while (coord.x < pos2.x)
+	{
+		pixel_put(img, coord, color);
+		coord.x += pos1x;
+		coord.y += pos1y;
+	}
+}
+
 void	clear_img(t_img *img, int color)
 {
 	t_vector3 pos1;

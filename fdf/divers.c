@@ -16,3 +16,24 @@ int	create_img(t_img *img, float widht, float height, t_root *root)
 	get_data_img(img);
 	return (1);
 }
+
+void	error_catch(t_bool signal)
+{
+	if (signal < 0)
+	{
+		if (signal == ERROR)
+			printf("Error\n");
+		else if (signal == ERROR_FILE)
+			printf("Error file\n");
+		else if (signal == ERROR_MALLOC)
+			printf("Error malloc\n");
+		exit(0);
+	}
+}
+
+int	update_img(t_root *root)
+{
+	
+	mlx_put_image_to_window(root->mlx, root->win.win, root->img.img, 0, 0);
+	return (1);
+}
