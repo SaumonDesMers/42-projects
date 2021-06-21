@@ -1,0 +1,5 @@
+	error_catch(nb_cmd, -1, "Error : not enough argument");
+	error_catch(access(av[1], F_OK), -1, "Error : something is wrong with the input file");
+	error_catch(access(av[ac - 1], F_OK), -1, "Error : something is wrong with the output file");
+	error_catch((int)pid, 0, "Error : fail to malloc pid");
+	error_catch((int)pid, 0, "Error : fail to malloc pipe");
