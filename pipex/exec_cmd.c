@@ -8,7 +8,7 @@ void	get_cmd(char **cmd, char ***args, char ***env, char *arg)
 	*env[0] = NULL;
 }
 
-int	exec_cmd(char *arg, t_root *root)
+int	exec_cmd(char *arg, int fd_in, int fd_out, t_root *root)
 {
 	int		pid;
 	char	*cmd;
@@ -19,21 +19,26 @@ int	exec_cmd(char *arg, t_root *root)
 	get_cmd(&cmd, &args, &env, arg);
 	if (cmd == 0 || args == 0 || env == 0)
 	{
-		free(cmd);
-		free_split(args);
-		free_split(env);
+		free_cmd_arg(cmd, args, env);
 		error_catch(1, "malloc fail", root);
 	}
 	pid = fork();
 	error_catch(pid == -1, "fail to create fork", root);
 	if (pid == 0)
 	{
+		dup2(fd_in, 0);
+		dup2(fd_out, 1);
 		execve(cmd, args, env);
-		error_catch(1, "command not found", root);
+		error_catch(1, cmd, root);
 		return (-1);
 	}
+	free_cmd_arg(cmd, args, env);
+	return (0);
+}
+
+void	free_cmd_arg(char *cmd, char **args, char **env)
+{
 	free(cmd);
 	free_split(args);
 	free_split(env);
-	return (0);
 }
