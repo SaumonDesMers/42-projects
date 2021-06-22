@@ -3,43 +3,41 @@
 int	main(int ac, char **av)
 {
 	int		nb_cmd;
-	int		*pid;
-	int		*fd_pipe[2];
-	int		fd_input;
-	int		fd_output;
+	t_root	root;
 	int		i;
 
-	nb_cmd = count_cmd(ac);
-	error_catch(nb_cmd, -1, "Error : not enough argument");
+	root.pid = 0;
+	*root.fd_pipe = 0;
+	root.fd_input = -1;
+	root.fd_output = -1;
 
-	fd_input = open(av[1], O_RDONLY);
-	error_catch(fd_input, -1, "Error : fail to open input file");
+	nb_cmd = count_cmd(ac);
+	error_catch(nb_cmd == -1, "not enough argument", &root);
+
+	root.fd_input = open(av[1], O_RDONLY);
+	error_catch(root.fd_input == -1, "fail to open input file", &root);
 
 	if (access(av[ac - 1], F_OK) == -1)
-		fd_output = open(av[ac - 1], O_CREAT | O_WRONLY);
+		root.fd_output = open(av[ac - 1], O_CREAT | O_WRONLY);
 	else
-		fd_output = open(av[ac - 1], O_WRONLY);
-	error_catch(fd_output, -1, "Error : fail to open output file");
+		root.fd_output = open(av[ac - 1], O_WRONLY);
+	error_catch(root.fd_output == -1, "fail to open output file", &root);
 
-	pid = malloc(sizeof(int) * nb_cmd);
-	error_catch((int)pid, 0, "Error : fail to malloc pid list");
+	root.pid = malloc(sizeof(int) * nb_cmd);
+	error_catch(root.pid == 0, "fail to malloc pid list", &root);
 
-	*fd_pipe = malloc(sizeof(int[2]) * (nb_cmd + 1));
-	error_catch((int)pid, 0, "Error : fail to malloc pipe list");
+	*(root.fd_pipe) = malloc(sizeof(int[2]) * (nb_cmd + 1));
+	error_catch(root.fd_pipe == 0, "fail to malloc pipe list", &root);
 
-
-	// error_catch(dup2(), -1, "Error : fail from dup2");
+	// error_catch(dup2(), -1, "fail from dup2", &root);
 
 	i = 0;
 	while (i < nb_cmd)
 	{
-		exec_cmd(av[i + 2]);
+		exec_cmd(av[i + 2], &root);
 		i++;
 	}
 	while (wait(NULL) != -1);
-	free(pid);
-	free(*fd_pipe);
-	close(fd_input);
-	close(fd_output);
+	free_all(&root);
 	return (0);
 }

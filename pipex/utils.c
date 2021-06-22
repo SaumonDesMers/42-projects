@@ -7,11 +7,24 @@ int	count_cmd(int ac)
 	return(ac - 3);
 }
 
-void	error_catch(int test_value, int error_value, char *error_msg)
+void	error_catch(t_bool test, char *error_msg, t_root *root)
 {
-	if (test_value == error_value)
+	if (test)
 	{
+		write(2, "Error : ", 8);
 		write(2, error_msg, ft_strlen(error_msg));
+		write(2, "\n", 1);
+		free_all(root);
 		exit(0);
 	}
+}
+
+void	free_all(t_root *root)
+{
+	free(root->pid);
+	free(*root->fd_pipe);
+	if (root->fd_input != -1)
+		close(root->fd_input);
+	if (root->fd_output != -1)
+		close(root->fd_output);
 }
