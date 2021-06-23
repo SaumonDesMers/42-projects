@@ -26,8 +26,8 @@ int	exec_cmd(char *arg, int fd_in, int fd_out, t_root *root)
 	error_catch(pid == -1, "fail to create fork", root);
 	if (pid == 0)
 	{
-		error_catch(dup2(fd_in, 0) == -1, ft_strjoin("dup2 fail for fd_in ", cmd), root);
-		error_catch(dup2(fd_out, 1) == -1, ft_strjoin("dup2 fail for fd_out ", cmd), root);
+		error_catch(dup2(fd_in, 0) == -1, "dup2 fail for fd_in", root);
+		error_catch(dup2(fd_out, 1) == -1, "dup2 fail for fd_out", root);
 		execve(cmd, args, env);
 		error_catch(1, cmd, root);
 		return (-1);

@@ -4,7 +4,7 @@ int	count_cmd(int ac)
 {
 	if (ac < 3)
 		return (-1);
-	return(ac - 3);
+	return (ac - 3);
 }
 
 void	error_catch(t_bool test, char *error_msg, t_root *root)
@@ -21,7 +21,7 @@ void	error_catch(t_bool test, char *error_msg, t_root *root)
 
 void	free_root(t_root *root)
 {
-	free(root->fd_pipe);
+	free(root->pipe);
 	if (root->fd_input != -1)
 		close(root->fd_input);
 	if (root->fd_output != -1)
