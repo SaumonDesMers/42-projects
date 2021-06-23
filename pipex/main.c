@@ -5,6 +5,7 @@ int	main(int ac, char **av)
 	int		nb_cmd;
 	t_root	root;
 	int		i;
+	int		testfd[2];
 
 	root.pid = 0;
 	*root.fd_pipe = 0;
@@ -37,21 +38,22 @@ int	main(int ac, char **av)
 	while (i < nb_cmd)
 		error_catch(pipe(root.fd_pipe[i++]) == -1, "fail to open pipe", &root);
 
-	printf("a\n");
+	pipe(testfd);
+
 	if (nb_cmd == 1)
 		exec_cmd(av[2], root.fd_input, root.fd_output, &root);
 	else
 	{
-		exec_cmd(av[2], root.fd_input, root.fd_pipe[0][1], &root);
+		exec_cmd(av[2], root.fd_input, testfd[1], &root);
 		printf("b\n");
 		i = 1;
-		while (i < nb_cmd - 1)
-		{
-			exec_cmd(av[i + 2], root.fd_pipe[i - 1][0], root.fd_pipe[i][1], &root);
-			printf("c\n");
-			i++;
-		}
-		exec_cmd(av[i + 2], root.fd_pipe[i - 1][0], root.fd_output, &root);
+		// while (i < nb_cmd - 1)
+		// {
+		// 	exec_cmd(av[i + 2], root.fd_pipe[i - 1][0], root.fd_pipe[i][1], &root);
+		// 	printf("c\n");
+		// 	i++;
+		// }
+		exec_cmd(av[3], testfd[0], root.fd_output, &root);
 		printf("d\n");
 	}
 	
