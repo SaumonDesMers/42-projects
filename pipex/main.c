@@ -5,10 +5,8 @@ int	main(int ac, char **av)
 	int		nb_cmd;
 	t_root	root;
 	int		i;
-	int		testfd[2];
 
-	root.pid = 0;
-	*root.fd_pipe = 0;
+	root.fd_pipe = 0;
 	root.fd_input = -1;
 	root.fd_output = -1;
 
@@ -24,39 +22,26 @@ int	main(int ac, char **av)
 		root.fd_output = open(av[ac - 1], O_WRONLY | O_TRUNC);
 	error_catch(root.fd_output == -1, "fail to open output file", &root);
 
-	root.pid = malloc(sizeof(int) * nb_cmd);
-	error_catch(root.pid == 0, "fail to malloc pid list", &root);
-
-	i = 0;
-	while (i < nb_cmd)
-	{
-		root.fd_pipe[i] = malloc(sizeof(int[2]));
-		error_catch(root.fd_pipe[i++] == 0, "fail to malloc pipe list", &root);
-	}
+	root.fd_pipe = malloc(sizeof(int[2]) * (nb_cmd - 1));
+	error_catch(root.fd_pipe == 0, "fail to malloc pipe list", &root);
 
 	i = 0;
 	while (i < nb_cmd)
 		error_catch(pipe(root.fd_pipe[i++]) == -1, "fail to open pipe", &root);
 
-	pipe(testfd);
-
 	if (nb_cmd == 1)
 		exec_cmd(av[2], root.fd_input, root.fd_output, &root);
 	else
 	{
-		exec_cmd(av[2], root.fd_input, testfd[1], &root);
-		printf("b\n");
+		exec_cmd(av[2], root.fd_input, root.fd_pipe[0][1], &root);
 		i = 1;
-		// while (i < nb_cmd - 1)
-		// {
-		// 	exec_cmd(av[i + 2], root.fd_pipe[i - 1][0], root.fd_pipe[i][1], &root);
-		// 	printf("c\n");
-		// 	i++;
-		// }
-		exec_cmd(av[3], testfd[0], root.fd_output, &root);
-		printf("d\n");
+		while (i < nb_cmd - 1)
+		{
+			exec_cmd(av[i + 2], root.fd_pipe[i - 1][0], root.fd_pipe[i][1], &root);
+			i++;
+		}
+		exec_cmd(av[i + 2], root.fd_pipe[i - 1][0], root.fd_output, &root);
 	}
-	
 	
 	while (wait(NULL) != -1);
 	free_root(&root);

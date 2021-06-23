@@ -21,8 +21,7 @@ void	error_catch(t_bool test, char *error_msg, t_root *root)
 
 void	free_root(t_root *root)
 {
-	free(root->pid);
-	free(*root->fd_pipe);
+	free(root->fd_pipe);
 	if (root->fd_input != -1)
 		close(root->fd_input);
 	if (root->fd_output != -1)

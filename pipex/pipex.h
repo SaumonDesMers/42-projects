@@ -14,8 +14,7 @@ typedef int t_bool;
 
 typedef struct	s_root
 {
-	int		*pid;
-	int		*fd_pipe[2];
+	int		(*fd_pipe)[2];
 	int		fd_input;
 	int		fd_output;
 }	t_root;

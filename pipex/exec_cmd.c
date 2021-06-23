@@ -3,7 +3,7 @@
 void	get_cmd(char **cmd, char ***args, char ***env, char *arg)
 {
 	*args = ft_split(arg, ' ');
-	*cmd = ft_strjoin("/bin/", *args[0]);
+	*cmd = ft_strjoin("", *args[0]);
 	*env = malloc(sizeof(char **) * 1);
 	*env[0] = NULL;
 }
@@ -26,12 +26,14 @@ int	exec_cmd(char *arg, int fd_in, int fd_out, t_root *root)
 	error_catch(pid == -1, "fail to create fork", root);
 	if (pid == 0)
 	{
-		dup2(fd_in, 0);
-		dup2(fd_out, 1);
+		error_catch(dup2(fd_in, 0) == -1, ft_strjoin("dup2 fail for fd_in ", cmd), root);
+		error_catch(dup2(fd_out, 1) == -1, ft_strjoin("dup2 fail for fd_out ", cmd), root);
 		execve(cmd, args, env);
 		error_catch(1, cmd, root);
 		return (-1);
 	}
+	close(fd_in);
+	close(fd_out);
 	free_cmd_arg(cmd, args, env);
 	return (0);
 }

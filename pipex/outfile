@@ -1,0 +1,12 @@
+Makefile
+exec_cmd.c
+ft_split.c
+ft_strjoin.c
+infile
+libft.c
+main.c
+obj
+outfile
+pipex
+pipex.h
+utils.c
