@@ -1,12 +1,18 @@
-Makefile
-exec_cmd.c
-ft_split.c
-ft_strjoin.c
-infile
-libft.c
-main.c
-obj
-outfile
-pipex
-pipex.h
-utils.c
+total 144
+-rw-r--r--   1 sgaubert  2021_paris    631 Jun 24 16:58 Makefile
+-rw-r--r--   1 sgaubert  2021_paris    998 Jun 24 18:01 exec_cmd.c
+-rw-r--r--   1 sgaubert  2021_paris   2034 Jun 24 17:53 fonction.c
+-rw-r--r--   1 sgaubert  2021_paris    449 Jun 24 17:04 ft_gnl.c
+-rw-r--r--   1 sgaubert  2021_paris    136 Jun 24 16:45 ft_putstr_fd.c
+-rw-r--r--   1 sgaubert  2021_paris   1108 Jun 21 10:42 ft_split.c
+-rw-r--r--   1 sgaubert  2021_paris    250 Jun 24 16:52 ft_strdup.c
+-rw-r--r--   1 sgaubert  2021_paris    382 Jun 21 11:38 ft_strjoin.c
+-rw-r--r--   1 sgaubert  2021_paris    261 Jun 24 12:07 ft_strncmp.c
+-rw-r--r--   1 sgaubert  2021_paris      6 Jun 24 12:18 infile
+-rw-r--r--   1 sgaubert  2021_paris    104 Jun 21 10:28 libft.c
+-rw-r--r--   1 sgaubert  2021_paris    312 Jun 24 17:52 main.c
+drwxr-xr-x  16 sgaubert  2021_paris    544 Jun 24 18:02 obj
+-rw-r--r--   1 sgaubert  2021_paris      0 Jun 24 18:03 outfile
+-rwxr-xr-x   1 sgaubert  2021_paris  14060 Jun 24 18:02 pipex
+-rw-r--r--   1 sgaubert  2021_paris   1207 Jun 24 18:02 pipex.h
+-rw-r--r--   1 sgaubert  2021_paris    618 Jun 24 12:32 utils.c

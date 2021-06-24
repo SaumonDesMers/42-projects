@@ -1,7 +1,8 @@
 NAME		= pipex
 
 SRC_DIR		= .
-SRCS		= $(patsubst %, $(SRC_DIR)/%, main.c exec_cmd.c utils.c libft.c ft_split.c ft_strjoin.c)
+SRCS		= $(patsubst %, $(SRC_DIR)/%, main.c exec_cmd.c utils.c libft.c ft_split.c ft_strjoin.c \
+				ft_gnl.c ft_putstr_fd.c ft_strncmp.c ft_strdup.c fonction.c)
 
 OBJ_DIR		= obj
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

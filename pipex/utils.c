@@ -1,10 +1,17 @@
 #include "pipex.h"
 
-int	count_cmd(int ac)
+int	count_cmd(int ac, char **av, t_root *root)
 {
 	if (ac < 3)
 		return (-1);
-	return (ac - 3);
+	root->here_doc = 0;
+	if (!ft_strncmp(av[1], "here_doc", 9))
+	{
+		if (ac < 4)
+			return (-1);
+		root->here_doc = 1;
+	}
+	return (ac - 3 - root->here_doc);
 }
 
 void	error_catch(t_bool test, char *error_msg, t_root *root)
