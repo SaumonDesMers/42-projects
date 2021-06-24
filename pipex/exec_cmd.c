@@ -3,9 +3,36 @@
 void	get_cmd(t_cmd *cmd, char *arg)
 {
 	cmd->args = ft_split(arg, ' ');
-	cmd->cmd = ft_strjoin("", cmd->args[0]);
+	cmd->cmd = get_path(cmd->args[0]);
 	cmd->env = malloc(sizeof(char **) * 1);
 	cmd->env[0] = NULL;
+}
+
+char	*get_path(char *cmd)
+{
+	char	**path;
+	char	*path_cmd;
+	int		i;
+
+	path = ft_split("/usr/local/bin/:/usr/bin/:/bin/:/usr/sbin/ \
+		:/sbin/:/usr/local/go/bin/:/usr/local/munki/", ':');
+	if (path == 0)
+		return (NULL);
+	i = 0;
+	while (path[i])
+	{
+		path_cmd = ft_strjoin(path[i++], cmd);
+		if (path_cmd == 0)
+			return (NULL);
+		if (access(path_cmd, F_OK) == 0)
+		{
+			free_split(path);
+			return (path_cmd);
+		}
+		free(path_cmd);
+	}
+	free_split(path);
+	return (NULL);
 }
 
 int	exec_cmd(char *arg, int fd_in, int fd_out, t_root *root)

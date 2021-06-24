@@ -29,10 +29,11 @@ typedef struct s_cmd
 }	t_cmd;
 
 void	open_and_malloc(int ac, char **av, t_root *root);
-void	heredoc_or_not(int ac, char **av, t_root *root);
-void	exec_all_cmd_(int ac, char **av, int fd_in, t_root *root);
+void	heredoc_or_not(char **av, t_root *root);
+void	exec_all_cmd_(char **av, int fd_in, t_root *root);
 
 void	get_cmd(t_cmd *cmd, char *arg);
+char	*get_path(char *cmd);
 int		exec_cmd(char *arg, int fd_in, int fd_out, t_root *root);
 void	free_cmd_arg(t_cmd cmd, int fd_in, int fd_out);
 

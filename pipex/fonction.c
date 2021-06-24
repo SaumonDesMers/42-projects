@@ -27,9 +27,8 @@ void	open_and_malloc(int ac, char **av, t_root *root)
 		error_catch(pipe(root->pipe[i++]) == -1, "fail to open pipe", root);
 }
 
-void	heredoc_or_not(int ac, char **av, t_root *root)
+void	heredoc_or_not(char **av, t_root *root)
 {
-	int		i;
 	int		heredoc_pipe[2];
 	char	*line;
 	char	gnl_return;
@@ -48,13 +47,13 @@ void	heredoc_or_not(int ac, char **av, t_root *root)
 			free(line);
 		}
 		close(heredoc_pipe[1]);
-		exec_all_cmd_(ac, av, heredoc_pipe[0], root);
+		exec_all_cmd_(av, heredoc_pipe[0], root);
 	}
 	else
-		exec_all_cmd_(ac, av, root->fd_input, root);
+		exec_all_cmd_(av, root->fd_input, root);
 }
 
-void	exec_all_cmd_(int ac, char **av, int fd_in, t_root *root)
+void	exec_all_cmd_(char **av, int fd_in, t_root *root)
 {
 	int		i;
 	int		i_cmd;
