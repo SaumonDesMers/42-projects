@@ -9,9 +9,9 @@ void	sa(t_root *root, int flag)
 		tmp = root->stack_a[0];
 		root->stack_a[0] = root->stack_a[1];
 		root->stack_a[1] = tmp;
+		if (flag)
+			write(1, "sa\n", 3);
 	}
-	if (flag)
-		write(1, "sa\n", 3);
 }
 
 void	sb(t_root *root, int flag)
@@ -23,9 +23,9 @@ void	sb(t_root *root, int flag)
 		tmp = root->stack_b[0];
 		root->stack_b[0] = root->stack_b[1];
 		root->stack_b[1] = tmp;
+		if (flag)
+			write(1, "sb\n", 3);
 	}
-	if (flag)
-		write(1, "sb\n", 3);
 }
 
 void	ss(t_root *root, int flag)
@@ -56,11 +56,11 @@ void	pa(t_root *root, int flag)
 			i++;
 		}
 		root->stack_b[i] = -1;
+		root->size_a++;
+		root->size_b--;
+		if (flag)
+			write(1, "pa\n", 3);
 	}
-	root->size_a++;
-	root->size_b--;
-	if (flag)
-		write(1, "pa\n", 3);
 }
 
 void	pb(t_root *root, int flag)
@@ -83,11 +83,11 @@ void	pb(t_root *root, int flag)
 			i++;
 		}
 		root->stack_a[i] = -1;
+		root->size_b++;
+		root->size_a--;
+		if (flag)
+			write(1, "pb\n", 3);
 	}
-	root->size_b++;
-	root->size_a--;
-	if (flag)
-		write(1, "pb\n", 3);
 }
 
 void	ra(t_root *root, int flag)
@@ -105,9 +105,9 @@ void	ra(t_root *root, int flag)
 			i++;
 		}
 		root->stack_a[i] = tmp;
+		if (flag)
+			write(1, "ra\n", 3);
 	}
-	if (flag)
-		write(1, "ra\n", 3);
 }
 
 void	rb(t_root *root, int flag)
@@ -125,9 +125,9 @@ void	rb(t_root *root, int flag)
 			i++;
 		}
 		root->stack_b[i] = tmp;
+		if (flag)
+			write(1, "rb\n", 3);
 	}
-	if (flag)
-		write(1, "rb\n", 3);
 }
 
 void	rr(t_root *root, int flag)
@@ -150,9 +150,9 @@ void	rra(t_root *root, int flag)
 		while (--i >= 0)
 			root->stack_a[i + 1] = root->stack_a[i];
 		root->stack_a[0] = tmp;
+		if (flag)
+			write(1, "rra\n", 4);
 	}
-	if (flag)
-		write(1, "rra\n", 4);
 }
 
 void	rrb(t_root *root, int flag)
@@ -167,9 +167,9 @@ void	rrb(t_root *root, int flag)
 		while (--i >= 0)
 			root->stack_b[i + 1] = root->stack_b[i];
 		root->stack_b[0] = tmp;
+		if (flag)
+			write(1, "rrb\n", 4);
 	}
-	if (flag)
-		write(1, "rrb\n", 4);
 }
 
 void	rrr(t_root *root, int flag)

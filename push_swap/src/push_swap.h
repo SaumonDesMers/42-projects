@@ -6,6 +6,8 @@
 # include "../libft/src/libft.h"
 # include <stdio.h>
 
+typedef int	t_bool;
+
 typedef struct s_root
 {
 	int	*stack_a;
@@ -28,6 +30,13 @@ void	rr(t_root *root, int flag);
 void	rra(t_root *root, int flag);
 void	rrb(t_root *root, int flag);
 void	rrr(t_root *root, int flag);
+
+void	sort(int size_sample, t_root *root);
+int		get_median(int *stack, int size);
+void	push_sample_back_on_a(int size_sample, t_root *root);
+void	sort_sample(int size_sample, t_root *root);
+void	push_lower_half_a_to_b(int size_sample, t_root *root);
+void	push_upper_half_b_to_a(int size_sample, t_root *root);
 
 void	brutal_sorting(t_root *root);
 int		is_sorted(int *stack, int size);
