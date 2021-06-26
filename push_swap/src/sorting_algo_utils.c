@@ -7,7 +7,7 @@ void	push_sample_back_on_a(int size_sample, t_root *root)
 	i = 0;
 	while (i < size_sample)
 	{
-		pa(root, 1);
+		pa(root, 0);
 		i++;
 	}
 }
@@ -21,7 +21,7 @@ void	sort_sample(int size_sample, t_root *root)
 	if (size_sample == 2)
 	{
 		if (root->stack_a[0] > root->stack_a[1])
-			sa(root, 1);
+			sa(root, 0);
 		return ;
 	}
 	first = root->stack_a[0];
@@ -29,33 +29,33 @@ void	sort_sample(int size_sample, t_root *root)
 	third = root->stack_a[2];
 	if (second > third && third > first)
 	{
-		ra(root, 1);
-		sa(root, 1);
-		rra(root, 1);
+		ra(root, 0);
+		sa(root, 0);
+		rra(root, 0);
 	}
 	else if (third > first && first > second)
-		sa(root, 1);
+		sa(root, 0);
 	else if (second > first && first > third)
 	{
-		ra(root, 1);
-		sa(root, 1);
-		rra(root, 1);
-		sa(root, 1);
+		ra(root, 0);
+		sa(root, 0);
+		rra(root, 0);
+		sa(root, 0);
 	}
 	else if (first > second && second > third)
 	{
-		sa(root, 1);
-		ra(root, 1);
-		sa(root, 1);
-		rra(root, 1);
-		sa(root, 1);
+		sa(root, 0);
+		ra(root, 0);
+		sa(root, 0);
+		rra(root, 0);
+		sa(root, 0);
 	}
 	else if (first > third && third > second)
 	{
-		sa(root, 1);
-		ra(root, 1);
-		sa(root, 1);
-		rra(root, 1);
+		sa(root, 0);
+		ra(root, 0);
+		sa(root, 0);
+		rra(root, 0);
 	}
 }
 
@@ -96,18 +96,18 @@ void	push_lower_half_a_to_b(int size_sample, t_root *root)
 	j = 0;
 	while (size_sample--)
 	{
-		if (!lower_value_to_push(root->stack_a, median, size_sample))
-			break ;
+		// if (!lower_value_to_push(root->stack_a, median, size_sample + 1))
+		// 	break ;
 		if (root->stack_a[0] < median)
-			pb(root, 1);
+			pb(root, 0);
 		else
 		{
-			ra(root, 1);
+			ra(root, 0);
 			j++;
 		}
 	}
 	while (j--)
-		rra(root, 1);
+		rra(root, 0);
 }
 
 void	push_upper_half_b_to_a(int size_sample, t_root *root)
@@ -121,41 +121,32 @@ void	push_upper_half_b_to_a(int size_sample, t_root *root)
 	j = 0;
 	while (size_sample--)
 	{
-		if (!upper_value_to_push(root->stack_b, median, size_sample))
-			break ;
-		if (root->stack_b[0] < median)
-			pa(root, 1);
+		// if (!upper_value_to_push(root->stack_b, median, size_sample + 1))
+		// 	break ;
+		if (root->stack_b[0] >= median)
+			pa(root, 0);
 		else
 		{
-			rb(root, 1);
+			rb(root, 0);
 			j++;
 		}
 	}
 	while (j--)
-		rrb(root, 1);
+		rrb(root, 0);
 }
 
 int	get_median(int *stack, int size)
 {
-	int	median;
-	int	count;
+	int	min;
 	int	i;
-	int	j;
 
+	min = stack[0];
 	i = 0;
 	while (i < size)
 	{
-		median = stack[i];
-		j = 0;
-		count = 0;
-		while (j < size)
-		{
-			if (median > stack[j++])
-				count++;
-		}
-		if (count == size / 2)
-			return (median);
+		if (min > stack[i])
+			min = stack[i];
 		i++;
 	}
-	return (median);
+	return (min + (size / 2));
 }

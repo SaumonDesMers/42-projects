@@ -16,6 +16,8 @@ typedef struct s_root
 	int	size_b;
 }	t_root;
 
+void	print_stacks(t_root *root);
+
 int		check_arg(int ac, char **av);
 int		get_stack(int ac, char **av, t_root *root);
 
