@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void	sort(int size_sample, t_root *root)
+void	sort_recursive(int size_sample, t_root *root)
 {
 	// 	push_lower_half_a_to_b(20, root);
 	// 		push_lower_half_a_to_b(10, root);
@@ -31,7 +31,7 @@ void	sort(int size_sample, t_root *root)
 		push_lower_half_a_to_b(size_sample, root);
 		print_stacks(root);
 		next_size_sample = (size_sample + 1) / 2;
-		sort(next_size_sample, root);
+		sort_recursive(next_size_sample, root);
 		size_sample -= next_size_sample;
 	}
 	else
@@ -54,7 +54,7 @@ void	sort(int size_sample, t_root *root)
 		push_upper_half_b_to_a(size_sample, root);
 		print_stacks(root);
 		next_size_sample = (size_sample + 1) / 2;
-		sort(next_size_sample, root);
+		sort_recursive(next_size_sample, root);
 		size_sample -= next_size_sample;
 		printf("2 push_sample_back_on_a & sort_sample : size_sample = %d\n", size_sample);
 		push_sample_back_on_a(size_sample, root);

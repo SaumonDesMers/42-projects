@@ -32,8 +32,8 @@ int	main(int ac, char **av)
 		sorting_size_3(root);
 	else
 	{
-		// sort(root->size_a, root);
-		brutal_sorting(root);
+		sort_iterative(root);
+		// brutal_sorting(root);
 	}
 	// print_stacks(root);
 	free_all(root, 0);

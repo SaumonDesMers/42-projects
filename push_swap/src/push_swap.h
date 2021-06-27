@@ -16,6 +16,14 @@ typedef struct s_root
 	int	size_b;
 }	t_root;
 
+typedef struct sort_sample
+{
+	int	size_a[100];
+	int	nb_a;
+	int	size_b[100];
+	int	nb_b;
+}	t_sample;
+
 void	print_stacks(t_root *root);
 
 int		check_arg(int ac, char **av);
@@ -33,12 +41,12 @@ void	rra(t_root *root, int flag);
 void	rrb(t_root *root, int flag);
 void	rrr(t_root *root, int flag);
 
-void	sort(int size_sample, t_root *root);
+void	sort_iterative(t_root *root);
 int		get_median(int *stack, int size);
-void	push_sample_back_on_a(int size_sample, t_root *root);
-void	sort_sample(int size_sample, t_root *root);
-void	push_lower_half_a_to_b(int size_sample, t_root *root);
-void	push_upper_half_b_to_a(int size_sample, t_root *root);
+void	push_sample_back_on_a(t_sample *sample, t_root *root);
+void	sort_sample(t_sample *sample, t_root *root);
+void	push_lower_half_a_to_b(t_sample *sample, t_root *root);
+void	push_upper_half_b_to_a(t_sample *sample, t_root *root);
 
 void	brutal_sorting(t_root *root);
 int		is_sorted(int *stack, int size);

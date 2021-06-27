@@ -3,8 +3,8 @@ NAME		= push_swap
 OBJ_DIR		= obj
 SRC_DIR		= src
 
-SRCS		=	$(patsubst %, $(SRC_DIR)/%, main_push_swap.c read_arg.c sort_stack.c push_swap_fonction.c utils.c \
-				sorting_size_3.c sorting_algo.c sorting_algo_utils.c)
+SRCS		=	$(patsubst %, $(SRC_DIR)/%, main_push_swap.c read_arg.c brutal_sorting.c push_swap_fonction.c utils.c \
+				sorting_size_3.c iterative_sorting.c sorting_algo_utils.c)
 OBJS		=	$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 SRCS_BONUS	=	$(patsubst %, $(SRC_DIR)/%, main_checker.c read_arg.c push_swap_fonction.c utils.c checker.c)

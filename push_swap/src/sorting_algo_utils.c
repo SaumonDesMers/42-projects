@@ -1,24 +1,94 @@
 #include "push_swap.h"
 
-void	push_sample_back_on_a(int size_sample, t_root *root)
+void	push_sample_back_on_a(t_sample *sample, t_root *root)
 {
+	int	size_sample;
 	int	i;
 
+	size_sample = sample->size_b[sample->nb_b - 1];
 	i = 0;
 	while (i < size_sample)
 	{
 		pa(root, 0);
 		i++;
 	}
+	sample->nb_a++;
+	sample->size_b[sample->nb_b - 1] = 0;
+	sample->nb_b--;
+	sample->size_a[sample->nb_a - 1] = size_sample;
 }
 
-void	sort_sample(int size_sample, t_root *root)
+void	push_lower_half_a_to_b(t_sample *sample, t_root *root)
+{
+	int	size_sample = sample->size_a[sample->nb_a - 1];
+	int	median;
+	int	i;
+	int	j;
+
+	median = get_median(root->stack_a, size_sample);
+	i = 0;
+	j = 0;
+	while (i < size_sample)
+	{
+		if (root->stack_a[0] < median)
+		{
+			pb(root, 0);
+			// if (++i > size_sample / 2)
+			// 	break ;
+		}
+		else
+		{
+			ra(root, 0);
+			j++;
+		}
+		i++;
+	}
+	while (j--)
+		rra(root, 0);
+	sample->nb_b++;
+	sample->size_b[sample->nb_b - 1] = size_sample / 2;
+	sample->size_a[sample->nb_a - 1] -= size_sample / 2;
+}
+
+void	push_upper_half_b_to_a(t_sample *sample, t_root *root)
+{
+	int	size_sample = sample->size_b[sample->nb_b - 1];
+	int	median;
+	int	i;
+	int	j;
+
+	median = get_median(root->stack_b, size_sample);
+	i = 0;
+	j = 0;
+	while ( i < size_sample)
+	{
+		if (root->stack_b[0] > median)
+		{
+			pa(root, 0);
+			// if (++i > size_sample / 2)
+			// 	break ;
+		}
+		else
+		{
+			rb(root, 0);
+			j++;
+		}
+		i++;
+	}
+	while (j--)
+		rrb(root, 0);
+	sample->nb_a++;
+	sample->size_a[sample->nb_a - 1] = size_sample / 2;
+	sample->size_b[sample->nb_b - 1] -= size_sample / 2;
+}
+
+void	sort_sample(t_sample *sample, t_root *root)
 {
 	int	first;
 	int	second;
 	int	third;
 
-	if (size_sample == 2)
+	if (sample->size_a[sample->nb_a - 1] == 2)
 	{
 		if (root->stack_a[0] > root->stack_a[1])
 			sa(root, 0);
@@ -57,82 +127,6 @@ void	sort_sample(int size_sample, t_root *root)
 		sa(root, 0);
 		rra(root, 0);
 	}
-}
-
-t_bool	lower_value_to_push(int *stack, int median, int size_sample)
-{
-	int	i;
-
-	i = 0;
-	while (i < size_sample)
-	{
-		if (stack[i++] < median)
-			return (1);
-	}
-	return (0);
-}
-
-t_bool	upper_value_to_push(int *stack, int median, int size_sample)
-{
-	int	i;
-
-	i = 0;
-	while (i < size_sample)
-	{
-		if (stack[i++] > median)
-			return (1);
-	}
-	return (0);
-}
-
-void	push_lower_half_a_to_b(int size_sample, t_root *root)
-{
-	int	median;
-	int	i;
-	int	j;
-
-	median = get_median(root->stack_a, size_sample);
-	i = 0;
-	j = 0;
-	while (size_sample--)
-	{
-		// if (!lower_value_to_push(root->stack_a, median, size_sample + 1))
-		// 	break ;
-		if (root->stack_a[0] < median)
-			pb(root, 0);
-		else
-		{
-			ra(root, 0);
-			j++;
-		}
-	}
-	while (j--)
-		rra(root, 0);
-}
-
-void	push_upper_half_b_to_a(int size_sample, t_root *root)
-{
-	int	median;
-	int	i;
-	int	j;
-
-	median = get_median(root->stack_b, size_sample);
-	i = 0;
-	j = 0;
-	while (size_sample--)
-	{
-		// if (!upper_value_to_push(root->stack_b, median, size_sample + 1))
-		// 	break ;
-		if (root->stack_b[0] >= median)
-			pa(root, 0);
-		else
-		{
-			rb(root, 0);
-			j++;
-		}
-	}
-	while (j--)
-		rrb(root, 0);
 }
 
 int	get_median(int *stack, int size)
