@@ -1,23 +1,5 @@
 #include "push_swap.h"
 
-void	print_sample(t_sample *sample, t_root *root)
-{
-	int	i;
-	int	j;
-
-	i = 100;
-	while (i > -1)
-	{
-		j = 0;
-		if (sample->size_a[i] > 3)
-			j = 10;
-		printf("[%*.d]\t[%.d]\n", j, sample->size_a[i], sample->size_b[i]);
-		i--;
-	}
-	printf("%d\t%d\n", sample->nb_a, sample->nb_b);
-	printf("\n");
-}
-
 void	sort_iterative(t_root *root)
 {
 	t_sample	sample;
