@@ -57,6 +57,7 @@ void	sort_stack(t_root *root)
 		if (!check_op(line) && ret)
 		{
 			printf("Error\n");
+			free(line);
 			return ;
 		}
 		do_op(root, line);

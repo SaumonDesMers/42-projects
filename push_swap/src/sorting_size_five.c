@@ -23,21 +23,21 @@ static void	push_lower_half_a_to_b_for_five(int size_sample, t_root *root)
 
 static void	sorting_size_three_for_five(t_root *root)
 {
-	if (wich_list(2, 4, 3, root))
+	if (wich_list("243", root->stack_a, 3))
 	{
 		rra(root, 1);
 		sa(root, 1);
 	}
-	else if (wich_list(3, 2, 4, root))
+	else if (wich_list("324", root->stack_a, 3))
 		sa(root, 1);
-	else if (wich_list(3, 4, 2, root))
+	else if (wich_list("342", root->stack_a, 3))
 		rra(root, 1);
-	else if (wich_list(4, 3, 2, root))
+	else if (wich_list("432", root->stack_a, 3))
 	{
 		sa(root, 1);
 		rra(root, 1);
 	}
-	else if (wich_list(4, 2, 3, root))
+	else if (wich_list("423", root->stack_a, 3))
 		ra(root, 1);
 }
 

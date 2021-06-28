@@ -2,28 +2,34 @@
 
 void	sorting_size_three(t_root *root)
 {
-	if (wich_list(0, 2, 1, root))
+	if (wich_list("021", root->stack_a, 3))
 	{
 		rra(root, 1);
 		sa(root, 1);
 	}
-	else if (wich_list(1, 0, 2, root))
+	else if (wich_list("102", root->stack_a, 3))
 		sa(root, 1);
-	else if (wich_list(1, 2, 0, root))
+	else if (wich_list("120", root->stack_a, 3))
 		rra(root, 1);
-	else if (wich_list(2, 1, 0, root))
+	else if (wich_list("210", root->stack_a, 3))
 	{
 		sa(root, 1);
 		rra(root, 1);
 	}
-	else if (wich_list(2, 0, 1, root))
+	else if (wich_list("201", root->stack_a, 3))
 		ra(root, 1);
 }
 
-int	wich_list(int n1, int n2, int n3, t_root *root)
+int	wich_list(char *list, int *tab, int size)
 {
-	return (
-		root->stack_a[0] == n1
-		&& root->stack_a[1] == n2
-		&& root->stack_a[2] == n3);
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		if (tab[i] != list[i] - '0')
+			return (0);
+		i++;
+	}
+	return (1);
 }

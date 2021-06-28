@@ -11,7 +11,8 @@ void	sort_iterative(t_root *root)
 	sample.nb_b = 0;
 	while (!is_sorted(root->stack_a, root->size_a) || root->size_b != 0)
 	{
-		if (sample.nb_a > 0 && sample.size_a[sample.nb_a - 1] > 3)
+		if (sample.nb_a > 0 && sample.size_a[sample.nb_a - 1] > 3
+			&& !is_sorted(root->stack_a, root->size_a))
 			push_lower_half_a_to_b(&sample, root);
 		else
 		{

@@ -5,7 +5,8 @@ SRC_DIR		= src
 
 SRCS		=	$(patsubst %, $(SRC_DIR)/%, main_push_swap.c read_arg.c utils.c \
 				sorting_size_three.c iterative_sorting.c sorting_algo_utils.c push.c \
-				swap.c rotate.c reverse_rotate.c sorting_size_five.c sorting_algo_utils2.c)
+				swap.c rotate.c reverse_rotate.c sorting_size_five.c \
+				sorting_algo_utils2.c)
 OBJS		=	$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 SRCS_BONUS	=	$(patsubst %, $(SRC_DIR)/%, main_checker.c read_arg.c  utils.c checker.c \

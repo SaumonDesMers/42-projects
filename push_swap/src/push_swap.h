@@ -41,13 +41,14 @@ void	rrr(t_root *root, int flag);
 
 void	sort_iterative(t_root *root);
 int		get_median(int *stack, int size);
+void	push_sample_back_on_a_size_three(t_sample *sample, t_root *root);
 void	push_sample_back_on_a(t_sample *sample, t_root *root);
 void	sort_sample(t_sample *sample, t_root *root);
 void	push_lower_half_a_to_b(t_sample *sample, t_root *root);
 void	push_upper_half_b_to_a(t_sample *sample, t_root *root);
 
 void	sorting_size_three(t_root *root);
-int		wich_list(int n1, int n2, int n3, t_root *root);
+int		wich_list(char *list, int *tab, int size);
 
 void	sorting_size_five(t_root *root);
 
@@ -56,6 +57,7 @@ void	do_op(t_root *root, char *line);
 void	sort_stack(t_root *root);
 int		check_op(char *op);
 
+int		get_min(int *tab, int size);
 int		is_sorted(int *stack, int size);
 int		free_all(t_root *root, int ret);
 

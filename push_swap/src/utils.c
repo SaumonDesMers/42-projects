@@ -1,5 +1,21 @@
 #include "push_swap.h"
 
+int	get_min(int *tab, int size)
+{
+	int	i;
+	int	min;
+
+	min = tab[0];
+	i = 0;
+	while (i < size)
+	{
+		if (min > tab[i])
+			min = tab[i];
+		i++;
+	}
+	return (min);
+}
+
 int	is_sorted(int *stack, int size)
 {
 	int	i;
