@@ -14,18 +14,18 @@ int	check_arg(int ac, char **av)
 			if (!ft_isdigit(av[i][j]) && av[i][j] != '-')
 				return (0);
 	}
-	// i = 0;
-	// j = 0;
-	// while (++i < ac)
-	// {
-	// 	nb = ft_atol(av[i]);
-	// 	if (nb > 2147483647 || nb < -2147483648)
-	// 		return (0);
-	// 	j = i;
-	// 	while (++j < ac)
-	// 		if (nb == ft_atol(av[j]))
-	// 			return (0);
-	// }
+	i = 0;
+	j = 0;
+	while (++i < ac)
+	{
+		nb = ft_atol(av[i]);
+		if (nb > 2147483647 || nb < -2147483648)
+			return (0);
+		j = i;
+		while (++j < ac)
+			if (nb == ft_atol(av[j]))
+				return (0);
+	}
 	return (1);
 }
 

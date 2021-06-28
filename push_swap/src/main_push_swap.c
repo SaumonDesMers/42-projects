@@ -1,17 +1,5 @@
 #include "push_swap.h"
 
-void	print_stacks(t_root *root)
-{
-	// getchar();
-	printf("{%d}\t{%d}\n", root->size_a, root->size_b);
-	int i = 0;
-	while (i < root->size_a + root->size_b)
-	{
-		printf("[%.d]\t[%.d]\n", root->stack_a[i] + 1, root->stack_b[i] + 1);
-		i++;
-	}
-}
-
 int	main(int ac, char **av)
 {
 	t_root	*root;
@@ -26,16 +14,12 @@ int	main(int ac, char **av)
 		return (0);
 	if (!get_stack(ac, av, root))
 		return (0);
-	
-	// print_stacks(root);
 	if (root->size_a == 3)
-		sorting_size_3(root);
+		sorting_size_three(root);
+	if (root->size_a == 5)
+		sorting_size_five(root);
 	else
-	{
 		sort_iterative(root);
-		// brutal_sorting(root);
-	}
-	// print_stacks(root);
 	free_all(root, 0);
 	return (0);
 }

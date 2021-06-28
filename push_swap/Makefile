@@ -3,18 +3,19 @@ NAME		= push_swap
 OBJ_DIR		= obj
 SRC_DIR		= src
 
-SRCS		=	$(patsubst %, $(SRC_DIR)/%, main_push_swap.c read_arg.c brutal_sorting.c push_swap_fonction.c utils.c \
-				sorting_size_3.c iterative_sorting.c sorting_algo_utils.c)
+SRCS		=	$(patsubst %, $(SRC_DIR)/%, main_push_swap.c read_arg.c utils.c \
+				sorting_size_three.c iterative_sorting.c sorting_algo_utils.c push.c \
+				swap.c rotate.c reverse_rotate.c sorting_size_five.c sorting_algo_utils2.c)
 OBJS		=	$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-SRCS_BONUS	=	$(patsubst %, $(SRC_DIR)/%, main_checker.c read_arg.c push_swap_fonction.c utils.c checker.c)
+SRCS_BONUS	=	$(patsubst %, $(SRC_DIR)/%, main_checker.c read_arg.c  utils.c checker.c \
+				push.c swap.c rotate.c reverse_rotate.c)
 OBJS_BUNUS	=	$(SRCS_BONUS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-
 
 LIBS		= libft/libft.a
 
 CC			= cc
-CFLAGS		= #-Wall -Wextra -Werror
+CFLAGS		= -g -fsanitize=address #-Wall -Wextra -Werror
 AR			= ar rcs
 RM			= rm -f
 

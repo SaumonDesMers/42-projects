@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void	sorting_size_3(t_root *root)
+void	sorting_size_three(t_root *root)
 {
 	if (wich_list(0, 2, 1, root))
 	{

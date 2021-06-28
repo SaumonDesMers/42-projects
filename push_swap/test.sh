@@ -52,7 +52,7 @@ echo -e "\033[38;2;128;0;128m--------5 elements--------\033[0;00m"
 
 for i in `seq 1 10`
 do
-	ARG=`ruby -e "puts (0..5).to_a.shuffle.join(' ')"`
+	ARG=`ruby -e "puts (0..4).to_a.shuffle.join(' ')"`
 	NB=`./push_swap $ARG | wc -l | tr -d ' '`
 	TEST=`./push_swap $ARG | ./checker $ARG`
 	if [ "$TEST" = "OK" ]
@@ -67,7 +67,7 @@ echo
 echo -e "\033[38;2;128;0;128m--------100 elements--------\033[0;00m"
 for i in `seq 1 10`
 do
-	ARG=`ruby -e "puts (0..100).to_a.shuffle.join(' ')"`
+	ARG=`ruby -e "puts (0..99).to_a.shuffle.join(' ')"`
 	NB=`./push_swap $ARG | wc -l | tr -d ' '`
 	TEST=`./push_swap $ARG | ./checker $ARG`
 	if [ "$TEST" = "OK" ]
@@ -82,7 +82,7 @@ echo
 echo -e "\033[38;2;128;0;128m--------500 elements--------\033[0;00m"
 for i in `seq 1 10`
 do
-	ARG=`ruby -e "puts (0..500).to_a.shuffle.join(' ')"`
+	ARG=`ruby -e "puts (0..498).to_a.shuffle.join(' ')"`
 	NB=`./push_swap $ARG | wc -l | tr -d ' '`
 	TEST=`./push_swap $ARG | ./checker $ARG`
 	if [ "$TEST" = "OK" ]

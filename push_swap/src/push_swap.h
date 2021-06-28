@@ -16,15 +16,13 @@ typedef struct s_root
 	int	size_b;
 }	t_root;
 
-typedef struct sort_sample
+typedef struct s_sort_sample
 {
-	int	size_a[100];
+	int	size_a[64000];
 	int	nb_a;
-	int	size_b[100];
+	int	size_b[64000];
 	int	nb_b;
 }	t_sample;
-
-void	print_stacks(t_root *root);
 
 int		check_arg(int ac, char **av);
 int		get_stack(int ac, char **av, t_root *root);
@@ -48,17 +46,17 @@ void	sort_sample(t_sample *sample, t_root *root);
 void	push_lower_half_a_to_b(t_sample *sample, t_root *root);
 void	push_upper_half_b_to_a(t_sample *sample, t_root *root);
 
-void	brutal_sorting(t_root *root);
-int		is_sorted(int *stack, int size);
-
-void	sorting_size_3(t_root *root);
+void	sorting_size_three(t_root *root);
 int		wich_list(int n1, int n2, int n3, t_root *root);
+
+void	sorting_size_five(t_root *root);
 
 int		get_stack_checker(int ac, char **av, t_root *root);
 void	do_op(t_root *root, char *line);
 void	sort_stack(t_root *root);
 int		check_op(char *op);
 
+int		is_sorted(int *stack, int size);
 int		free_all(t_root *root, int ret);
 
 #endif
