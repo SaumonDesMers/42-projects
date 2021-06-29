@@ -11,7 +11,7 @@ void	open_and_malloc(int ac, char **av, t_root *root)
 		root->fd_input = open(av[1], O_RDONLY);
 	error_catch(root->fd_input == -1, "fail to open input file", root);
 	if (access(av[ac - 1], F_OK) == -1)
-		root->fd_output = open(av[ac - 1], O_CREAT | O_WRONLY, 0644);
+		root->fd_output = open(av[ac - 1], O_CREAT | O_WRONLY, 0644); // check permission on vm
 	else if (root->here_doc == 0)
 		root->fd_output = open(av[ac - 1], O_WRONLY | O_TRUNC);
 	else if (root->here_doc == 1)
@@ -45,7 +45,9 @@ void	heredoc_or_not(char **av, t_root *root)
 			ft_putstr_fd(line, heredoc_pipe[1]);
 			ft_putstr_fd("\n", heredoc_pipe[1]);
 			free(line);
+			line = NULL;
 		}
+		free(line);
 		close(heredoc_pipe[1]);
 		exec_all_cmd_(av, heredoc_pipe[0], root);
 	}
