@@ -11,7 +11,7 @@ void	open_and_malloc(int ac, char **av, t_root *root)
 		root->fd_input = open(av[1], O_RDONLY);
 	error_catch(root->fd_input == -1, "fail to open input file", root);
 	if (access(av[ac - 1], F_OK) == -1)
-		root->fd_output = open(av[ac - 1], O_CREAT | O_WRONLY);
+		root->fd_output = open(av[ac - 1], O_CREAT | O_WRONLY, 0644);
 	else if (root->here_doc == 0)
 		root->fd_output = open(av[ac - 1], O_WRONLY | O_TRUNC);
 	else if (root->here_doc == 1)

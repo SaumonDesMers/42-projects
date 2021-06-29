@@ -28,6 +28,8 @@ typedef struct s_cmd
 	char	**env;
 }	t_cmd;
 
+void	check_input(char **av, t_root *root);
+
 void	open_and_malloc(int ac, char **av, t_root *root);
 void	heredoc_or_not(char **av, t_root *root);
 void	exec_all_cmd_(char **av, int fd_in, t_root *root);
