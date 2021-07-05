@@ -11,9 +11,7 @@ void	check_input(char **av, t_root *root)
 		cmd = get_path(av[1 + i + root->here_doc]);
 		if (cmd == NULL)
 		{
-			write(2, "Error : ", 8);
-			write(2, av[1 + i + root->here_doc], ft_strlen(av[1 + i + root->here_doc]));
-			write(2, " not found\n", 11);
+			write(2, "Error : cmd not found\n", 22);
 			exit(0);
 		}
 		free(cmd);
