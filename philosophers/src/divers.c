@@ -10,5 +10,6 @@ long	get_utime()
 
 t_bool	philo_dead(t_philo *philo)
 {
-	return (get_utime() - philo->last_lunch_time > philo->data->time_to_die);
+	return (get_utime() - philo->last_lunch_time > philo->data->time_to_die
+		&& philo->last_lunch_time != -1);
 }

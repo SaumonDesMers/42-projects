@@ -2,13 +2,13 @@ NAME		= philo
 
 SRC_DIR		= src
 SRCS		= $(patsubst %, $(SRC_DIR)/%, main.c thread_philo.c ft_atoi.c \
-				initialisation.c divers.c)
+				initialisation.c divers.c ft_putnbr_fd.c ft_strlen.c writing.c)
 
 OBJ_DIR		= obj
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 CC			= cc
-CFLAGS		= -fsanitize=address #-Wall -Wextra -Werror
+CFLAGS		= #-fsanitize=address #-Wall -Wextra -Werror
 RM			= rm -f
 
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c

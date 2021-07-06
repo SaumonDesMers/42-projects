@@ -9,6 +9,7 @@ void	init_philo(t_data *data, t_philo *philo, int index)
 		philo->right_fork = &data->fork[data->nb_of_philo - 1];
 	else
 		philo->right_fork = &data->fork[index - 1];
+	philo->last_lunch_time = -1;
 }
 
 int	init_data(int ac, char **av, t_data *data)
@@ -32,5 +33,8 @@ int	init_data(int ac, char **av, t_data *data)
 	data->nb_of_meal_max = -1;
 	if (ac == 6)
 		data->nb_of_meal_max = ft_atoi(av[5]);
+	data->a_philo_died = 0;
+	data->start_simulation = 0;
+	data->nb_of_philo_ready = 0;
 	return (SUCCESS);
 }
