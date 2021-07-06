@@ -11,6 +11,7 @@ int	main(int ac, char **av)
 	i = 0;
 	while (i < data.nb_of_philo)
 		pthread_mutex_init(&data.fork[i++], NULL);
+	data.starting_time = get_utime();
 	i = 0;
 	while (i < data.nb_of_philo)
 	{
@@ -18,10 +19,6 @@ int	main(int ac, char **av)
 		pthread_create(&data.philo[i].philo_tid, NULL, &thread_philo, &data.philo[i]);
 		i++;
 	}
-	while (data.nb_of_philo_ready < data.nb_of_philo)
-		;
-	data.starting_time = get_utime();
-	data.start_simulation = 1;
 	// i = 0;
 	// while (i < data.nb_of_philo)
 	// 	pthread_join(data.philo[i++].philo_tid, NULL);

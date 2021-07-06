@@ -34,7 +34,5 @@ int	init_data(int ac, char **av, t_data *data)
 	if (ac == 6)
 		data->nb_of_meal_max = ft_atoi(av[5]);
 	data->a_philo_died = 0;
-	data->start_simulation = 0;
-	data->nb_of_philo_ready = 0;
 	return (SUCCESS);
 }

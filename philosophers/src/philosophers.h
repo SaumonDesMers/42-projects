@@ -25,6 +25,7 @@ typedef struct s_philo
 {
 	pthread_t		philo_tid;
 	pthread_t		death_checker_tid;
+	pthread_t		writing_tid;
 	int				philo_nb;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
@@ -42,12 +43,16 @@ typedef struct s_data
 	int				nb_of_meal_max;
 	t_bool			a_philo_died;
 	t_time			starting_time;
-	t_bool			start_simulation;
-	int				nb_of_philo_ready;
 	t_philo			*philo;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	pen;
 }	t_data;
+
+typedef struct s_writing
+{
+	t_philo	*philo;
+	char	*msg;
+}	t_writing;
 
 void	*thread_philo(void *philo);
 void	*check_time_to_live(void *philo);
@@ -62,6 +67,6 @@ void	ft_putnbr_fd(long n, int fd);
 int		ft_strlen(const char *s);
 
 t_bool	philo_dead(t_philo *philo);
-long	get_utime();
+long	get_utime(void);
 
 #endif

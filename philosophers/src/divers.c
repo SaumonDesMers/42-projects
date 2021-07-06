@@ -1,6 +1,6 @@
 #include "philosophers.h"
 
-long	get_utime()
+long	get_utime(void)
 {
 	struct timeval	time;
 

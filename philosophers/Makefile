@@ -8,7 +8,7 @@ OBJ_DIR		= obj
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 CC			= cc
-CFLAGS		= #-fsanitize=address #-Wall -Wextra -Werror
+CFLAGS		= -fsanitize=thread #-Wall -Wextra -Werror
 RM			= rm -f
 
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
