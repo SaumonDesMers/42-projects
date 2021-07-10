@@ -40,7 +40,6 @@ typedef struct s_data
 	t_time			time_to_sleep;
 	int				nb_of_meal_max;
 	t_bool			a_philo_died;
-	pthread_mutex_t a_philo_died_mutex;
 	t_time			starting_time;
 	t_philo			*philo;
 	pthread_mutex_t	*fork;
@@ -48,12 +47,11 @@ typedef struct s_data
 }	t_data;
 
 void	*thread_philo(void *philo);
-t_bool	philo_dead(t_philo *philo);
 
 void	init_philo(t_data *data, t_philo *philo, int index);
 int		init_data(int ac, char **av, t_data *data);
 
-void	writing(char *msg, t_philo *philo);
+int		writing(char *msg, t_philo *philo);
 
 int		ft_atoi(const char *nptr);
 void	ft_putnbr_fd(long n, int fd);
