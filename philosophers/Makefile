@@ -7,8 +7,8 @@ SRCS		= $(patsubst %, $(SRC_DIR)/%, main.c thread_philo.c ft_atoi.c \
 OBJ_DIR		= obj
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-CC			= cc
-CFLAGS		= #-g -fsanitize=thread #-Wall -Wextra -Werror
+CC			= gcc
+CFLAGS		= -lpthread -g -fsanitize=thread #-Wall -Wextra -Werror
 RM			= rm -f
 
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
