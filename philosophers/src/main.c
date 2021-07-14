@@ -7,10 +7,7 @@ int	main(int ac, char **av)
 
 	if (init_data(ac, av, &data) == ERROR)
 		return (0);
-	pthread_mutex_init(&data.pen, NULL);
-	i = 0;
-	while (i < data.nb_of_philo)
-		pthread_mutex_init(&data.fork[i++], NULL);
+	init_mutex(&data);
 	data.starting_time = get_utime();
 	i = 0;
 	while (i < data.nb_of_philo)
@@ -23,10 +20,7 @@ int	main(int ac, char **av)
 	i = 0;
 	while (i < data.nb_of_philo)
 		pthread_join(data.philo[i++].philo_tid, NULL);
-	i = 0;
-	while (i < data.nb_of_philo)
-		pthread_mutex_destroy(&data.fork[i++]);
-	pthread_mutex_destroy(&data.pen);
+	destroy_mutex(&data);
 	free(data.philo);
 	free(data.fork);
 	return (0);

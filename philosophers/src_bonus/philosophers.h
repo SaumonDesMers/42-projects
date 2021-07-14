@@ -2,10 +2,11 @@
 # define PHILOSOPHERS_H
 
 # include <sys/time.h>
-# include <pthread.h>
+# include <semaphore.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <fcntl.h>
 
 # define NB_PHILO 5
 
@@ -23,10 +24,7 @@ enum	e_key_words
 
 typedef struct s_philo
 {
-	pthread_t		philo_tid;
 	int				philo_nb;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
 	t_time			last_lunch_time;
 	int				nb_of_meal;
 	t_data			*data;
@@ -34,24 +32,25 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	int				nb_of_philo;
-	t_time			time_to_die;
-	t_time			time_to_eat;
-	t_time			time_to_sleep;
-	int				nb_of_meal_max;
-	t_bool			a_philo_died;
-	t_time			starting_time;
-	t_philo			*philo;
-	pthread_mutex_t	*fork;
-	pthread_mutex_t	pen;
+	int		*philo_pid;
+	int		nb_of_philo;
+	t_time	time_to_die;
+	t_time	time_to_eat;
+	t_time	time_to_sleep;
+	int		nb_of_meal_max;
+	t_bool	a_philo_died;
+	t_time	starting_time;
+	t_philo	philo;
+	sem_t	*fork;
+	sem_t	*pen;
 }	t_data;
 
-void	*thread_philo(void *philo);
+void	*fork_philo(void *philo);
 
 void	init_philo(t_data *data, t_philo *philo, int index);
 int		init_data(int ac, char **av, t_data *data);
-void	init_mutex(t_data *data);
-void	destroy_mutex(t_data *data);
+void	init_sem(t_data *data);
+void	destroy_sem(t_data *data);
 
 int		writing(char *msg, t_philo *philo);
 void	ft_sleep(t_time time_ms, t_philo *philo);

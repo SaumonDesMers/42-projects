@@ -2,10 +2,10 @@
 
 t_bool	writing(char *msg, t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->pen);
+	sem_wait(philo->data->pen);
 	if (philo->data->a_philo_died)
 	{
-		pthread_mutex_unlock(&philo->data->pen);
+		sem_post(philo->data->pen);
 		return (DEAD);
 	}
 	if (get_utime() - philo->last_lunch_time > philo->data->time_to_die * 1000)
@@ -20,7 +20,7 @@ t_bool	writing(char *msg, t_philo *philo)
 	ft_putnbr_fd(philo->philo_nb, 1);
 	write(1, " ", 1);
 	write(1, msg, ft_strlen(msg));
-	pthread_mutex_unlock(&philo->data->pen);
+	sem_post(philo->data->pen);
 	if (msg[0] == 'd')
 		return (DEAD);
 	return (ALIVE);

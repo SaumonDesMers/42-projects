@@ -17,7 +17,7 @@ int	init_data(int ac, char **av, t_data *data)
 	if (ac != 5 && ac != 6)
 		return (ERROR);
 	data->nb_of_philo = ft_atoi(av[1]);
-	if (data->nb_of_philo < 2)
+	if (data->nb_of_philo < 1)
 		return (ERROR);
 	data->philo = malloc(sizeof(t_philo) * data->nb_of_philo);
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->nb_of_philo);
@@ -35,4 +35,24 @@ int	init_data(int ac, char **av, t_data *data)
 		data->nb_of_meal_max = ft_atoi(av[5]);
 	data->a_philo_died = 0;
 	return (SUCCESS);
+}
+
+void	init_mutex(t_data *data)
+{
+	int	i;
+
+	pthread_mutex_init(&data->pen, NULL);
+	i = 0;
+	while (i < data->nb_of_philo)
+		pthread_mutex_init(&data->fork[i++], NULL);
+}
+
+void	destroy_mutex(t_data *data)
+{
+	int	i;
+
+	pthread_mutex_destroy(&data->pen);
+	i = 0;
+	while (i < data->nb_of_philo)
+		pthread_mutex_destroy(&data->fork[i++]);
 }

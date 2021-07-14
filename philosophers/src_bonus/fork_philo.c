@@ -15,16 +15,16 @@ void	philo_think(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
-	pthread_mutex_lock(philo->left_fork);
+	sem_wait(philo->data->fork);
 	writing("has taken a fork\n", philo);
-	pthread_mutex_lock(philo->right_fork);
+	sem_wait(philo->data->fork);
 	writing("has taken a fork\n", philo);
 	writing("is eating\n", philo);
 	philo->nb_of_meal++;
 	philo->last_lunch_time = get_utime();
 	ft_sleep(philo->data->time_to_eat, philo);
-	pthread_mutex_unlock(philo->left_fork);
-	pthread_mutex_unlock(philo->right_fork);
+	sem_post(philo->data->fork);
+	sem_post(philo->data->fork);
 }
 
 t_bool	end_loop(t_philo *philo)
@@ -32,14 +32,14 @@ t_bool	end_loop(t_philo *philo)
 	t_bool	retval;
 
 	retval = 0;
-	pthread_mutex_lock(&philo->data->pen);
+	sem_wait(philo->data->pen);
 	if (philo->data->a_philo_died)
 		retval = 1;
-	pthread_mutex_unlock(&philo->data->pen);
+	sem_post(philo->data->pen);
 	return (retval);
 }
 
-void	*thread_philo(void *void_philo)
+void	*fork_philo(void *void_philo)
 {
 	t_philo	*philo;
 
@@ -65,5 +65,6 @@ void	*thread_philo(void *void_philo)
 		if (end_loop(philo))
 			break ;
 	}
+	// printf("%d\n", philo->philo_nb);
 	return (NULL);
 }
