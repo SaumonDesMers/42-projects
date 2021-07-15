@@ -2,7 +2,7 @@ NAME		= philo
 NAME_BONUS	= philo_bonus
 
 CC			= gcc
-CFLAGS		= -g -fsanitize=thread #-Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror #-lpthread #-g -fsanitize=address
 RM			= rm -f
 
 #----------------------------MANDATORY----------------------------
@@ -33,13 +33,15 @@ $(OBJ_DIR_BONUS)/%.o:$(SRC_DIR_BONUS)/%.c
 			@mkdir -p $(OBJ_DIR_BONUS)
 			@$(CC) $(CFLAGS) -I includes -c $< -o $@
 
-bonus:		$(OBJS_BONUS)
-			@$(CC) $(CFLAGS) $(OBJS_BONUS) -o $(NAME_BONUS)
+$(NAME_BONUS):	$(OBJS_BONUS)
+			@$(CC) $(CFLAGS) $(OBJS_BONUS) -o $@
 			@echo "Done"
 
 #-----------------------------------------------------------------
 
 all:		$(NAME)
+
+bonus:		$(NAME_BONUS)
 
 clean:
 			@$(RM) $(OBJS) $(OBJS_BONUS)
@@ -51,4 +53,4 @@ fclean:		clean
 
 re:			fclean all
 
-.PHONY:		all clean fclean re
+.PHONY:		all clean fclean re bonus

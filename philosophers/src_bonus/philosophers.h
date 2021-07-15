@@ -1,11 +1,13 @@
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
-# include <sys/time.h>
 # include <semaphore.h>
-# include <stdio.h>
+# include <sys/time.h>
+# include <sys/wait.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <signal.h>
+# include <stdio.h>
 # include <fcntl.h>
 
 # define NB_PHILO 5
@@ -38,27 +40,29 @@ typedef struct s_data
 	t_time	time_to_eat;
 	t_time	time_to_sleep;
 	int		nb_of_meal_max;
-	t_bool	a_philo_died;
 	t_time	starting_time;
 	t_philo	philo;
 	sem_t	*fork;
 	sem_t	*pen;
+	sem_t	*wait_start;
 }	t_data;
 
-void	*fork_philo(void *philo);
+void	fork_philo(t_philo *philo);
 
-void	init_philo(t_data *data, t_philo *philo, int index);
+void	init_philo(t_data *data, t_philo *philo);
 int		init_data(int ac, char **av, t_data *data);
 void	init_sem(t_data *data);
-void	destroy_sem(t_data *data);
+void	close_sem(t_data *data);
+void	unlink_sem(void);
 
-int		writing(char *msg, t_philo *philo);
-void	ft_sleep(t_time time_ms, t_philo *philo);
+void	writing(char *msg, t_philo *philo);
 
 int		ft_atoi(const char *nptr);
 void	ft_putnbr_fd(long n, int fd);
 int		ft_strlen(const char *s);
 
 long	get_utime(void);
+void	ft_sleep(t_time time_ms, t_philo *philo);
+void	kill_all(t_data *data);
 
 #endif

@@ -10,6 +10,7 @@ void	init_philo(t_data *data, t_philo *philo, int index)
 	else
 		philo->right_fork = &data->fork[index - 1];
 	philo->last_lunch_time = -1;
+	philo->nb_of_meal = 0;
 }
 
 int	init_data(int ac, char **av, t_data *data)

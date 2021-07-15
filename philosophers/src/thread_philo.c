@@ -51,8 +51,6 @@ void	*thread_philo(void *void_philo)
 		printf("%ld 0 died\n", philo->data->time_to_die);
 		return (NULL);
 	}
-	if (philo->philo_nb == 0)
-		philo->data->starting_time = get_utime();
 	philo->last_lunch_time = get_utime();
 	if (philo->philo_nb % 2 == 1)
 		ft_sleep(philo->data->time_to_eat, philo);

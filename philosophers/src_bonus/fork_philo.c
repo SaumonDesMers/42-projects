@@ -27,44 +27,36 @@ void	philo_eat(t_philo *philo)
 	sem_post(philo->data->fork);
 }
 
-t_bool	end_loop(t_philo *philo)
+void	in_else(t_philo *philo)
 {
-	t_bool	retval;
-
-	retval = 0;
-	sem_wait(philo->data->pen);
-	if (philo->data->a_philo_died)
-		retval = 1;
-	sem_post(philo->data->pen);
-	return (retval);
+	if (philo->philo_nb % 2 == 1)
+		ft_sleep(philo->data->time_to_eat, philo);
+	while (1)
+	{
+		philo_eat(philo);
+		if (!(philo->data->nb_of_meal_max == -1
+				|| philo->nb_of_meal < philo->data->nb_of_meal_max))
+			break ;
+		philo_sleep(philo);
+		philo_think(philo);
+	}
 }
 
-void	*fork_philo(void *void_philo)
+void	fork_philo(t_philo *philo)
 {
-	t_philo	*philo;
-
-	philo = ((t_philo *)void_philo);
+	sem_wait(philo->data->wait_start);
+	philo->data->starting_time = get_utime();
+	philo->last_lunch_time = get_utime();
 	if (philo->data->nb_of_philo == 1)
 	{
 		printf("0 0 has taken a fork\n");
 		usleep(philo->data->time_to_die * 1000);
 		printf("%ld 0 died\n", philo->data->time_to_die);
-		return (NULL);
 	}
-	if (philo->philo_nb == 0)
-		philo->data->starting_time = get_utime();
-	philo->last_lunch_time = get_utime();
-	if (philo->philo_nb % 2 == 1)
-		ft_sleep(philo->data->time_to_eat, philo);
-	while ((philo->data->nb_of_meal_max == -1
-			|| philo->nb_of_meal < philo->data->nb_of_meal_max))
-	{
-		philo_eat(philo);
-		philo_sleep(philo);
-		philo_think(philo);
-		if (end_loop(philo))
-			break ;
-	}
-	// printf("%d\n", philo->philo_nb);
-	return (NULL);
+	else
+		in_else(philo);
+	usleep((philo->data->time_to_eat * 2000
+			+ philo->data->time_to_sleep * 2000));
+	close_sem(philo->data);
+	exit(0);
 }

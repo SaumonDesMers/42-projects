@@ -24,3 +24,12 @@ void	ft_sleep(t_time time_ms, t_philo *philo)
 		usleep(100);
 	}
 }
+
+void	kill_all(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nb_of_philo)
+		kill(data->philo_pid[i++], 15);
+}
