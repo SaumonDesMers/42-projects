@@ -2,7 +2,7 @@ NAME		= philo
 NAME_BONUS	= philo_bonus
 
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror #-lpthread #-g -fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror #-lpthread
 RM			= rm -f
 
 #----------------------------MANDATORY----------------------------
@@ -25,7 +25,8 @@ $(NAME):	$(OBJS)
 
 SRC_DIR_BONUS	= src_bonus
 SRCS_BONUS		= $(patsubst %, $(SRC_DIR_BONUS)/%, main.c fork_philo.c ft_atoi.c \
-				initialisation.c divers.c ft_putnbr_fd.c ft_strlen.c writing.c)
+				initialisation.c divers.c ft_putnbr_fd.c ft_strlen.c writing.c \
+				simulation.c)
 OBJ_DIR_BONUS	= obj_bonus
 OBJS_BONUS		= $(SRCS_BONUS:$(SRC_DIR_BONUS)/%.c=$(OBJ_DIR_BONUS)/%.o)
 

@@ -15,6 +15,7 @@ void	philo_think(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
+	ft_wait(philo);
 	sem_wait(philo->data->fork);
 	writing("has taken a fork\n", philo);
 	sem_wait(philo->data->fork);
@@ -29,14 +30,12 @@ void	philo_eat(t_philo *philo)
 
 void	in_else(t_philo *philo)
 {
-	if (philo->philo_nb % 2 == 1)
-		ft_sleep(philo->data->time_to_eat, philo);
 	while (1)
 	{
 		philo_eat(philo);
 		if (!(philo->data->nb_of_meal_max == -1
 				|| philo->nb_of_meal < philo->data->nb_of_meal_max))
-			break ;
+			return ;
 		philo_sleep(philo);
 		philo_think(philo);
 	}
@@ -55,8 +54,6 @@ void	fork_philo(t_philo *philo)
 	}
 	else
 		in_else(philo);
-	usleep((philo->data->time_to_eat * 2000
-			+ philo->data->time_to_sleep * 2000));
 	close_sem(philo->data);
 	exit(0);
 }

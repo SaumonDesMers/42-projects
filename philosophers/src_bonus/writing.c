@@ -14,6 +14,7 @@ void	writing(char *msg, t_philo *philo)
 	write(1, msg, ft_strlen(msg));
 	if (msg[0] == 'd')
 	{
+		sem_post(philo->data->a_philo_died);
 		close_sem(philo->data);
 		exit(0);
 	}

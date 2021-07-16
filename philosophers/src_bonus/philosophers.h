@@ -45,13 +45,17 @@ typedef struct s_data
 	sem_t	*fork;
 	sem_t	*pen;
 	sem_t	*wait_start;
+	sem_t	*a_philo_died;
 }	t_data;
 
 void	fork_philo(t_philo *philo);
 
+void	manage_death(t_data *data);
+void	simulation(t_data *data);
+
 void	init_philo(t_data *data, t_philo *philo);
 int		init_data(int ac, char **av, t_data *data);
-void	init_sem(t_data *data);
+t_bool	init_sem(t_data *data);
 void	close_sem(t_data *data);
 void	unlink_sem(void);
 
@@ -64,5 +68,7 @@ int		ft_strlen(const char *s);
 long	get_utime(void);
 void	ft_sleep(t_time time_ms, t_philo *philo);
 void	kill_all(t_data *data);
+t_bool	error(char *msg);
+void	ft_wait(t_philo *philo);
 
 #endif

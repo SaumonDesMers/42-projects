@@ -18,8 +18,18 @@ enum	e_key_words
 	ERROR	= -1,
 	SUCCESS	= 1,
 	ALIVE,
-	DEAD
+	DEAD,
+	ON,
+	OFF
 };
+
+typedef struct s_sem
+{
+	int				val;
+	pthread_mutex_t	val_mutex;
+	t_bool			status;
+	pthread_mutex_t	status_mutex;
+}	t_sem;
 
 typedef struct s_philo
 {
@@ -44,6 +54,8 @@ typedef struct s_data
 	t_philo			*philo;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	pen;
+	t_sem			even_turn;
+	t_sem			odd_turn;
 }	t_data;
 
 void	*thread_philo(void *philo);
@@ -61,5 +73,6 @@ void	ft_putnbr_fd(long n, int fd);
 int		ft_strlen(const char *s);
 
 long	get_utime(void);
+void	ft_wait(t_philo *philo);
 
 #endif

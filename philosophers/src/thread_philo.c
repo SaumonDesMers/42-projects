@@ -4,6 +4,8 @@ void	philo_sleep(t_philo *philo)
 {
 	writing("is sleeping\n", philo);
 	ft_sleep(philo->data->time_to_sleep, philo);
+	if (philo->data->time_to_sleep == 0)
+		ft_sleep(1, philo);
 }
 
 void	philo_think(t_philo *philo)
@@ -15,6 +17,7 @@ void	philo_think(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
+	ft_wait(philo);
 	pthread_mutex_lock(philo->left_fork);
 	writing("has taken a fork\n", philo);
 	pthread_mutex_lock(philo->right_fork);
@@ -53,7 +56,7 @@ void	*thread_philo(void *void_philo)
 	}
 	philo->last_lunch_time = get_utime();
 	if (philo->philo_nb % 2 == 1)
-		ft_sleep(philo->data->time_to_eat, philo);
+		ft_sleep(1, philo);
 	while ((philo->data->nb_of_meal_max == -1
 			|| philo->nb_of_meal < philo->data->nb_of_meal_max))
 	{
