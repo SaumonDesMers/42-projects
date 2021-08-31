@@ -1,0 +1,2 @@
+grep cou << end << lol
+cat file | grep cou << end

@@ -1,0 +1,17 @@
+Makefile
+exec_cmd.c
+file
+fonction.c
+ft_putstr_fd.c
+ft_split.c
+ft_strdup.c
+ft_strjoin.c
+ft_strlen.c
+ft_strncmp.c
+main.c
+minishell
+minishell.h
+obj
+problem.txt
+utils.c
+coucou
