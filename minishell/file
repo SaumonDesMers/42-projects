@@ -1,6 +1,7 @@
 Makefile
 exec_cmd.c
 file
+file2
 fonction.c
 ft_putstr_fd.c
 ft_split.c
@@ -14,4 +15,3 @@ minishell.h
 obj
 problem.txt
 utils.c
-coucou

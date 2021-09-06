@@ -1,2 +1,6 @@
 grep cou << end << lol
 cat file | grep cou << end
+cat text.txt > file < text2.txt
+cat text2.txt > file text2.txt
+cat text.txt | grep "-a" < text2.txt < text2.txt
+echo "-a" >> text.txt > texte3.txt | grep "a"

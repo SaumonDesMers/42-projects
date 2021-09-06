@@ -1,12 +1,5 @@
 #include "minishell.h"
 
-void	get_cmd(t_cmd *cmd, char *str_cmd)
-{
-	cmd->args = ft_split(str_cmd, ' ');
-	// cmd->cmd = get_cmd_path(cmd->args[0]);
-	cmd->cmd = ft_strdup(cmd->args[0]);
-}
-
 char	*get_cmd_path(char *cmd)
 {
 	char	**path;
@@ -42,39 +35,31 @@ char	*get_cmd_path(char *cmd)
 	return (NULL);
 }
 
-int	exec_cmd(char *str_cmd, int fd_in, int fd_out, t_root *root)
+int	exec_cmd(t_ast *ast, int fd_in, int fd_out, t_root *root)
 {
-	int		pid;
-	t_cmd	cmd;
-	int		retval;
+	char	*cmd_path;
 
-	error_catch(str_cmd[0] == 0, "empty command", root);
-	get_cmd(&cmd, str_cmd);
-	if (cmd.cmd == 0 || cmd.args == 0)
+	error_catch(ast->cmd[0] == NULL, "empty command", root);
+
+	// cmd_path = get_cmd_path(ast->cmd[0]);
+	cmd_path = ft_strdup(ast->cmd[0]);
+
+	if (cmd.cmd == 0)
 	{
-		free_cmd_arg(cmd, fd_in, fd_out);
+		free(cmd_path);
 		error_catch(1, "problem with cmd or malloc fail", root);
 	}
-	pid = fork();
-	error_catch(pid == -1, "fail to create fork", root);
-	if (pid == 0)
+	ast->pid = fork();
+	error_catch(ast->pid == -1, "fail to create fork", root);
+	if (ast->pid == 0)
 	{
-		if (fd_in != 0)
-			error_catch(dup2(fd_in, 0) == -1, "dup2 fail for fd_in", root);
-		if (fd_out != 1)
-			error_catch(dup2(fd_out, 1) == -1, "dup2 fail for fd_out", root);
-		execve(cmd.cmd, cmd.args, root->shell_env);
-		error_catch(1, cmd.cmd, root);
+		error_catch(dup2(fd_in, 0) == -1, "dup2 fail for fd_in", root);
+		error_catch(dup2(fd_out, 1) == -1, "dup2 fail for fd_out", root);
+		execve(cmd_path, ast->cmd, root->shell_env);
+		free(cmd_path);
+		error_catch(1, cmd_path, root);
 		return (-1);
 	}
-	free_cmd_arg(cmd, fd_in, fd_out);
+	free(cmd_path);
 	return (0);
-}
-
-void	free_cmd_arg(t_cmd cmd, int fd_in, int fd_out)
-{
-	close(fd_in);
-	close(fd_out);
-	free(cmd.cmd);
-	free_split(cmd.args);
 }

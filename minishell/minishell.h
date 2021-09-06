@@ -19,6 +19,7 @@ typedef struct s_root
 	int		(*pipe)[2];
 	int		pipe_index;
 	char	**shell_env;
+	t_ast	*ast_start;
 }	t_root;
 
 typedef struct s_cmd
@@ -34,6 +35,30 @@ typedef struct s_list
 	struct s_list	*next;
 	struct s_list	*prev;
 }	t_list;
+
+typedef struct s_ast
+{
+	struct s_ast	*parent;
+	struct s_ast	*left;
+	struct s_ast	*right;
+	int				pid;
+	int				type; // cmd operator file limiter
+	char			*operator; // | < << > >>
+	char			**cmd;
+	char			*file;
+	char			*limiter;
+	int				fd_in;
+	int				fd_out;
+	int				index;
+} t_ast;
+
+enum e_ast
+{
+	CMD,
+	OPERATOR,
+	FILE,
+	LIMITER
+};
 
 void	open_and_malloc(t_list *lst, t_root *root);
 void	exec_all_cmd(t_list *lst, t_root *root);

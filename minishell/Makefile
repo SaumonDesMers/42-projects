@@ -15,7 +15,6 @@ OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
 			@mkdir -p $(OBJ_DIR)
 			@$(CC) $(CFLAGS) -I includes -c $< -o $@
-			@printf "|"
 
 $(NAME):	$(OBJS)
 			@$(CC) $(CFLAGS) $(OBJS) -o $@ -lreadline

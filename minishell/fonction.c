@@ -1,132 +1,122 @@
 #include "minishell.h"
 
-void	open_and_malloc(t_list *lst, t_root *root)
+void	open_fd(t_ast *ast, t_root *root)
 {
-	int	i;
-	int	nb_pipe;
+	int	pipe[2];
 
-	nb_pipe = 0;
-	while (lst)
+	if (ast->type == OPERATOR)
 	{
-		if (lst->sym && ft_strncmp(lst->sym, "|", 2) == 0)
-			nb_pipe++;
-		lst = lst->next;
+		if (ft_strncmp(ast->operator, "|", 2) == 0
+			|| ft_strncmp(ast->operator, "<<", 3) == 0)
+		{
+			error_catch(pipe(ast->pipe) == -1, "fail to open pipe", root);
+			ast->fd_in = pipe[0];
+			ast->fd_out = pipe[1];
+		}
+		if (ft_strncmp(ast->operator, ">", 2) == 0)
+		{
+			ast->fd_out = open(ast->right->file, O_WRONLY | O_TRUNC);
+			if (ast->fd_out == -1)
+				ast->fd_out = open(ast->right->file, O_WRONLY | O_CREAT, 0664);
+			error_catch(ast->fd_out == -1, "fail to open output file", root);
+		}
+		if (ft_strncmp(ast->operator, ">>", 2) == 0)
+		{
+			ast->fd_out = open(ast->right->file, O_WRONLY | O_APPEND);
+			if (ast->fd_out == -1)
+				ast->fd_out = open(ast->right->file, O_WRONLY | O_CREAT, 0664);
+			error_catch(ast->fd_out == -1, "fail to open output file", root);
+		}
+		if (ft_strncmp(ast->operator, "<", 2) == 0)
+		{
+			ast->fd_in = open(ast->left->file, O_RDONLY);
+			error_catch(fd_in == -1, "fail to open input file", root);
+		}
 	}
-
-	if (nb_pipe > 0)
-	{
-		root->pipe = malloc(sizeof(int [2]) * (nb_pipe - 1));
-		error_catch(root->pipe == 0, "fail to malloc pipe list", root);
-	}
-	i = 0;
-	while (i < nb_pipe)
-		error_catch(pipe(root->pipe[i++]) == -1, "fail to open pipe", root);
 }
 
-int	select_fd_in(t_list *lst, t_root *root)
+void	close_fd(t_ast *ast, t_root *root)
 {
-	int		fd_in;
+	if (ast->type == OPERATOR)
+	{
+		if (ft_strncmp(ast->operator, "|", 2) == 0
+			|| ft_strncmp(ast->operator, "<<", 3) == 0)
+		{
+			close(ast->fd_in);
+			close(ast->fd_out);
+		}
+		if (ft_strncmp(ast->operator, ">", 2) == 0
+			|| ft_strncmp(ast->operator, ">>", 3) == 0)
+			close(ast->fd_out);
+		if (ft_strncmp(ast->operator, "<", 2) == 0)
+			close(ast->fd_in);
+	}
+}
+
+void	scan_ast(void (*fct)(t_ast, t_root), t_ast *ast, t_root *root)
+{
+	fct(ast, root);
+	if (ast->left)
+		scan_ast(fct, ast->left, root);
+	if (ast->right)
+		scan_ast(fct, ast->right, root);
+}
+
+t_ast	*search_index(t_ast *ast, int index)
+{
+	static t_ast *ast_return;
+
+	if (ast->index == index)
+		ast_return == ast;
+	if (ast->left)
+		search_index(fct, ast->left);
+	if (ast->right)
+		search_index(fct, ast->right);
+	return (ast_return);
+}
+
+int	read_heredoc_pipe(int heredoc_pipe[2])
+{
 	int		heredoc_pipe[2];
 	char	*line;
 
-	fd_in = 0;
-	if (lst->sym && ft_strncmp(lst->sym, "<", 2) == 0)
+	while (1)
 	{
-		fd_in = open(lst->next->str, O_RDONLY);
-		error_catch(fd_in == -1, "fail to open input file", root);
+		line = readline("pipe heredoc>");
+		// check line not NULL
+		if (!ft_strncmp(line, lst->next->str, ft_strlen(lst->next->str) + 1))
+			break ;
+		ft_putstr_fd(line, heredoc_pipe[1]);
+		ft_putstr_fd("\n", heredoc_pipe[1]);
+		free(line);
+		line = NULL;
 	}
-	else if (lst->sym && ft_strncmp(lst->sym, "<<", 3) == 0)
+	free(line);
+	close(heredoc_pipe[1]);
+	return (heredoc_pipe[0])
+}
+
+void	exec_all_cmd(t_ast *ast, t_root *root)
+{
+	t_ast *ast_output;
+	t_ast *ast_input;
+	t_ast *ast_input_stop;
+
+	if (ast->type == CMD)
 	{
-		error_catch(pipe(heredoc_pipe) == -1, "fail to open pipe", root);
+		ast_output = search_index(root->ast_start, ast->index + 1)->parent;
+		ast_input_stop = ast_output;
 		while (1)
 		{
-			line = readline("pipe heredoc>");
-			if (!ft_strncmp(line, lst->next->str, ft_strlen(lst->next->str) + 1))
+			ast_input = ast->parent;
+			while (ast_input != ast_input_stop)
+			{
+				exec_cmd(ast, ast_input->fd_in, ast_output->fd_out, root);
+				ast_input = ast_input->parent;
+			}
+			if (ft_strncmp(ast_output->operator, "|", 2) == 0)
 				break ;
-			ft_putstr_fd(line, heredoc_pipe[1]);
-			ft_putstr_fd("\n", heredoc_pipe[1]);
-			free(line);
-			line = NULL;
+			ast_output = ast_output->parent;
 		}
-		free(line);
-		close(heredoc_pipe[1]);
-		fd_in = heredoc_pipe[0];
 	}
-	else if (lst->prev == NULL)
-		return (fd_in);
-	else if (ft_strncmp(lst->prev->sym, "|", 2) == 0)
-		fd_in = root->pipe[root->pipe_index][0];
-	return (fd_in);
-}
-
-int	select_fd_out(t_list *lst, t_root *root)
-{
-	int	fd_out;
-
-	fd_out = 1;
-	if (lst->sym == NULL)
-		return (fd_out);
-	else if (ft_strncmp(lst->sym, "|", 2) == 0)
-	{
-		printf("{%d}\n", root->pipe[root->pipe_index][1]);
-		fd_out = root->pipe[root->pipe_index++][1];
-		printf("a\n");
-	}
-	else if (ft_strncmp(lst->sym, ">", 2) == 0)
-	{
-		fd_out = open(lst->next->str, O_WRONLY | O_TRUNC);
-		if (fd_out == -1)
-			fd_out = open(lst->next->str, O_WRONLY | O_CREAT, 0664);
-		error_catch(fd_out == -1, "fail to open output file", root);
-	}
-	else if (ft_strncmp(lst->sym, ">>", 3) == 0)
-	{
-		fd_out = open(lst->next->str, O_WRONLY | O_APPEND);
-		if (fd_out == -1)
-			fd_out = open(lst->next->str, O_WRONLY | O_CREAT, 0664);
-		error_catch(fd_out == -1, "fail to open output file", root);
-	}
-	else if (ft_strncmp(lst->sym, "<<", 3) == 0)
-	{
-		fd_out = select_fd_out(lst->next, root);
-	}
-	return (fd_out);
-}
-
-t_bool	is_file_or_limiter(t_list *lst)
-{
-	t_bool	retval;
-
-	retval = 0;
-	if (lst->prev && ft_strncmp(lst->prev->sym, ">", 2) == 0)
-		retval = 1;
-	else if (lst->prev && ft_strncmp(lst->prev->sym, "<", 2) == 0)
-		retval = 1;
-	else if (lst->prev && ft_strncmp(lst->prev->sym, ">>", 3) == 0)
-		retval = 1;
-	else if (lst->prev && ft_strncmp(lst->prev->sym, "<<", 3) == 0)
-		retval = 1;
-	return (retval);
-}
-
-void	exec_all_cmd(t_list *lst, t_root *root)
-{
-	int		i;
-	int		fd_in = 0;
-	int		fd_out = 0;
-
-	root->pipe_index = 0;
-	i = 0;
-	while (lst)
-	{
-		if (!is_file_or_limiter(lst))
-		{
-			fd_out = select_fd_out(lst, root);
-			fd_in = select_fd_in(lst, root);
-			printf("\n[%d] -> %s -> [%d]\n", fd_in, lst->str, fd_out);
-			exec_cmd(lst->str, fd_in, fd_out, root);
-		}
-		lst = lst->next;
-	}
-	waitpid(-1, NULL, 0);
 }
