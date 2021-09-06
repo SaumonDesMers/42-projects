@@ -13,21 +13,21 @@ void	open_fd(t_ast *ast, t_root *root)
 			ast->fd_in = pipe[0];
 			ast->fd_out = pipe[1];
 		}
-		if (ft_strncmp(ast->operator, ">", 2) == 0)
+		else if (ft_strncmp(ast->operator, ">", 2) == 0)
 		{
 			ast->fd_out = open(ast->right->file, O_WRONLY | O_TRUNC);
 			if (ast->fd_out == -1)
 				ast->fd_out = open(ast->right->file, O_WRONLY | O_CREAT, 0664);
 			error_catch(ast->fd_out == -1, "fail to open output file", root);
 		}
-		if (ft_strncmp(ast->operator, ">>", 2) == 0)
+		else if (ft_strncmp(ast->operator, ">>", 2) == 0)
 		{
 			ast->fd_out = open(ast->right->file, O_WRONLY | O_APPEND);
 			if (ast->fd_out == -1)
 				ast->fd_out = open(ast->right->file, O_WRONLY | O_CREAT, 0664);
 			error_catch(ast->fd_out == -1, "fail to open output file", root);
 		}
-		if (ft_strncmp(ast->operator, "<", 2) == 0)
+		else if (ft_strncmp(ast->operator, "<", 2) == 0)
 		{
 			ast->fd_in = open(ast->left->file, O_RDONLY);
 			error_catch(fd_in == -1, "fail to open input file", root);
@@ -45,10 +45,10 @@ void	close_fd(t_ast *ast, t_root *root)
 			close(ast->fd_in);
 			close(ast->fd_out);
 		}
-		if (ft_strncmp(ast->operator, ">", 2) == 0
+		else if (ft_strncmp(ast->operator, ">", 2) == 0
 			|| ft_strncmp(ast->operator, ">>", 3) == 0)
 			close(ast->fd_out);
-		if (ft_strncmp(ast->operator, "<", 2) == 0)
+		else if (ft_strncmp(ast->operator, "<", 2) == 0)
 			close(ast->fd_in);
 	}
 }
