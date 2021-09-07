@@ -44,7 +44,8 @@ int	exec_cmd(t_ast *ast, int fd_in, int fd_out, t_root *root)
 	// cmd_path = get_cmd_path(ast->cmd[0]);
 	cmd_path = ft_strdup(ast->cmd[0]);
 
-	if (cmd.cmd == 0)
+	printf("[%d] -> %s -> [%d]\n", fd_in, cmd_path, fd_out);
+	if (cmd_path == 0)
 	{
 		free(cmd_path);
 		error_catch(1, "problem with cmd or malloc fail", root);

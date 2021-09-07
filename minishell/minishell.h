@@ -14,10 +14,24 @@
 
 typedef int	t_bool;
 
+typedef struct s_ast
+{
+	struct s_ast	*parent;
+	struct s_ast	*left;
+	struct s_ast	*right;
+	int				pid;
+	int				type; // cmd operator file limiter
+	char			*operator; // | < << > >>
+	char			**cmd;
+	char			*file;
+	char			*limiter;
+	int				fd_in;
+	int				fd_out;
+	int				index;
+} t_ast;
+
 typedef struct s_root
 {
-	int		(*pipe)[2];
-	int		pipe_index;
 	char	**shell_env;
 	t_ast	*ast_start;
 }	t_root;
@@ -36,36 +50,24 @@ typedef struct s_list
 	struct s_list	*prev;
 }	t_list;
 
-typedef struct s_ast
-{
-	struct s_ast	*parent;
-	struct s_ast	*left;
-	struct s_ast	*right;
-	int				pid;
-	int				type; // cmd operator file limiter
-	char			*operator; // | < << > >>
-	char			**cmd;
-	char			*file;
-	char			*limiter;
-	int				fd_in;
-	int				fd_out;
-	int				index;
-} t_ast;
-
 enum e_ast
 {
-	CMD,
-	OPERATOR,
-	FILE,
-	LIMITER
+	_CMD,
+	_OPERATOR,
+	_FILE,
+	_LIMITER
 };
 
-void	open_and_malloc(t_list *lst, t_root *root);
-void	exec_all_cmd(t_list *lst, t_root *root);
+void	open_fd(t_ast *ast, t_root *root);
+void	close_fd(t_ast *ast, t_root *root);
+void	scan_ast(void (*fct)(t_ast *, t_root *), t_ast *ast, t_root *root);
+t_ast	*search_index(t_ast *ast, int index);
+void	ast_set_index(t_ast *ast);
+void	exec_all_cmd(t_ast *ast, t_root *root);
 
 void	get_cmd(t_cmd *cmd, char *arg);
 char	*get_cmd_path(char *cmd);
-int		exec_cmd(char *arg, int fd_in, int fd_out, t_root *root);
+int		exec_cmd(t_ast *ast, int fd_in, int fd_out, t_root *root);
 void	free_cmd_arg(t_cmd cmd, int fd_in, int fd_out);
 
 char	**get_arg(char *arg);
@@ -80,6 +82,5 @@ void	ft_putstr_fd(char *s, int fd);
 char	*ft_strdup(const char *s);
 
 void	error_catch(t_bool test, char *error_msg, t_root *root);
-void	free_root(t_root *root);
 
 #endif
