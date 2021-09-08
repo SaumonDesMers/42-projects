@@ -1,101 +1,17 @@
 #include "minishell.h"
 
-void	open_fd(t_ast *ast, t_root *root)
+int	read_heredoc_pipe(char *limiter)
 {
-	int	pipe_fd[2];
-
-	if (ast->type == _OPERATOR)
-	{
-		if (ft_strncmp(ast->operator, "|", 2) == 0
-			|| ft_strncmp(ast->operator, "<<", 3) == 0)
-		{
-			error_catch(pipe(pipe_fd) == -1, "fail to open pipe", root);
-			ast->fd_in = pipe_fd[0];
-			ast->fd_out = pipe_fd[1];
-		}
-		else if (ft_strncmp(ast->operator, ">", 2) == 0)
-		{
-			ast->fd_out = open(ast->right->file, O_WRONLY | O_TRUNC);
-			if (ast->fd_out == -1)
-				ast->fd_out = open(ast->right->file, O_WRONLY | O_CREAT, 0664);
-			error_catch(ast->fd_out == -1, "fail to open output file", root);
-		}
-		else if (ft_strncmp(ast->operator, ">>", 2) == 0)
-		{
-			ast->fd_out = open(ast->right->file, O_WRONLY | O_APPEND);
-			if (ast->fd_out == -1)
-				ast->fd_out = open(ast->right->file, O_WRONLY | O_CREAT, 0664);
-			error_catch(ast->fd_out == -1, "fail to open output file", root);
-		}
-		else if (ft_strncmp(ast->operator, "<", 2) == 0)
-		{
-			ast->fd_in = open(ast->left->file, O_RDONLY);
-			error_catch(ast->fd_in == -1, "fail to open input file", root);
-		}
-	}
-}
-
-void	close_fd(t_ast *ast, t_root *root)
-{
-	if (ast->type == _OPERATOR)
-	{
-		if (ft_strncmp(ast->operator, "|", 2) == 0
-			|| ft_strncmp(ast->operator, "<<", 3) == 0)
-		{
-			close(ast->fd_in);
-			close(ast->fd_out);
-		}
-		else if (ft_strncmp(ast->operator, ">", 2) == 0
-			|| ft_strncmp(ast->operator, ">>", 3) == 0)
-			close(ast->fd_out);
-		else if (ft_strncmp(ast->operator, "<", 2) == 0)
-			close(ast->fd_in);
-	}
-}
-
-void	scan_ast(void (*fct)(t_ast *, t_root *), t_ast *ast, t_root *root)
-{
-	fct(ast, root);
-	if (ast->left)
-		scan_ast(fct, ast->left, root);
-	if (ast->right)
-		scan_ast(fct, ast->right, root);
-}
-
-void	ast_set_index(t_ast *ast)
-{
-	static int	index;
-
-	ast->index = index;
-	index++;
-	if (ast->left)
-		ast_set_index(ast->left);
-	if (ast->right)
-		ast_set_index(ast->right);
-}
-
-t_ast	*search_index(t_ast *ast, int index)
-{
-	static t_ast *ast_return;
-
-	if (ast->index == index)
-		ast_return = ast;
-	if (ast->left)
-		search_index(ast->left, index);
-	if (ast->right)
-		search_index(ast->right, index);
-	return (ast_return);
-}
-
-int	read_heredoc_pipe(t_ast *ast, int heredoc_pipe[2])
-{
+	int		heredoc_pipe[2];
 	char	*line;
 
+	if (error_catch(pipe(heredoc_pipe) == -1, "system", "fail to open pipe"))
+		return (-1);
 	while (1)
 	{
-		line = readline("pipe heredoc>");
+		line = readline(">");
 		// check line not NULL
-		if (!ft_strncmp(line, ast->limiter, ft_strlen(ast->limiter) + 1))
+		if (!ft_strncmp(line, limiter, ft_strlen(limiter) + 1))
 			break ;
 		ft_putstr_fd(line, heredoc_pipe[1]);
 		ft_putstr_fd("\n", heredoc_pipe[1]);
@@ -107,30 +23,80 @@ int	read_heredoc_pipe(t_ast *ast, int heredoc_pipe[2])
 	return (heredoc_pipe[0]);
 }
 
-void	exec_all_cmd(t_ast *ast, t_root *root)
+t_bool	open_fd(t_redir *redir)
 {
-	t_ast *ast_output;
-	t_ast *ast_input;
-	t_ast *ast_input_stop;
-
-	if (ast->type == _CMD)
+	while (redir)
 	{
-		ast_output = search_index(root->ast_start, ast->index + 1)->parent;
-		ast_input_stop = ast_output;
-		while (1)
+		if (redir->mode == OUT_TRUNC || redir->mode == OUT_APPEND)
 		{
-			ast_input = ast->parent;
-			printf("[%d] [%d]\n", ast_input->fd_in, ast_output->fd_out);
-			if (ast_input->fd_in == 0 || ast_input->fd_out == 1)
-				exec_cmd(ast, ast_input->fd_in, ast_output->fd_out, root);
-			while (ast_input != ast_input_stop)
-			{
-				exec_cmd(ast, ast_input->fd_in, ast_output->fd_out, root);
-				ast_input = ast_input->parent;
-			}
-			if (ft_strncmp(ast_output->operator, "|", 2) == 0)
-				break ;
-			ast_output = ast_output->parent;
+			redir->fd = open(redir->str, O_WRONLY | redir->mode);
+			if (redir->fd == -1)
+				redir->fd = open(redir->str, O_WRONLY | O_CREAT, 0664); 
 		}
+		else if (redir->mode == IN_FILE)
+			redir->fd = open(redir->str, O_RDONLY);
+		if (redir->mode == IN_LIMITER)
+		{
+			redir->fd = read_heredoc_pipe(redir->str);
+			if (redir->fd == -1)
+				return (ERROR);
+		}
+		if (error_catch(redir->fd == -1, redir->str, "No such file or directory"))
+			return (ERROR);
+		redir = redir->next;
 	}
+	return (SUCCESS);
+}
+
+void	close_fd(t_redir *redir)
+{
+	while (redir)
+	{
+		if (redir->fd == -1)
+			return ;
+		close(redir->fd);
+		redir = redir->next;
+	}
+}
+
+int	(*open_pipe(int nb_of_cmd))[2]
+{
+	int	i;
+	int	(*pipe_fd)[2];
+
+	pipe_fd = malloc(sizeof(int [2]) * (nb_of_cmd - 1));
+	if (error_catch(pipe_fd == 0, "system", "fail to malloc pipe table"))
+		return (NULL);
+	i = 0;
+	while (i < nb_of_cmd - 1)
+	{
+		if (error_catch(pipe(pipe_fd[i++]) == -1, "system", "fail to open pipe"))
+			return (NULL);
+	}
+	return (pipe_fd);
+}
+
+t_bool	exec_all_cmd(t_cmd *cmds, int nb_of_cmd, t_root *root)
+{
+	int	i;
+	int	(*pipe_fd)[2];
+
+	pipe_fd = open_pipe(nb_of_cmd);
+	i = 0;
+	while (i < nb_of_cmd)
+	{
+		if (open_fd(cmds[i].redir) == ERROR)
+			close_fd(cmds[i].redir);
+		else
+		{
+			// cmds[i].fd_in = select_fd_in(cmds[i], i, pipe_fd, nb_of_cmd);
+			// cmds[i].fd_out = select_fd_out(cmds[i], i, pipe_fd, nb_of_cmd);
+			exec_cmd(&cmds[i], root);
+			close_fd(cmds[i].redir);
+		}
+		i++;
+	}
+	// close_pipe(pipe_fd);
+	// return (wait_process(cmds));
+	return (0);
 }

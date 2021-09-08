@@ -35,32 +35,32 @@ char	*get_cmd_path(char *cmd)
 	return (NULL);
 }
 
-int	exec_cmd(t_ast *ast, int fd_in, int fd_out, t_root *root)
+int	exec_cmd(t_cmd *cmd, t_root *root)
 {
 	char	*cmd_path;
 
-	error_catch(ast->cmd[0] == NULL, "empty command", root);
+	if (cmd->cmd[0] == NULL)
+		return (SUCCESS);
 
-	// cmd_path = get_cmd_path(ast->cmd[0]);
-	cmd_path = ft_strdup(ast->cmd[0]);
+	// cmd_path = get_cmd_path(cmd->cmd[0]);
+	cmd_path = ft_strdup(cmd->cmd[0]);
 
-	printf("[%d] -> %s -> [%d]\n", fd_in, cmd_path, fd_out);
-	if (cmd_path == 0)
+	printf("[%d] -> %s -> [%d]\n", cmd->fd_in, cmd_path, cmd->fd_out);
+	if (error_catch(cmd_path == NULL, "system", "fail to malloc cmd_path"))
+		exit(1);
+	cmd->pid = fork();
+	error_catch(cmd->pid == -1, "system", "fail to create fork");
+	if (cmd->pid == 0)
 	{
+		if (error_catch(dup2(cmd->fd_in, 0) == -1, "system", "dup2 fail"))
+			exit(ERROR);
+		if (error_catch(dup2(cmd->fd_out, 1) == -1, "system", "dup2 fail"))
+			exit(ERROR);
+		execve(cmd_path, cmd->cmd, root->shell_env);	
 		free(cmd_path);
-		error_catch(1, "problem with cmd or malloc fail", root);
-	}
-	ast->pid = fork();
-	error_catch(ast->pid == -1, "fail to create fork", root);
-	if (ast->pid == 0)
-	{
-		error_catch(dup2(fd_in, 0) == -1, "dup2 fail for fd_in", root);
-		error_catch(dup2(fd_out, 1) == -1, "dup2 fail for fd_out", root);
-		execve(cmd_path, ast->cmd, root->shell_env);
-		free(cmd_path);
-		error_catch(1, cmd_path, root);
-		return (-1);
+		error_catch(1, cmd->cmd[0], "some problem has occured");
+		exit(ERROR);
 	}
 	free(cmd_path);
-	return (0);
+	return (SUCCESS);
 }

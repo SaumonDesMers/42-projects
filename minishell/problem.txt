@@ -1,6 +1,58 @@
-grep cou << end << lol
-cat file | grep cou << end
-cat text.txt > file < text2.txt
-cat text2.txt > file text2.txt
-cat text.txt | grep "-a" < text2.txt < text2.txt
+redirection entree
+{
+	s'il n'y a que des < et/ou <<
+		- toutes les entrees sont ouvertes mais seule la derniere est lue
+		- le pipe n'est pas lu
+	
+	s'il y a des entrees directement en argument
+		- les < et << sont ignores
+		- le pipe n'est pas lu
+}
+
+redirection sortie
+{
+	s'il y a des > et/ou >>
+		- toutes les sorties sont ouvertes mais seule la derniere est utilisee
+		- rien n'est ecrit dans le pipe s'il y en a un
+}
+
+pipe
+{
+	cmd1 | cmd2 | cmd3
+		- toutes les cmd valides sont executees
+}
+
+
+grep cou << end << lol < file
+{
+	file -> grep -> stdout
+}
+
+cat < file > file2 | grep cou
+{
+	file -> cat -> file2
+	| -> grep -> stdout
+}
+
+cat file > file2 < file3 > file4
+{
+	file -> cat -> file4
+}
+
+cat < file > file2 < file3
+{
+	file3 -> cat -> file2
+}
+
+cat file > file2 file3
+{
+	file file3 -> cat -> file2
+}
+
+cat file | grep file file2
+{
+	file -> cat -> |
+	file2 -> grep -> sdtout
+}
+
 echo "-a" >> text.txt > texte3.txt | grep "a"
