@@ -9,7 +9,8 @@ NAME		= minishell
 
 SRC_DIR		= .
 SRCS		= $(patsubst %, $(SRC_DIR)/%, main.c exec_cmd.c fonction.c \
-				utils.c)
+				utils.c select_fd.c pipe_and_fd.c checker.c parser.c \
+				split_chevron.c split_quote.c strjoin.c)
 OBJ_DIR		= obj
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

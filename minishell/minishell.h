@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgaubert <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/09 15:18:37 by sgaubert          #+#    #+#             */
+/*   Updated: 2021/09/09 15:18:41 by sgaubert         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -17,7 +29,7 @@ typedef int	t_bool;
 
 typedef struct s_cmd
 {
-	char			**cmd; // cmd with all arguments
+	char			*cmd; // cmd with all arguments
 	int				pid;
 	int				fd_in;
 	int				fd_out;
@@ -48,6 +60,7 @@ enum e_flag
 
 typedef struct s_root
 {
+	int		nb_of_cmd;
 	char	**shell_env;
 }	t_root;
 
@@ -60,14 +73,22 @@ int		exec_cmd(t_cmd *cmd, t_root *root);
 
 char	**get_arg(char *arg);
 
-char	*ft_strjoin(char const *s1, char const *s2);
-void	free_split(char **strs);
-char	**ft_split(const char *str, char c);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-int		ft_gnl(int fd, char **line);
-void	ft_putstr_fd(char *s, int fd);
-char	*ft_strdup(const char *s);
+int		find_last_fd_in_or_out(t_redir *redir, int test_one, int test_two);
+int		select_fd_in(t_cmd *cmd, int cmd_index, int (*pipe_fd)[2]);
+int		select_fd_out(t_cmd *cmd, int cmd_index, int (*pipe_fd)[2], int nb_of_cmd);
+
+int		read_heredoc_pipe(char *limiter);
+t_bool	open_fd(t_redir *redir);
+void	close_fd(t_redir *redir);
+int		(*open_pipe(int nb_of_cmd))[2];
 
 t_bool	error_catch(t_bool test, char *str, char *error_msg);
+
+void	ft_check_quote(char c, int *quote);
+int		ft_check_str(char *str);
+t_cmd	*ft_parser(char *str, t_root *root);
+char	**ft_split_quote(const char *s, char c);
+char	**ft_split_chevron(const char *s);
+char	*ft_strjoin_malloc(char *s1, char *s2);
 
 #endif
