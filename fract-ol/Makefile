@@ -13,7 +13,7 @@ OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 LIBS		= libft/libft.a
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g
 AR			= ar rcs
 RM			= rm -f
 
@@ -28,6 +28,9 @@ $(NAME):	$(OBJS)
 			@echo "Done"
 
 all:		$(NAME)
+
+malloc_test: $(OBJS)
+		$(CC) $(CFLAGS) -fsanitize=undefined -rdynamic -o $@ ${OBJS} -L./otherlib/ -lyourlib -L. -lmallocator
 
 clean:
 			@make clean -C libft

@@ -1,8 +1,8 @@
 NAME		= philo
 NAME_BONUS	= philo_bonus
 
-CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror #-lpthread
+CC			= clang
+CFLAGS		= -Wall -Wextra -Werror -g#-lpthread
 RM			= rm -f
 
 #----------------------------MANDATORY----------------------------
@@ -41,6 +41,9 @@ $(NAME_BONUS):	$(OBJS_BONUS)
 #-----------------------------------------------------------------
 
 all:		$(NAME)
+
+malloc_test: $(OBJS)
+		$(CC) $(CFLAGS) -fsanitize=undefined -rdynamic -o $@ ${OBJS} -L./otherlib/ -L. -lmallocator
 
 bonus:		$(NAME_BONUS)
 
