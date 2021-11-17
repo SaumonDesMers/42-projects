@@ -46,8 +46,6 @@ float	cast_ray_dda(t_ray *var, t_root *root)
 {
 	while (root->input.grid[var->cell[0]][var->cell[1]] != '1')
 	{
-		// if (root->input.grid[var->cell[0]][var->cell[1]] == '2')
-			// objet
 		if (var->len.x <= var->len.y)
 		{
 			var->cell[0] += var->step.x;

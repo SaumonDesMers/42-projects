@@ -27,7 +27,6 @@ void	manipulate_img(t_root *root)
 	rotation.x = 0;
 	rotation.y = 0;
 	rotation.z = 0;
-	(void)root;
 	print_img(&root->img.test, &root->img.NO, scale, rotation, root);
 }
 
@@ -46,8 +45,8 @@ int	update_img(t_root *root)
 {
 	(void)root;
 	rendering(root);
-	mlx_put_image_to_window(root->mlx, root->win.win, root->img.maze.img, 0, 0);
+	// mlx_put_image_to_window(root->mlx, root->win.win, root->img.maze.img, 0, 0);
 	// mlx_put_image_to_window(root->mlx, root->win.win, root->img.grid.img, 0, 0);
-	// mlx_put_image_to_window(root->mlx, root->win.win, root->img.test.img, 0, 0);
+	mlx_put_image_to_window(root->mlx, root->win.win, root->img.test.img, 0, 0);
 	return (0);
 }

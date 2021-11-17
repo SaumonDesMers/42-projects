@@ -1,0 +1,7 @@
+.DS_Store
+*.o
+*.a
+*.so
+a.out*
+main.c
+_bonus.c

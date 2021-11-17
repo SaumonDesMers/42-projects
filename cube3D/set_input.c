@@ -7,7 +7,7 @@ void	read_file(char *path_name, t_root *root)
 	int		flag;
 	char	**strs;
 	int		i;
-	
+
 	fd = open(path_name, O_RDONLY);
 	if (fd < 0)
 		exit(0);
@@ -16,7 +16,7 @@ void	read_file(char *path_name, t_root *root)
 		flag = get_next_line(fd, &line);
 		strs = ft_split(line, ' ');
 		if (!strs[0])
-			continue;
+			continue ;
 		if (!ft_isdigit(strs[0][0]))
 			set_input(strs, root);
 		// else if (ft_isalpha(strs[0][0]))
@@ -68,9 +68,9 @@ void	get_color_input(char *str, char flag, t_root *root)
 	g = ft_atoi(strs[1]);
 	b = ft_atoi(strs[2]);
 	if (flag == 'F')
-		root->input.f_color = create_trgb(0,r,g,b);
+		root->input.f_color = create_trgb(0, r, g, b);
 	if (flag == 'C')
-		root->input.c_color = create_trgb(0,r,g,b);
+		root->input.c_color = create_trgb(0, r, g, b);
 	i = 0;
 	while (strs[i])
 		free(strs[i++]);
@@ -79,7 +79,6 @@ void	get_color_input(char *str, char flag, t_root *root)
 
 void	set_grid(char *line, t_root *root)
 {
-	(void)line;
 	int		i;
 	char	*str[10] =  {"1111111111",
 						"1000100001",
@@ -91,6 +90,8 @@ void	set_grid(char *line, t_root *root)
 						"1001000001",
 						"1001000001",
 						"1111111111"};
+
+	(void)line;
 	i = 0;
 	root->input.grid = malloc(sizeof(char*) * 10);
 	while (i < 10)
